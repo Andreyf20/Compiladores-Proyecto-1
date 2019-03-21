@@ -1,0 +1,34 @@
+Command ::= single-Command
+	 |  Command ";" single-Command
+
+single-Command ::= V-name ":=" Expression
+		|  Identifier "(" Actual-Parameter-Sequence ")"
+		|  "pass"
+		|  "loop" "while" Expression "do" Command "end"
+		|  "loop" "until" Expression "do" Command "end"
+		|  "loop" "do" Command "while" Expression "end"
+		|  "loop" "do" Command "until" Expression "end"
+		|  "loop" "for" Identifier "from" Expression "to" Expression "do" Command "end"
+		|  "loop" "for" Identifier "from" Expression "to" Expression
+		|  "while" Expression "do" Command "end"
+		|  "loop" "for" Identifier "from" Expression "to" Expression
+		|  "until" Expression "do" Command "end"
+		|  "let" Declaration "in" Command "end"
+		|  "if" Expression "then" Command "else" Command "end"
+		|  "choose" Expression "from" Cases "end"
+
+Cases 		::= Case+ [ ElseCase ]
+Case 		::= "when" Case-Literals "then" Command
+ElseCase 	::= "else" Command
+Case-Literals	::= Case-Range ("|" Case-Range)*
+Case-Range	::= Case-Literal [".." Case-Literal]
+Case-Literal	::= Integer-Literal | Character-Literal
+
+Declaration ::=	compound-Declaration
+	     |	Declaration ";" compound-Declaration
+
+compound-Declaration
+	::=	single-Declaration
+	|	"recursive" Proc-Funcs "end"
+	|	"private" Declaration "in" Declaration "end"
+	|	"par" single-Declaration ("|" single-Declaration)+ "end"
