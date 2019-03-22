@@ -9,7 +9,7 @@ import Core.Console.OutputRedirector;
 import Core.IDE.IDEDisassembler;
 import Core.IDE.IDEInterpreter;
 import Core.Visitors.TableVisitor;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import com.sun.java.swing.plaf.motif.MotifLookAndFeel;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -42,7 +42,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 /**
  * The Main class. Contains the main form.
  *
- * @author Luis Leopoldo Pérez <luiperpe@ns.isi.ulatina.ac.cr>
+ * @author Luis Leopoldo Pï¿½rez <luiperpe@ns.isi.ulatina.ac.cr>
  */
 public class Main extends javax.swing.JFrame {
 
@@ -53,7 +53,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {        
         try {
-            UIManager.setLookAndFeel(new WindowsLookAndFeel());            
+            UIManager.setLookAndFeel(new MotifLookAndFeel());            
         } catch (Exception e) { }
         
         initComponents();
