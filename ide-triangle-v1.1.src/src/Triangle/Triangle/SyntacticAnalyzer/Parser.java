@@ -295,7 +295,8 @@ public class Parser {
 
     case Token.PASS:
     {
-        
+        acceptIt();
+        break;
     }
    
     case Token.LOOP:
@@ -303,6 +304,7 @@ public class Parser {
       acceptIt();
       switch (currentToken.kind) {
           case Token.FOR:
+          {
               acceptIt();
               Identifier iAST = parseIdentifier();
               accept(Token.FROM);
@@ -320,6 +322,16 @@ public class Parser {
                     accept(Token.END);
                   break; 
               }
+          }
+          case Token.WHILE:
+          {
+              acceptIt();
+              Expression e1AST = parseExpression();
+              accept(Token.DO);
+              commandAST = parseCommand();
+              accept(Token.END);
+              break;
+          }
       }
     }
       break;  
@@ -356,17 +368,6 @@ public class Parser {
         //CASES ----------------------------------------------------------------
         Identifier iAST = parseIdentifier();
         accept(Token.END);
-      }
-      break;
-      
-    case Token.WHILE:
-      {
-        acceptIt();
-        Expression eAST = parseExpression();
-        accept(Token.DO);
-        Command cAST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new WhileCommand(eAST, cAST, commandPos);
       }
       break;
 
