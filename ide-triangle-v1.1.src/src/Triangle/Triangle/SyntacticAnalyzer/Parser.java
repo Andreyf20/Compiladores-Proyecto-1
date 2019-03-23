@@ -312,7 +312,13 @@ public class Parser {
               accept(Token.TO);
               Expression e2AST = parseExpression();
               switch (currentToken.kind) {
-                  
+                  case Token.DO:
+                  {
+                      acceptIt();
+                      commandAST = parseCommand();
+                      accept(Token.END);
+                      break;
+                  }
                   case Token.WHILE: 
                   case Token.UNTIL:
                     acceptIt();
@@ -330,6 +336,38 @@ public class Parser {
               accept(Token.DO);
               commandAST = parseCommand();
               accept(Token.END);
+              break;
+          }
+          case Token.UNTIL:
+          {
+              acceptIt();
+              Expression e1AST = parseExpression();
+              accept(Token.DO);
+              commandAST = parseCommand();
+              accept(Token.END);
+              break;
+          }
+          case Token.DO:
+          {
+              acceptIt();
+              commandAST = parseCommand();
+              switch(currentToken.kind)
+              {
+                  case Token.WHILE:
+                  {
+                      acceptIt();
+                      Expression e1AST = parseExpression();
+                      accept(Token.END);
+                      break;
+                  }
+                  case Token.UNTIL:
+                  {
+                      acceptIt();
+                      Expression e1AST = parseExpression();
+                      accept(Token.END);
+                      break;
+                  }
+              }
               break;
           }
       }
