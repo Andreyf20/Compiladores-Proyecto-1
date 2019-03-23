@@ -467,7 +467,8 @@ public class Parser {
       
       //en caso de existir el else de un elseCase lo parsea
       if(currentToken.kind == Token.ELSE){
-        commandAST = parseElseCase();
+          acceptIt();
+          commandAST = parseElseCase();
       }
       
       return commandAST;
