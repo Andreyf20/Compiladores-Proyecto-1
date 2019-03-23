@@ -293,11 +293,10 @@ public class Parser {
       }
       break;
 
-    case Token.BEGIN:
-      acceptIt();
-      commandAST = parseCommand();
-      accept(Token.END);
-      break;
+    case Token.PASS:
+    {
+        
+    }
    
     case Token.LOOP:
       {
@@ -801,7 +800,50 @@ public class Parser {
   }
   
   Declaration parseProcFunc() throws SyntaxError{
-      return null;//cascarón de la función
+      Declaration declarationAST = null;
+      
+      SourcePosition declarationPos = new SourcePosition();
+      start(declarationPos);
+      
+      switch(currentToken.kind) {
+          
+          case Token.PROC:
+            {
+                acceptIt();
+                Identifier iAST = parseIdentifier();
+                accept(Token.LPAREN);
+                FormalParameterSequence fpsAST = parseFormalParameterSequence();
+                accept(Token.RPAREN);
+                accept(Token.IS);
+                Command cmdAST = parseCommand();
+                accept(Token.END);
+                finish(declarationPos);
+                declarationAST = new ProcDeclaration(iAST, fpsAST, cmdAST, declarationPos);
+            }
+            break;
+            
+          case Token.FUNC:
+            {
+                acceptIt();
+                Identifier iAST = parseIdentifier();
+                accept(Token.LPAREN);
+                FormalParameterSequence fpsAST = parseFormalParameterSequence();
+                accept(Token.RPAREN);
+                accept(Token.SEMICOLON);
+                TypeDenoter tAST = parseTypeDenoter();
+                accept(Token.IS);
+                Expression eAST = parseExpression();
+                finish(declarationPos);
+                declarationAST = new FuncDeclaration(iAST, fpsAST, tAST, eAST, declarationPos);
+            }
+            break;
+            
+          default:
+              syntacticError("\"%\" error parsing proc-func", currentToken.spelling);
+              break;
+      
+      }
+      return declarationAST;
   }
   
 
@@ -829,9 +871,17 @@ public class Parser {
         acceptIt();
         Identifier iAST = parseIdentifier();
         accept(Token.COLON);
-        TypeDenoter tAST = parseTypeDenoter();
-        finish(declarationPos);
-        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        if(currentToken.kind == Token.BECOMES)
+        {
+            acceptIt();
+            Expression eAST = parseExpression();
+            finish(declarationPos);
+            declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+        } else{
+            TypeDenoter tAST = parseTypeDenoter();
+            finish(declarationPos);
+            declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        }
       }
       break;
 
@@ -843,7 +893,8 @@ public class Parser {
         FormalParameterSequence fpsAST = parseFormalParameterSequence();
         accept(Token.RPAREN);
         accept(Token.IS);
-        Command cAST = parseSingleCommand();
+        Command cAST = parseCommand();
+        accept(Token.END);
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }
