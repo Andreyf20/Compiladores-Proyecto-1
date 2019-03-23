@@ -618,6 +618,14 @@ public class Parser {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+// CASES
+//
+///////////////////////////////////////////////////////////////////////////////
+     
+  
+  
+///////////////////////////////////////////////////////////////////////////////
+//
 // DECLARATIONS
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -627,16 +635,80 @@ public class Parser {
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-    declarationAST = parseSingleDeclaration();
+    declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseSingleDeclaration();
+      Declaration d2AST = parseCompoundDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
         declarationPos);
     }
     return declarationAST;
   }
+  
+  Declaration parseCompoundDeclaration() throws SyntaxError{
+      Declaration declarationAST = null;
+      
+      SourcePosition declarationPos = new SourcePosition();
+      start(declarationPos);
+      declarationAST = parseSingleDeclaration();
+      
+      switch (currentToken.kind) {
+
+            case Token.RECURSIVE:
+                acceptIt();
+                Declaration p2AST = parseProcFunc();
+                finish(declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, p2AST,
+                declarationPos);
+                
+                break;
+                
+            case Token.PRIVATE:
+                
+                acceptIt();
+                Declaration d1AST = parseSingleDeclaration();
+                finish(declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, d1AST,
+                declarationPos);
+                
+                accept(Token.IN);
+                
+                Declaration d2AST = parseSingleDeclaration();
+                finish(declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, d2AST,
+                declarationPos);
+                
+                accept(Token.END);
+                
+                break;
+                
+            case Token.PAR:
+                acceptIt();
+                Declaration d3AST = parseSingleDeclaration();
+                finish(declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, d3AST,
+                declarationPos);
+                
+                while (currentToken.kind == Token.OR) {
+                    acceptIt();
+                    Declaration d4AST = parseSingleDeclaration();
+                    finish(declarationPos);
+                    declarationAST = new SequentialDeclaration(declarationAST, d4AST,
+                    declarationPos);
+                }
+                
+                accept(Token.END);
+                
+                break;         
+      }
+      return declarationAST;
+  }
+  
+  Declaration parseProcFunc() throws SyntaxError{
+      return null;//cascarón de la función
+  }
+  
 
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
