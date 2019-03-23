@@ -390,6 +390,51 @@ public class Parser {
 
     return commandAST;
   }
+  
+  Command parseElseCase() throws SyntaxError{
+      
+      Command commandAST = null; // in case there's a syntactic error
+      accept(Token.ELSE);
+      commandAST = parseCommand();
+
+      return commandAST;
+  }
+  
+  Command parseCaseSingular() throws SyntaxError{
+      Command commandAST = null; // in case thre´s a syntactic error
+      
+      accept(Token.WHEN);
+      
+      Expression expressionAST = parseCaseLiteralsPlural();
+      
+      accept(Token.THEN);
+      
+      commandAST = parseCommand();
+      
+      return commandAST;
+      
+  }
+  
+  Command parseCasesPlural() throws SyntaxError{
+      Command commandAST = null;
+      
+      commandAST = parseCaseSingular();
+      
+      //dado que un case empieza con el token when entonces entra en el ciclo en caso
+      //de existir más cases, si no continua con el elseCase
+      while(currentToken.kind == Token.WHEN){
+          acceptIt();
+          commandAST = parseCaseSingular();
+      }
+      
+      //en caso de existir el else de un elseCase lo parsea
+      if(currentToken.kind == Token.ELSE){
+        commandAST = parseElseCase();
+      }
+      
+      return commandAST;
+      
+  }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -538,7 +583,61 @@ public class Parser {
     }
     return expressionAST;
   }
+  
+  Expression parseCaseLiteralSingular() throws SyntaxError{
+      Expression expressionAST = null; // in case there's a syntactic error
 
+      SourcePosition expressionPos = new SourcePosition();
+      start(expressionPos);
+      switch (currentToken.kind) {
+
+        case Token.INTLITERAL:
+          IntegerLiteral ilAST = parseIntegerLiteral();
+          finish(expressionPos);
+          expressionAST = new IntegerExpression(ilAST, expressionPos);
+          break;
+
+        case Token.CHARLITERAL:
+          CharacterLiteral clAST= parseCharacterLiteral();
+          finish(expressionPos);
+          expressionAST = new CharacterExpression(clAST, expressionPos);
+          break;
+          
+        default:
+          syntacticError("\"%\" cannot start an expression",
+          currentToken.spelling);
+          break;
+      }
+      return expressionAST;
+  }
+  
+  Expression parseCaseRange() throws SyntaxError{
+      Expression expressionAST = null; // in case there's a syntactic error
+
+      expressionAST = parseCaseLiteralSingular();
+      
+      if(currentToken.kind == Token.DOUBLEDOT){
+          acceptIt();
+          expressionAST = parseCaseLiteralSingular();
+      }
+      
+      return expressionAST;
+  }
+  
+  Expression parseCaseLiteralsPlural() throws SyntaxError{
+      Expression expressionAST = null; // in case there's a syntactic error
+
+      expressionAST = parseCaseRange();
+      while(currentToken.kind == Token.OR){
+          acceptIt();
+          expressionAST = parseCaseRange();
+      }
+      
+      return expressionAST;
+  }
+  
+  
+  
   RecordAggregate parseRecordAggregate() throws SyntaxError {
     RecordAggregate aggregateAST = null; // in case there's a syntactic error
 
@@ -618,14 +717,6 @@ public class Parser {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// CASES
-//
-///////////////////////////////////////////////////////////////////////////////
-     
-  
-  
-///////////////////////////////////////////////////////////////////////////////
-//
 // DECLARATIONS
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -700,7 +791,11 @@ public class Parser {
                 
                 accept(Token.END);
                 
-                break;         
+                break;
+            default:
+                syntacticError("\"%\" cannot start a compound declaration",
+                currentToken.spelling);
+                break;
       }
       return declarationAST;
   }
