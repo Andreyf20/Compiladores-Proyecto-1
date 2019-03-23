@@ -319,36 +319,47 @@ public class Parser {
                     accept(Token.DO);
                     commandAST = parseCommand();
                     accept(Token.END);
-                  break;
+                  break; 
               }
       }
     }
       break;  
-      
+    
+    //no borrar, este let ya esta actualizado
     case Token.LET:
       {
         acceptIt();
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
-        Command cAST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new LetCommand(dAST, cAST, commandPos);
+        commandAST = parseCommand();
+        accept(Token.END);
       }
       break;
 
+      //no borrar, este if ya esta actualizado
     case Token.IF:
       {
         acceptIt();
         Expression eAST = parseExpression();
         accept(Token.THEN);
-        Command c1AST = parseSingleCommand();
+        commandAST = parseCommand();
         accept(Token.ELSE);
-        Command c2AST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+        commandAST = parseCommand();
+        accept(Token.END);
       }
       break;
 
+    case Token.CHOOSE:
+      {
+        acceptIt();
+        Expression eAST = parseExpression();
+        accept(Token.FROM);
+        //CASES ----------------------------------------------------------------
+        Identifier iAST = parseIdentifier();
+        accept(Token.END);
+      }
+      break;
+      
     case Token.WHILE:
       {
         acceptIt();
