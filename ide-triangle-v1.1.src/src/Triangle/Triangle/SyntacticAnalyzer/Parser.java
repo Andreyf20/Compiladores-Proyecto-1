@@ -298,7 +298,33 @@ public class Parser {
       commandAST = parseCommand();
       accept(Token.END);
       break;
-
+   
+    case Token.LOOP:
+      {
+      acceptIt();
+      switch (currentToken.kind) {
+          case Token.FOR:
+              acceptIt();
+              Identifier iAST = parseIdentifier();
+              accept(Token.FROM);
+              Expression e1AST = parseExpression();
+              accept(Token.TO);
+              Expression e2AST = parseExpression();
+              switch (currentToken.kind) {
+                  
+                  case Token.WHILE: 
+                  case Token.UNTIL:
+                    acceptIt();
+                    Expression e3AST = parseExpression();
+                    accept(Token.DO);
+                    commandAST = parseCommand();
+                    accept(Token.END);
+                  break;
+              }
+      }
+    }
+      break;  
+      
     case Token.LET:
       {
         acceptIt();
