@@ -404,7 +404,8 @@ public class Parser {
         Expression eAST = parseExpression();
         accept(Token.FROM);
         //CASES ----------------------------------------------------------------
-        Identifier iAST = parseIdentifier();
+        //Identifier iAST = parseIdentifier(); X
+        commandAST = parseCasesPlural();//<-------
         accept(Token.END);
       }
       break;

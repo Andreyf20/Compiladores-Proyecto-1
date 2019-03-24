@@ -141,6 +141,7 @@ final class Token extends Object {
     "loop",
     "of",
     "par",
+    "pass",
     "private",
     "proc",
     "record",
