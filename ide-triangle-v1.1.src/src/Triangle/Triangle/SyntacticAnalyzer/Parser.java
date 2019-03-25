@@ -457,20 +457,18 @@ public class Parser {
   Command parseCasesPlural() throws SyntaxError{
       Command commandAST = null;
       
-      commandAST = parseCaseSingular();
-      
       //dado que un case empieza con el token when entonces entra en el ciclo en caso
       //de existir más cases, si no continua con el elseCase
       while(currentToken.kind == Token.WHEN){
-          acceptIt();
           commandAST = parseCaseSingular();
+          
+          //en caso de existir el else de un elseCase lo parsea
+          if(currentToken.kind == Token.ELSE){
+            commandAST = parseElseCase();
+          }
       }
       
-      //en caso de existir el else de un elseCase lo parsea
-      if(currentToken.kind == Token.ELSE){
-          acceptIt();
-          commandAST = parseElseCase();
-      }
+      
       
       return commandAST;
       
@@ -655,11 +653,12 @@ public class Parser {
       Expression expressionAST = null; // in case there's a syntactic error
 
       expressionAST = parseCaseLiteralSingular();
-      
-      if(currentToken.kind == Token.DOUBLEDOT){
-          acceptIt();
-          expressionAST = parseCaseLiteralSingular();
+
+      if(currentToken.kind == Token.DOUBLEDOT){          
+        acceptIt();
+        expressionAST = parseCaseLiteralSingular();
       }
+      
       
       return expressionAST;
   }
@@ -669,10 +668,9 @@ public class Parser {
 
       expressionAST = parseCaseRange();
       while(currentToken.kind == Token.OR){
-          acceptIt();
+          accept(Token.OR);
           expressionAST = parseCaseRange();
       }
-      
       return expressionAST;
   }
   

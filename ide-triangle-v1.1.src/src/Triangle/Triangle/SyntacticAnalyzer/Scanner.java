@@ -119,6 +119,10 @@ public final class Scanner {
         takeIt();
       return Token.OPERATOR;
 
+    case '|':
+      takeIt();
+      return Token.OR;
+      
     case '\'':
       takeIt();
       takeIt(); // the quoted character
@@ -130,11 +134,28 @@ public final class Scanner {
 
     case '.':
       takeIt();
-      return Token.DOT;
+      if(currentChar == '.'){
+          takeIt();
+          return Token.DOUBLEDOT;
+      }
+      else{
+        return Token.DOT;
+      }
+      
+    case '$':
+        takeIt();
+        return Token.DOLLAR;
 
     case ':':
       takeIt();
-      if (currentChar == '=') {
+      if(currentChar == ':'){
+          takeIt();
+          if(currentChar == '='){
+              takeIt();
+              return Token.DOUBLEBECOMES;
+          }
+      }
+      else if (currentChar == '=') {
         takeIt();
         return Token.BECOMES;
       } else
