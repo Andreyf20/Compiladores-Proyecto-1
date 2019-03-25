@@ -940,17 +940,22 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.COLON);
-        if(currentToken.kind == Token.BECOMES)
-        {
-            acceptIt();
-            Expression eAST = parseExpression();
-            finish(declarationPos);
-            declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
-        } else{
-            TypeDenoter tAST = parseTypeDenoter();
-            finish(declarationPos);
-            declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        switch (currentToken.kind) {
+            case Token.COLON:
+                acceptIt();
+                TypeDenoter tAST = parseTypeDenoter();
+                finish(declarationPos);
+                declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+                break;
+            case Token.DOUBLEBECOMES:
+                acceptIt();
+                Expression eAST = parseExpression();
+                finish(declarationPos);
+                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+                break;
+            default:
+                syntacticError("\"%\" unexpexted token", currentToken.spelling);
+                break;
         }
       }
       break;
