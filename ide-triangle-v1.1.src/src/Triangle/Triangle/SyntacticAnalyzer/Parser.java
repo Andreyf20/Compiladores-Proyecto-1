@@ -878,10 +878,41 @@ public class Parser {
             break;
             
           default:
-              syntacticError("\"%\" error parsing proc-func", currentToken.spelling);
+              syntacticError("\"%\" error parsing proc-func, unexpected token", currentToken.spelling);
               break;
       
       }
+      return declarationAST;
+  }
+  
+  SequentialDeclaration parseProcFuncs() throws SyntaxError{
+      SequentialDeclaration declarationAST = null;
+      
+      SourcePosition declarationPos = new SourcePosition();
+      start(declarationPos);
+      
+      if(currentToken.kind == Token.PROC || currentToken.kind == Token.FUNC) {
+          declarationAST = new SequentialDeclaration(parseProcFunc(), null, declarationPos);
+          finish(declarationPos);
+      } else {
+          syntacticError("\"%\" error parsing proc-funcs, unexpected token", currentToken.spelling);
+      }
+      
+      if(currentToken.kind == Token.OR) {
+            acceptIt();
+            Declaration dAST = parseProcFunc();
+            finish(declarationPos);
+            declarationAST = new SequentialDeclaration(declarationAST, dAST, declarationPos);
+            while(currentToken.kind == Token.OR){
+                acceptIt();
+                dAST = parseProcFunc();
+                finish(declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, dAST, declarationPos);
+            }
+      } else {
+          syntacticError("\"%\" error parsing proc-funcs, unexpected token", currentToken.spelling);
+      }
+      
       return declarationAST;
   }
   
