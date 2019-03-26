@@ -150,6 +150,12 @@ public class Parser {
     currentToken = lexicalAnalyser.scan();
 
     try {
+        
+      while(currentToken.kind == Token.PACKAGE){
+          parsePackageDeclaration();
+          accept(Token.SEMICOLON);
+      }
+        
       Command cAST = parseCommand();
       programAST = new Program(cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
@@ -219,6 +225,35 @@ public class Parser {
       syntacticError("identifier expected here", "");
     }
     return I;
+  }
+  
+  Identifier parsePackageDeclaration() throws SyntaxError{
+      Identifier I = null;
+      
+      accept(Token.PACKAGE);
+      I = parsePackageIdentifier();
+      accept(Token.IS);
+      parseDeclaration();
+      accept(Token.END);
+      
+      return I;
+  }
+  
+  Identifier parsePackageIdentifier() throws SyntaxError{
+      return parseIdentifier();
+  }
+  
+  Identifier parseLongIdentifier() throws SyntaxError{
+      Identifier I = null;
+      
+      if(currentToken.kind == Token.IDENTIFIER){
+          I = parsePackageIdentifier();
+          if(currentToken.kind == Token.DOLLAR){
+              acceptIt();
+              I = parseIdentifier();
+          }          
+      }
+      return I;
   }
 
 // parseOperator parses an operator, and constructs a leaf AST to
@@ -582,7 +617,7 @@ public class Parser {
 
     case Token.IDENTIFIER:
       {
-        Identifier iAST= parseIdentifier();
+        Identifier iAST= parseLongIdentifier();
         if (currentToken.kind == Token.LPAREN) {
           acceptIt();
           ActualParameterSequence apsAST = parseActualParameterSequence();
@@ -724,6 +759,12 @@ public class Parser {
 ///////////////////////////////////////////////////////////////////////////////
 
   Vname parseVname () throws SyntaxError {
+      
+    if(currentToken.kind == Token.IDENTIFIER){
+        parsePackageIdentifier();
+        accept(Token.DOLLAR);
+    }
+      
     Vname vnameAST = null; // in case there's a syntactic error
     Identifier iAST = parseIdentifier();
     vnameAST = parseRestOfVname(iAST);
@@ -780,8 +821,6 @@ public class Parser {
       
       SourcePosition declarationPos = new SourcePosition();
       start(declarationPos);
-      declarationAST = parseSingleDeclaration();
-      
       switch (currentToken.kind) {
 
             case Token.RECURSIVE:
@@ -831,6 +870,18 @@ public class Parser {
                 
                 break;
             default:
+                
+                if(currentToken.kind == Token.CONST ||
+                   currentToken.kind == Token.VAR ||
+                   currentToken.kind == Token.FUNC ||
+                   currentToken.kind == Token.TYPE){
+                    Declaration d5AST = parseSingleDeclaration();
+                    finish(declarationPos);
+                    declarationAST = new SequentialDeclaration(declarationAST, d5AST,
+                    declarationPos);
+                    return declarationAST;
+                }
+                
                 syntacticError("\"%\" cannot start a compound declaration",
                 currentToken.spelling);
                 break;
@@ -1232,7 +1283,7 @@ public class Parser {
 
     case Token.IDENTIFIER:
       {
-        Identifier iAST = parseIdentifier();
+        Identifier iAST = parseLongIdentifier();
         finish(typePos);
         typeAST = new SimpleTypeDenoter(iAST, typePos);
       }
