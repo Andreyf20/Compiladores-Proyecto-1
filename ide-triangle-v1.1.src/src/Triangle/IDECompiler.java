@@ -13,7 +13,7 @@ import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.SyntacticAnalyzer.Parser;
 import Triangle.ContextualAnalyzer.Checker;
 import Triangle.CodeGenerator.Encoder;
-
+import Triangle.TreeWriterHTML.Writer;
 
 
 /** 
@@ -68,10 +68,14 @@ public class IDECompiler {
             }
         }
 
-        if (success)
+        if (success){
             System.out.println("Compilation was successful.");
-        else
+            Writer writer = new Writer(sourceName);
+            writer.write(rootAST);
+        }
+        else{
             System.out.println("Compilation was unsuccessful.");
+        }
         
         return(success);
     }
