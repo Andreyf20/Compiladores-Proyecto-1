@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Triangle.TreeWriterHTML;
+package Triangle.TreeWriterXML;
 
 import Triangle.AbstractSyntaxTrees.AnyTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ArrayExpression;
@@ -62,6 +62,7 @@ import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
@@ -82,482 +83,490 @@ public class WriterVisitor implements Visitor {
 
     // Commands
     public Object visitAssignCommand(AssignCommand ast, Object obj) {
-        writeLineHTML("<AssignCommand>");
+        writeLineXML("<AssignCommand>");
         ast.V.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</AssignCommand>");
+        writeLineXML("</AssignCommand>");
         return null;
     }
 
     public Object visitCallCommand(CallCommand ast, Object obj) {
-        writeLineHTML("<CallCommand>");
+        writeLineXML("<CallCommand>");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineHTML("</CallCommand>");
+        writeLineXML("</CallCommand>");
         return null;
     }
 
     public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
-        writeLineHTML("<EmptyCommand/>");
+        writeLineXML("<EmptyCommand/>");
         return null;
     }
 
     public Object visitIfCommand(IfCommand ast, Object obj) {
-        writeLineHTML("<IfCommand>");
+        writeLineXML("<IfCommand>");
         ast.E.visit(this, null);
         ast.C1.visit(this, null);
         ast.C2.visit(this, null);
-        writeLineHTML("</IfCommand>");
+        writeLineXML("</IfCommand>");
         return null;
     }
 
     public Object visitLetCommand(LetCommand ast, Object obj) {
-        writeLineHTML("<LetCommand>");
+        writeLineXML("<LetCommand>");
         ast.D.visit(this, null);
         ast.C.visit(this, null);
-        writeLineHTML("</LetCommand>");
+        writeLineXML("</LetCommand>");
         return null;
     }
 
     public Object visitSequentialCommand(SequentialCommand ast, Object obj) {
-        writeLineHTML("<SequentialCommand>");
+        writeLineXML("<SequentialCommand>");
         ast.C1.visit(this, null);
         ast.C2.visit(this, null);
-        writeLineHTML("</SequentialCommand>");
+        writeLineXML("</SequentialCommand>");
         return null;
     }
 
     public Object visitWhileCommand(WhileCommand ast, Object obj) {
-        writeLineHTML("<WhileCommand>");
+        writeLineXML("<WhileCommand>");
         ast.E.visit(this, null);
         ast.C.visit(this, null);
-        writeLineHTML("</WhileCommand>");
+        writeLineXML("</WhileCommand>");
+        return null;
+    }
+    
+    public Object visitUntilCommand(UntilCommand ast, Object obj) {
+        writeLineXML("<UntilCommand>");
+        ast.E.visit(this, null);
+        ast.C.visit(this, null);
+        writeLineXML("</UntilCommand>");
         return null;
     }
 
 
     // Expressions
     public Object visitArrayExpression(ArrayExpression ast, Object obj) {
-        writeLineHTML("<ArrayExpression>");
+        writeLineXML("<ArrayExpression>");
         ast.AA.visit(this, null);
-        writeLineHTML("</ArrayExpression>");
+        writeLineXML("</ArrayExpression>");
         return null;
     }
 
     public Object visitBinaryExpression(BinaryExpression ast, Object obj) {
-        writeLineHTML("<BinaryExpression>");
+        writeLineXML("<BinaryExpression>");
         ast.E1.visit(this, null);
         ast.O.visit(this, null);
         ast.E2.visit(this, null);
-        writeLineHTML("</BinaryExpression>");
+        writeLineXML("</BinaryExpression>");
         return null;
     }
 
     public Object visitCallExpression(CallExpression ast, Object obj) {
-        writeLineHTML("<CallExpression>");
+        writeLineXML("<CallExpression>");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineHTML("</CallExpression>");
+        writeLineXML("</CallExpression>");
         return null;
     }
 
     public Object visitCharacterExpression(CharacterExpression ast, Object obj) {
-        writeLineHTML("<CharacterExpression>");
+        writeLineXML("<CharacterExpression>");
         ast.CL.visit(this, null);
-        writeLineHTML("</CharacterExpression>");
+        writeLineXML("</CharacterExpression>");
         return null;
     }
 
     public Object visitEmptyExpression(EmptyExpression ast, Object obj) {
-        writeLineHTML("<EmptyExpression/>");
+        writeLineXML("<EmptyExpression/>");
         return null;
     }
 
     public Object visitIfExpression(IfExpression ast, Object obj) {
-        writeLineHTML("<IfExpression>");
+        writeLineXML("<IfExpression>");
         ast.E1.visit(this, null);
         ast.E2.visit(this, null);
         ast.E3.visit(this, null);
-        writeLineHTML("</IfExpression>");
+        writeLineXML("</IfExpression>");
         return null;
     }
 
     public Object visitIntegerExpression(IntegerExpression ast, Object obj) {
-        writeLineHTML("<IntegerExpression>");
+        writeLineXML("<IntegerExpression>");
         ast.IL.visit(this, null);
-        writeLineHTML("</IntegerExpression>");
+        writeLineXML("</IntegerExpression>");
         return null;
     }
 
     public Object visitLetExpression(LetExpression ast, Object obj) {
-        writeLineHTML("<LetExpression>");
+        writeLineXML("<LetExpression>");
         ast.D.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</LetExpression>");
+        writeLineXML("</LetExpression>");
         return null;
     }
 
     public Object visitRecordExpression(RecordExpression ast, Object obj) {
-        writeLineHTML("<RecordExpression>");
+        writeLineXML("<RecordExpression>");
         ast.RA.visit(this, null);
-        writeLineHTML("</RecordExpression>");
+        writeLineXML("</RecordExpression>");
         return null;
     }
 
     public Object visitUnaryExpression(UnaryExpression ast, Object obj) {
-        writeLineHTML("<UnaryExpression>");
+        writeLineXML("<UnaryExpression>");
         ast.O.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</UnaryExpression>");
+        writeLineXML("</UnaryExpression>");
         return null;
     }
 
     public Object visitVnameExpression(VnameExpression ast, Object obj) {
-        writeLineHTML("<VnameExpression>");
+        writeLineXML("<VnameExpression>");
         ast.V.visit(this, null);
-        writeLineHTML("</VnameExpression>");
+        writeLineXML("</VnameExpression>");
         return null;
     }
 
 
     // Declarations
     public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
-        writeLineHTML("<BinaryOperatorDeclaration>");
+        writeLineXML("<BinaryOperatorDeclaration>");
         ast.O.visit(this, null);
         ast.ARG1.visit(this, null);
         ast.ARG2.visit(this, null);
         ast.RES.visit(this, null);
-        writeLineHTML("</BinaryOperatorDeclaration>");
+        writeLineXML("</BinaryOperatorDeclaration>");
         return null;
     }
 
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
-        writeLineHTML("<ConstDeclaration>");
+        writeLineXML("<ConstDeclaration>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</ConstDeclaration>");
+        writeLineXML("</ConstDeclaration>");
         return null;
     }
 
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
-        writeLineHTML("<FuncDeclaration>");
+        writeLineXML("<FuncDeclaration>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.T.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</FuncDeclaration>");
+        writeLineXML("</FuncDeclaration>");
         return null;
     }
 
     public Object visitProcDeclaration(ProcDeclaration ast, Object obj) {
-        writeLineHTML("<ProcDeclaration>");
+        writeLineXML("<ProcDeclaration>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.C.visit(this, null);
-        writeLineHTML("</ProcDeclaration>");
+        writeLineXML("</ProcDeclaration>");
         return null;
     }
 
     public Object visitSequentialDeclaration(SequentialDeclaration ast, Object obj) {
-        writeLineHTML("<SequentialDeclaration>");
+        writeLineXML("<SequentialDeclaration>");
         ast.D1.visit(this, null);
         ast.D2.visit(this, null);
-        writeLineHTML("</SequentialDeclaration>");
+        writeLineXML("</SequentialDeclaration>");
         return null;
     }
 
     public Object visitTypeDeclaration(TypeDeclaration ast, Object obj) {
-        writeLineHTML("<TypeDeclaration>");
+        writeLineXML("<TypeDeclaration>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</TypeDeclaration>");
+        writeLineXML("</TypeDeclaration>");
         return null;
     }
 
     public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object obj) {
-        writeLineHTML("<UnaryOperatorDeclaration>");
+        writeLineXML("<UnaryOperatorDeclaration>");
         ast.O.visit(this, null);
         ast.ARG.visit(this, null);
         ast.RES.visit(this, null);
-        writeLineHTML("</UnaryOperatorDeclaration>");
+        writeLineXML("</UnaryOperatorDeclaration>");
         return null;
     }
 
     public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
-        writeLineHTML("<VarDeclaration>");
+        writeLineXML("<VarDeclaration>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</VarDeclaration>");
+        writeLineXML("</VarDeclaration>");
         return null;
     }
 
 
     // Array Aggregates
     public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object obj) {
-        writeLineHTML("<MultipleArrayAggregate>");
+        writeLineXML("<MultipleArrayAggregate>");
         ast.E.visit(this, null);
         ast.AA.visit(this, null);
-        writeLineHTML("</MultipleArrayAggregate>");
+        writeLineXML("</MultipleArrayAggregate>");
         return null;
     }
 
     public Object visitSingleArrayAggregate(SingleArrayAggregate ast, Object obj) {
-        writeLineHTML("<SingleArrayAggregate>");
+        writeLineXML("<SingleArrayAggregate>");
         ast.E.visit(this, null);
-        writeLineHTML("</SingleArrayAggregate>");
+        writeLineXML("</SingleArrayAggregate>");
         return null;
     }
 
 
     // Record Aggregates
     public Object visitMultipleRecordAggregate(MultipleRecordAggregate ast, Object obj) {
-        writeLineHTML("<MultipleRecordAggregate>");
+        writeLineXML("<MultipleRecordAggregate>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
         ast.RA.visit(this, null);
-        writeLineHTML("</MultipleRecordAggregate>");
+        writeLineXML("</MultipleRecordAggregate>");
         return null;
     }
 
     public Object visitSingleRecordAggregate(SingleRecordAggregate ast, Object obj) {
-        writeLineHTML("<SingleRecordAggregate>");
+        writeLineXML("<SingleRecordAggregate>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</SingleRecordAggregate>");
+        writeLineXML("</SingleRecordAggregate>");
         return null;
     }
 
 
     // Formal Parameters
     public Object visitConstFormalParameter(ConstFormalParameter ast, Object obj) {
-        writeLineHTML("<ConstFormalParameter>");
+        writeLineXML("<ConstFormalParameter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</ConstFormalParameter>");
+        writeLineXML("</ConstFormalParameter>");
         return null;
     }
 
     public Object visitFuncFormalParameter(FuncFormalParameter ast, Object obj) {
-        writeLineHTML("<FuncFormalParameter>");
+        writeLineXML("<FuncFormalParameter>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("<FuncFormalParameter>");
+        writeLineXML("<FuncFormalParameter>");
         return null;
     }
 
     public Object visitProcFormalParameter(ProcFormalParameter ast, Object obj) {
-        writeLineHTML("<ProcFormalParameter>");
+        writeLineXML("<ProcFormalParameter>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
-        writeLineHTML("</ProcFormalParameter>");
+        writeLineXML("</ProcFormalParameter>");
         return null;
     }
 
     public Object visitVarFormalParameter(VarFormalParameter ast, Object obj) {
-        writeLineHTML("<VarFormalParameter>");
+        writeLineXML("<VarFormalParameter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</VarFormalParameter>");
+        writeLineXML("</VarFormalParameter>");
         return null;
     }
 
 
     public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object obj) {
-        writeLineHTML("<EmptyFormalParameterSequence/>");
+        writeLineXML("<EmptyFormalParameterSequence/>");
         return null;
     }
 
     public Object visitMultipleFormalParameterSequence(MultipleFormalParameterSequence ast, Object obj) {
-        writeLineHTML("<MultipleFormalParameterSequence>");
+        writeLineXML("<MultipleFormalParameterSequence>");
         ast.FP.visit(this, null);
         ast.FPS.visit(this, null);
-        writeLineHTML("</MultipleFormalParameterSequence>");
+        writeLineXML("</MultipleFormalParameterSequence>");
         return null;
     }
 
     public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object obj) {
-        writeLineHTML("<SingleFormalParameterSequence>");
+        writeLineXML("<SingleFormalParameterSequence>");
         ast.FP.visit(this, null);
-        writeLineHTML("</SingleFormalParameterSequence>");
+        writeLineXML("</SingleFormalParameterSequence>");
         return null;
     }
 
 
     // Actual Parameters
     public Object visitConstActualParameter(ConstActualParameter ast, Object obj) {
-        writeLineHTML("<ConstActualParameter>");
+        writeLineXML("<ConstActualParameter>");
         ast.E.visit(this, null);
-        writeLineHTML("</ConstActualParameter>");
+        writeLineXML("</ConstActualParameter>");
         return null;
     }
 
     public Object visitFuncActualParameter(FuncActualParameter ast, Object obj) {
-        writeLineHTML("<FuncActualParameter>");
+        writeLineXML("<FuncActualParameter>");
         ast.I.visit(this, null);
-        writeLineHTML("</FuncActualParameter>");
+        writeLineXML("</FuncActualParameter>");
         return null;
     }
 
     public Object visitProcActualParameter(ProcActualParameter ast, Object obj) {
-        writeLineHTML("<ProcActualParameter>");
+        writeLineXML("<ProcActualParameter>");
         ast.I.visit(this, null);
-        writeLineHTML("</ProcActualParameter>");
+        writeLineXML("</ProcActualParameter>");
         return null;
     }
 
     public Object visitVarActualParameter(VarActualParameter ast, Object obj) {
-        writeLineHTML("<VarActualParameter>");
+        writeLineXML("<VarActualParameter>");
         ast.V.visit(this, null);
-        writeLineHTML("</VarActualParameter>");
+        writeLineXML("</VarActualParameter>");
         return null;
     }
 
 
     public Object visitEmptyActualParameterSequence(EmptyActualParameterSequence ast, Object obj) {
-        writeLineHTML("<EmptyActualParameterSequence/>");
+        writeLineXML("<EmptyActualParameterSequence/>");
         return null;
     }
 
     public Object visitMultipleActualParameterSequence(MultipleActualParameterSequence ast, Object obj) {
-        writeLineHTML("<MultipleActualParameterSequence>");
+        writeLineXML("<MultipleActualParameterSequence>");
         ast.AP.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineHTML("</MultipleActualParameterSequence>");
+        writeLineXML("</MultipleActualParameterSequence>");
         return null;
     }
 
     public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object obj) {
-        writeLineHTML("<SingleActualParameterSequence>");
+        writeLineXML("<SingleActualParameterSequence>");
         ast.AP.visit(this, null);
-        writeLineHTML("</SingleActualParameterSequence>");
+        writeLineXML("</SingleActualParameterSequence>");
         return null;
     }
 
 
     // Type Denoters
     public Object visitAnyTypeDenoter(AnyTypeDenoter ast, Object obj) {
-        writeLineHTML("<AnyTypeDenoter/>");
+        writeLineXML("<AnyTypeDenoter/>");
         return null;
     }
 
     public Object visitArrayTypeDenoter(ArrayTypeDenoter ast, Object obj) {
-        writeLineHTML("<ArrayTypeDenoter>");
+        writeLineXML("<ArrayTypeDenoter>");
         ast.IL.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</ArrayTypeDenoter>");
+        writeLineXML("</ArrayTypeDenoter>");
         return null;
     }
 
     public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object obj) {
-        writeLineHTML("<BoolTypeDenoter/>");
+        writeLineXML("<BoolTypeDenoter/>");
         return null;
     }
 
     public Object visitCharTypeDenoter(CharTypeDenoter ast, Object obj) {
-        writeLineHTML("<CharTypeDenoter/>");
+        writeLineXML("<CharTypeDenoter/>");
         return null;
     }
 
     public Object visitErrorTypeDenoter(ErrorTypeDenoter ast, Object obj) {
-        writeLineHTML("<ErrorTypeDenoter/>");
+        writeLineXML("<ErrorTypeDenoter/>");
         return null;
     }
 
     public Object visitSimpleTypeDenoter(SimpleTypeDenoter ast, Object obj) {
-        writeLineHTML("<SimpleTypeDenoter>");
+        writeLineXML("<SimpleTypeDenoter>");
         ast.I.visit(this, null);
-        writeLineHTML("</SimpleTypeDenoter>");
+        writeLineXML("</SimpleTypeDenoter>");
         return null;
     }
 
     public Object visitIntTypeDenoter(IntTypeDenoter ast, Object obj) {
-        writeLineHTML("<IntTypeDenoter/>");
+        writeLineXML("<IntTypeDenoter/>");
         return null;
     }
 
     public Object visitRecordTypeDenoter(RecordTypeDenoter ast, Object obj) {
-        writeLineHTML("<RecordTypeDenoter>");
+        writeLineXML("<RecordTypeDenoter>");
         ast.FT.visit(this, null);
-        writeLineHTML("</RecordTypeDenoter>");
+        writeLineXML("</RecordTypeDenoter>");
         return null;
     }
 
 
     public Object visitMultipleFieldTypeDenoter(MultipleFieldTypeDenoter ast, Object obj) {
-        writeLineHTML("<MultipleFieldTypeDenoter>");
+        writeLineXML("<MultipleFieldTypeDenoter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
         ast.FT.visit(this, null);
-        writeLineHTML("</MultipleFieldTypeDenoter>");
+        writeLineXML("</MultipleFieldTypeDenoter>");
         return null;
     }
 
     public Object visitSingleFieldTypeDenoter(SingleFieldTypeDenoter ast, Object obj) {
-        writeLineHTML("<SingleFieldTypeDenoter>");
+        writeLineXML("<SingleFieldTypeDenoter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineHTML("</SingleFieldTypeDenoter>");
+        writeLineXML("</SingleFieldTypeDenoter>");
         return null;
     }
 
 
     // Literals, Identifiers and Operators
     public Object visitCharacterLiteral(CharacterLiteral ast, Object obj) {
-        writeLineHTML("<CharacterLiteral value=\"" + ast.spelling + "\"/>");
+        writeLineXML("<CharacterLiteral value=\"" + ast.spelling + "\"/>");
         return null;
     }
 
     public Object visitIdentifier(Identifier ast, Object obj) {
-        writeLineHTML("<Identifier value=\"" + ast.spelling + "\"/>");
+        writeLineXML("<Identifier value=\"" + ast.spelling + "\"/>");
         return null;
     }
 
     public Object visitIntegerLiteral(IntegerLiteral ast, Object obj) {
-        writeLineHTML("<IntegerLiteral value=\"" + ast.spelling + "\"/>");
+        writeLineXML("<IntegerLiteral value=\"" + ast.spelling + "\"/>");
         return null;
     }
 
     public Object visitOperator(Operator ast, Object obj) {
-        writeLineHTML("<Operator value=\"" + transformOperator(ast.spelling) + "\"/>");
+        writeLineXML("<Operator value=\"" + transformOperator(ast.spelling) + "\"/>");
         return null;
     }
 
 
     // Value-or-variable names
     public Object visitDotVname(DotVname ast, Object obj) {
-        writeLineHTML("<DotVname>");
+        writeLineXML("<DotVname>");
         ast.V.visit(this, null);
         ast.I.visit(this, null);
-        writeLineHTML("</DotVname>");
+        writeLineXML("</DotVname>");
         return null;
     }
 
     public Object visitSimpleVname(SimpleVname ast, Object obj) {
-        writeLineHTML("<SimpleVname>");
+        writeLineXML("<SimpleVname>");
         ast.I.visit(this, null);
-        writeLineHTML("</SimpleVname>");
+        writeLineXML("</SimpleVname>");
         return null;
     }
 
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {
-        writeLineHTML("<SubscriptVname>");
+        writeLineXML("<SubscriptVname>");
         ast.V.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</SubscriptVname>");
+        writeLineXML("</SubscriptVname>");
         return null;
     }
 
 
     // Programs
     public Object visitProgram(Program ast, Object obj) {
-        writeLineHTML("<Program>");
+        writeLineXML("<Program>");
         ast.C.visit(this, null);
-        writeLineHTML("</Program>");
+        writeLineXML("</Program>");
         return null;
     }
 
-    private void writeLineHTML(String line) {
+    private void writeLineXML(String line) {
         try {
             fileWriter.write(line);
             fileWriter.write('\n');

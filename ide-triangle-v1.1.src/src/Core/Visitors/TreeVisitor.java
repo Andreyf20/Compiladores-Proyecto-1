@@ -62,6 +62,7 @@ import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
@@ -114,6 +115,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitWhileCommand(WhileCommand ast, Object obj) {
         return(createBinary("While Command", ast.E, ast.C));
+    }
+    
+    public Object visitUntilCommand(UntilCommand ast, Object obj) {
+        return(createBinary("Until Command", ast.E, ast.C));
     }
     // </editor-fold>
     

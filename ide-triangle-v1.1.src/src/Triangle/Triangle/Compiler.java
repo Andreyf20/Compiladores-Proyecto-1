@@ -21,7 +21,7 @@ import Triangle.SyntacticAnalyzer.Parser;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.SyntacticAnalyzer.SourceFile;
 import Triangle.TreeDrawer.Drawer;
-import Triangle.TreeWriterHTML.Writer;
+import Triangle.TreeWriterXML.Writer;
 
 /**
  * The main driver class for the Triangle compiler.

@@ -81,6 +81,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.UntilCommand;
 
 public class Parser {
 
@@ -361,7 +362,8 @@ public class Parser {
                     accept(Token.DO);
                     commandAST = parseCommand();
                     accept(Token.END);
-                  break; 
+                  break;
+                  //////////////////////////////////////////acá no se está creando ningún new ForCommand porque no existe
               }
           }
           case Token.WHILE:
@@ -369,8 +371,10 @@ public class Parser {
               acceptIt();
               Expression e1AST = parseExpression();
               accept(Token.DO);
-              commandAST = parseCommand();
+              Command c1AST = parseCommand();
               accept(Token.END);
+              finish(commandPos);
+              commandAST = new WhileCommand(e1AST, c1AST, commandPos);
               break;
           }
           case Token.UNTIL:
@@ -378,14 +382,16 @@ public class Parser {
               acceptIt();
               Expression e1AST = parseExpression();
               accept(Token.DO);
-              commandAST = parseCommand();
+              Command c1AST = parseCommand();
               accept(Token.END);
+              finish(commandPos);
+              commandAST = new UntilCommand(e1AST, c1AST, commandPos);
               break;
           }
           case Token.DO:
           {
               acceptIt();
-              commandAST = parseCommand();
+              Command c1AST = parseCommand();
               switch(currentToken.kind)
               {
                   case Token.WHILE:
@@ -393,6 +399,8 @@ public class Parser {
                       acceptIt();
                       Expression e1AST = parseExpression();
                       accept(Token.END);
+                      finish(commandPos);
+                      commandAST = new WhileCommand(e1AST, c1AST, commandPos);
                       break;
                   }
                   case Token.UNTIL:
@@ -400,6 +408,8 @@ public class Parser {
                       acceptIt();
                       Expression e1AST = parseExpression();
                       accept(Token.END);
+                      finish(commandPos);
+                      commandAST = new UntilCommand(e1AST, c1AST, commandPos);
                       break;
                   }
               }
@@ -415,21 +425,25 @@ public class Parser {
         acceptIt();
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
-        commandAST = parseCommand();
+        Command cAST = parseCommand();
         accept(Token.END);
+        finish(commandPos);
+        commandAST = new LetCommand(dAST, cAST, commandPos);
       }
       break;
 
-      //no borrar, este if ya esta actualizado
+      //no borrar, este if ya esta actualizado 
     case Token.IF:
       {
         acceptIt();
         Expression eAST = parseExpression();
         accept(Token.THEN);
-        commandAST = parseCommand();
+        Command c1AST = parseCommand();
         accept(Token.ELSE);
-        commandAST = parseCommand();
+        Command c2AST = parseCommand();
         accept(Token.END);
+        finish(commandPos);
+        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }
       break;
 
@@ -438,10 +452,9 @@ public class Parser {
         acceptIt();
         Expression eAST = parseExpression();
         accept(Token.FROM);
-        //CASES ----------------------------------------------------------------
-        //Identifier iAST = parseIdentifier(); X
-        commandAST = parseCasesPlural();//<-------
+        commandAST = parseCasesPlural();
         accept(Token.END);
+        //////////////////////////////////////////acá no se está creando ningún new ChooseCommand porque no existe
       }
       break;
 

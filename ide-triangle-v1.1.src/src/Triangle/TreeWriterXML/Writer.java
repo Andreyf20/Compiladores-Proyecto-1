@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Triangle.TreeWriterHTML;
+package Triangle.TreeWriterXML;
 
 import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.TreeWriterXML.WriterVisitor;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class Writer {
         try {
             FileWriter fileWriter = new FileWriter(fileName + ".xml");
 
-            //HTML header
+            //XML header
             fileWriter.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
 
             WriterVisitor layout = new WriterVisitor(fileWriter);

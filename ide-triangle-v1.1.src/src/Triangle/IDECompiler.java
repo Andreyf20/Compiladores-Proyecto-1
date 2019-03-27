@@ -13,7 +13,7 @@ import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.SyntacticAnalyzer.Parser;
 import Triangle.ContextualAnalyzer.Checker;
 import Triangle.CodeGenerator.Encoder;
-import Triangle.TreeWriterHTML.Writer;
+import Triangle.TreeWriterXML.Writer;
 
 
 /** 
