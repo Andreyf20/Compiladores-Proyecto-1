@@ -80,6 +80,7 @@ import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarDeclarationInitialized;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
@@ -1009,7 +1010,7 @@ public class Parser {
                 Expression eAST = parseExpression();
                 finish(declarationPos);
                 //
-                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+                declarationAST = new VarDeclarationInitialized(iAST, eAST, declarationPos);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //debe hacer el new vardeclaration en vez de constdeclaration pero no recibe una expression
                 break;

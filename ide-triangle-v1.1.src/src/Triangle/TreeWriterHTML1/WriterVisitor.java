@@ -67,6 +67,7 @@ import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarDeclarationInitialized;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
@@ -355,6 +356,14 @@ public class WriterVisitor implements Visitor {
         ast.I.visit(this, null);
         ast.T.visit(this, null);
         writeLineHTML("</VarDeclaration>");
+        return null;
+    }
+    
+    public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object obj) {
+        writeLineHTML("<VarDeclarationInitialized>");
+        ast.I.visit(this, null);
+        ast.E.visit(this, null);
+        writeLineHTML("</VarDeclarationInitialized>");
         return null;
     }
 

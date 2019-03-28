@@ -79,6 +79,7 @@ import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
 import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarDeclarationInitialized;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
@@ -219,6 +220,10 @@ public class LayoutVisitor implements Visitor {
 
   public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
     return layoutBinary("VarDecl.", ast.I, ast.T);
+  }
+  
+  public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object obj) {
+    return layoutBinary("ConstDecl.", ast.I, ast.E);
   }
 
 
