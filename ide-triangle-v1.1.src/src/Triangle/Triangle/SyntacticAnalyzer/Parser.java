@@ -26,6 +26,7 @@ import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
+import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.Command;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
@@ -37,6 +38,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
+import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -354,16 +357,26 @@ public class Parser {
                       commandAST = parseCommand();
                       accept(Token.END);
                       break;
+                      //aca falta el forDoCommand
                   }
                   case Token.WHILE: 
-                  case Token.UNTIL:
                     acceptIt();
                     Expression e3AST = parseExpression();
                     accept(Token.DO);
                     commandAST = parseCommand();
                     accept(Token.END);
+                    finish(commandPos);
+                    commandAST = new ForWhileCommand(iAST, e1AST, e2AST, e3AST, commandAST, commandPos);
+                  case Token.UNTIL:
+                    acceptIt();
+                    Expression e4AST = parseExpression();
+                    accept(Token.DO);
+                    commandAST = parseCommand();
+                    accept(Token.END);
+                    finish(commandPos);
+                    commandAST = new ForUntilCommand(iAST, e1AST, e2AST, e4AST, commandAST, commandPos);
                   break;
-                  //////////////////////////////////////////acá no se está creando ningún new ForCommand porque no existe
+                  
               }
           }
           case Token.WHILE:
@@ -419,7 +432,6 @@ public class Parser {
     }
       break;  
     
-    //no borrar, este let ya esta actualizado
     case Token.LET:
       {
         acceptIt();
@@ -431,8 +443,7 @@ public class Parser {
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
       break;
-
-      //no borrar, este if ya esta actualizado 
+ 
     case Token.IF:
       {
         acceptIt();
@@ -452,9 +463,10 @@ public class Parser {
         acceptIt();
         Expression eAST = parseExpression();
         accept(Token.FROM);
-        commandAST = parseCasesPlural();
+        Command commandCaseAST = parseCasesPlural();
         accept(Token.END);
-        //////////////////////////////////////////acá no se está creando ningún new ChooseCommand porque no existe
+        finish(commandPos);
+        //commandAST = new ChooseCommand(eAST, eAST, commandCaseAST, commandPos);
       }
       break;
 
@@ -488,7 +500,7 @@ public class Parser {
   }
   
   Command parseCaseSingular() throws SyntaxError{
-      Command commandAST = null; // in case thre´s a syntactic error
+      Command commandAST = null; // in case threï¿½s a syntactic error
       
       accept(Token.WHEN);
       
@@ -506,7 +518,7 @@ public class Parser {
       Command commandAST = null;
       
       //dado que un case empieza con el token when entonces entra en el ciclo en caso
-      //de existir más cases, si no continua con el elseCase
+      //de existir mï¿½s cases, si no continua con el elseCase
       while(currentToken.kind == Token.WHEN){
           commandAST = parseCaseSingular();
           

@@ -17,6 +17,7 @@ import Triangle.AbstractSyntaxTrees.CallExpression;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
+import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -26,6 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -69,6 +71,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -94,32 +97,71 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitCallCommand(CallCommand ast, Object obj) {
-        writeLineHTML("<CallCommand>");
+        writeLineHTML("<p class=\"callCommand\">");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineHTML("</CallCommand>");
+        writeLineHTML("</p>");
         return null;
     }
 
-    public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
-        writeLineHTML("<EmptyCommand/>");
-        return null;
-    }
-
-    public Object visitIfCommand(IfCommand ast, Object obj) {
-        writeLineHTML("<IfCommand>");
+    public Object visitChooseCommand(ChooseCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>choose</strong> </br> </p>");
         ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>from</strong> </br> </p>");
         ast.C1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
+        return null;
+    }
+    
+    public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
+        writeLineHTML("<EmptyCommand>");
+        return null;
+    }
+
+    public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
+        writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
+        ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
+        ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
+        ast.E2.visit(this, null);
+        return null;
+    }
+    
+    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
+        writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
+        ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
+        ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
+        ast.E2.visit(this, null);
+        return null;
+    }
+    
+    public Object visitIfCommand(IfCommand ast, Object obj) {
+        writeLineHTML("\t<p style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;"
+                            + "\">" 
+                                + "<strong>if</strong><p style=\"color: #000000;\">&ensp;(</p>" );
+        ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">) </br> <strong>then</strong> </br> </p>");
+        ast.C1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>else</strong> </br> </p>");
         ast.C2.visit(this, null);
-        writeLineHTML("</IfCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>end</strong> </br> </p>");
+        
         return null;
     }
 
     public Object visitLetCommand(LetCommand ast, Object obj) {
-        writeLineHTML("<LetCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>let</strong> </br> </p>");
         ast.D.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>in</strong> </br> </p>");
         ast.C.visit(this, null);
-        writeLineHTML("</LetCommand>");
+        writeLineHTML("");
         return null;
     }
 
@@ -131,11 +173,21 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    public Object visitWhileCommand(WhileCommand ast, Object obj) {
-        writeLineHTML("<WhileCommand>");
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>until</strong> </br> </p>");
         ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p>");
         ast.C.visit(this, null);
-        writeLineHTML("</WhileCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
+        return null;
+    }
+    
+    public Object visitWhileCommand(WhileCommand ast, Object obj) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>while</strong> </br> </p></p>");
+        ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p></p>");
+        ast.C.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p></p>");
         return null;
     }
 
@@ -178,11 +230,12 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitIfExpression(IfExpression ast, Object obj) {
-        writeLineHTML("<IfExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>if</strong> </br> </p></p>");
         ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>then</strong> </br> </p></p>");
         ast.E2.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>else</strong> </br> </p></p>");
         ast.E3.visit(this, null);
-        writeLineHTML("</IfExpression>");
         return null;
     }
 
@@ -194,10 +247,10 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitLetExpression(LetExpression ast, Object obj) {
-        writeLineHTML("<LetExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>let</strong> </br> </p></p>");
         ast.D.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>in</strong> </br> </p></p>");
         ast.E.visit(this, null);
-        writeLineHTML("</LetExpression>");
         return null;
     }
 
@@ -419,22 +472,26 @@ public class WriterVisitor implements Visitor {
 
 
     public Object visitEmptyActualParameterSequence(EmptyActualParameterSequence ast, Object obj) {
-        writeLineHTML("<EmptyActualParameterSequence/>");
+        writeLineHTML("<p class=\"emptyParameterSequence\" style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;\">()</p>");
         return null;
     }
 
     public Object visitMultipleActualParameterSequence(MultipleActualParameterSequence ast, Object obj) {
-        writeLineHTML("<MultipleActualParameterSequence>");
+        writeLineHTML("<p class=\"multipleParameterSequence\" style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;\">(");
         ast.AP.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineHTML("</MultipleActualParameterSequence>");
+        writeLineHTML(")</p>");
         return null;
     }
 
     public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object obj) {
-        writeLineHTML("<SingleActualParameterSequence>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">(</p>");
         ast.AP.visit(this, null);
-        writeLineHTML("</SingleActualParameterSequence>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">)</p>");
         return null;
     }
 
@@ -508,39 +565,43 @@ public class WriterVisitor implements Visitor {
 
     // Literals
     public Object visitCharacterLiteral(CharacterLiteral ast, Object obj) {
-        writeLineHTML("<\t<p style=\"color: #2E64FE;"
+        writeLineHTML("\t<p style=\"color: #2E64FE;"
                                     + "font-family: courier;"
-                                    + "font-size:1em;\">" 
+                                    + "font-size:1em;"
+                                    + "\">" 
                                 + ast.spelling + 
-                        "\"/p>");
+                        "</p>");
         return null;
     }
 
     public Object visitIntegerLiteral(IntegerLiteral ast, Object obj) {
-        writeLineHTML("<\t<p style=\"color: #2E64FE;"
+        writeLineHTML("\t<p style=\"color: #2E64FE;"
                                     + "font-family: courier;"
-                                    + "font-size:1em;\">" 
+                                    + "font-size:1em;"
+                                    + "\">" 
                                 + ast.spelling + 
-                        "\"/p>");
+                        "</p>");
         return null;
     }
     
     //Identifiers and Operators
     public Object visitIdentifier(Identifier ast, Object obj) {
-        writeLineHTML("<\t<p style=\"color: #000000;"
+        writeLineHTML("\t<p style=\"color: #000000;"
                                     + "font-family: courier;"
-                                    + "font-size:1em;\">" 
+                                    + "font-size:1em;"
+                                    + "\">" 
                                 + ast.spelling + 
-                        "\"/p>");
+                        "</p>");
         return null;
     }
 
     public Object visitOperator(Operator ast, Object obj) {
-        writeLineHTML("<\t<p style=\"color: #000000;"
+        writeLineHTML("\t<p style=\"color: #000000;"
                                     + "font-family: courier;"
-                                    + "font-size:1em;\">" 
+                                    + "font-size:1em;"
+                                    + "\">" 
                                 + ast.spelling + 
-                        "\"/p>");
+                        "</p>");
         return null;
     }
 
@@ -582,6 +643,8 @@ public class WriterVisitor implements Visitor {
         try {
             fileWriter.write(line);
             fileWriter.write('\n');
+            
+            
         } catch (IOException e) {
             System.err.println("Error while writing file for print the AST");
             e.printStackTrace();
@@ -599,9 +662,5 @@ public class WriterVisitor implements Visitor {
         else
             return operator;
     }
-
-    @Override
-    public Object visitUntilCommand(UntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+       
 }

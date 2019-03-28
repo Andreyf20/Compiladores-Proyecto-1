@@ -29,6 +29,7 @@ import Triangle.AbstractSyntaxTrees.CallExpression;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
+import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -38,6 +39,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -81,6 +83,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 
 public class LayoutVisitor implements Visitor {
 
@@ -102,10 +105,22 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("CallCom.", ast.I, ast.APS);
    }
 
+  public Object visitChooseCommand(ChooseCommand ast, Object o) {
+    return layoutBinary("ChooseCom.", ast.E, ast.C1);
+  }
+
   public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
     return layoutNullary("EmptyCom.");
   }
 
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+    return layoutQuinary("ForUntilCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+  }
+  
+  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+    return layoutQuinary("ForWhileCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+  }
+  
   public Object visitIfCommand(IfCommand ast, Object obj) {
     return layoutTernary("IfCom.", ast.E, ast.C1, ast.C2);
   }
@@ -425,6 +440,19 @@ public class LayoutVisitor implements Visitor {
     return dt;
   }
 
+  private DrawingTree layoutQuinary (String name, AST child1, AST child2,
+                                        AST child3, AST child4, AST child5) {
+    DrawingTree dt = layoutCaption(name);
+    DrawingTree d1 = (DrawingTree) child1.visit(this, null);
+    DrawingTree d2 = (DrawingTree) child2.visit(this, null);
+    DrawingTree d3 = (DrawingTree) child3.visit(this, null);
+    DrawingTree d4 = (DrawingTree) child4.visit(this, null);
+    DrawingTree d5 = (DrawingTree) child4.visit(this, null);
+    dt.setChildren(new DrawingTree[] {d1, d2, d3, d4, d5});
+    attachParent(dt, join(dt));
+    return dt;
+  }
+  
   private void attachParent(DrawingTree dt, int w) {
     int y = PARENT_SEP;
     int x2 = (w - dt.width) / 2 - BORDER;
@@ -547,5 +575,5 @@ public class LayoutVisitor implements Visitor {
 
     return r;
   }
-
+  
 }
