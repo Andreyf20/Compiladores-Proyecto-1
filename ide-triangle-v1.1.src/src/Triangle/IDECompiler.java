@@ -13,16 +13,11 @@ import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.SyntacticAnalyzer.Parser;
 import Triangle.ContextualAnalyzer.Checker;
 import Triangle.CodeGenerator.Encoder;
+import Triangle.TreeWriterHTML1.WriterHTML;
 import Triangle.TreeWriterXML.Writer;
 
 
-/** 
- * This is merely a reimplementation of the Triangle.Compiler class. We need
- * to get to the ASTs in order to draw them in the IDE without modifying the
- * original Triangle code.
- *
- * @author Luis Leopoldo Pérez <luiperpe@ns.isi.ulatina.ac.cr>
- */
+
 public class IDECompiler {
 
     // <editor-fold defaultstate="collapsed" desc=" Methods ">
@@ -70,8 +65,11 @@ public class IDECompiler {
 
         if (success){
             System.out.println("Compilation was successful.");
-            Writer writer = new Writer(sourceName);
-            writer.write(rootAST);
+            //Writer writer = new Writer(sourceName);
+            //writer.write(rootAST);
+            
+            WriterHTML writerHTML = new WriterHTML(sourceName);
+            writerHTML.write(rootAST);
         }
         else{
             System.out.println("Compilation was unsuccessful.");

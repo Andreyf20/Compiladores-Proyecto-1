@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Triangle.TreeWriterXML;
+package Triangle.TreeWriterHTML1;
 
 import Triangle.AbstractSyntaxTrees.AnyTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ArrayExpression;
@@ -75,504 +75,576 @@ import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
+/**
+ *
+ * @author kduran
+ */
 public class WriterVisitor implements Visitor {
-
+    
     private FileWriter fileWriter;
 
     WriterVisitor(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
     }
-
+    
     // Commands
     public Object visitAssignCommand(AssignCommand ast, Object obj) {
-        writeLineXML("<AssignCommand>");
+        writeLineHTML("<AssignCommand>");
         ast.V.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</AssignCommand>");
+        writeLineHTML("</AssignCommand>");
         return null;
     }
 
     public Object visitCallCommand(CallCommand ast, Object obj) {
-        writeLineXML("<CallCommand>");
+        writeLineHTML("<p class=\"callCommand\">");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineXML("</CallCommand>");
+        writeLineHTML("</p>");
         return null;
     }
 
-    public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
-        writeLineXML("<EmptyCommand/>");
-        return null;
-    }
-
-    public Object visitIfCommand(IfCommand ast, Object obj) {
-        writeLineXML("<IfCommand>");
+    public Object visitChooseCommand(ChooseCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>choose</strong> </br> </p>");
         ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>from</strong> </br> </p>");
         ast.C1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
+        return null;
+    }
+    
+    public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
+        writeLineHTML("<EmptyCommand>");
+        return null;
+    }
+
+    public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
+        writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
+        ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
+        ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
+        ast.E2.visit(this, null);
+        return null;
+    }
+    
+    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
+        writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
+        ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
+        ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
+        ast.E2.visit(this, null);
+        return null;
+    }
+    
+    public Object visitIfCommand(IfCommand ast, Object obj) {
+        writeLineHTML("\t<p style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;"
+                            + "\">" 
+                                + "<strong>if</strong><p style=\"color: #000000;\">&ensp;(</p>" );
+        ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">) </br> <strong>then</strong> </br> </p>");
+        ast.C1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>else</strong> </br> </p>");
         ast.C2.visit(this, null);
-        writeLineXML("</IfCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>end</strong> </br> </p>");
+        
         return null;
     }
 
     public Object visitLetCommand(LetCommand ast, Object obj) {
-        writeLineXML("<LetCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> </br> <strong>let</strong> </br> </p>");
         ast.D.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>in</strong> </br> </p>");
         ast.C.visit(this, null);
-        writeLineXML("</LetCommand>");
+        writeLineHTML("");
         return null;
     }
 
     public Object visitSequentialCommand(SequentialCommand ast, Object obj) {
-        writeLineXML("<SequentialCommand>");
+        writeLineHTML("<SequentialCommand>");
         ast.C1.visit(this, null);
         ast.C2.visit(this, null);
-        writeLineXML("</SequentialCommand>");
+        writeLineHTML("</SequentialCommand>");
         return null;
     }
 
-    public Object visitWhileCommand(WhileCommand ast, Object obj) {
-        writeLineXML("<WhileCommand>");
+    public Object visitUntilCommand(UntilCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>until</strong> </br> </p>");
         ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p>");
         ast.C.visit(this, null);
-        writeLineXML("</WhileCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
         return null;
     }
     
-    public Object visitUntilCommand(UntilCommand ast, Object obj) {
-        writeLineXML("<UntilCommand>");
+    public Object visitWhileCommand(WhileCommand ast, Object obj) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>while</strong> </br> </p></p>");
         ast.E.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p></p>");
         ast.C.visit(this, null);
-        writeLineXML("</UntilCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p></p>");
         return null;
     }
 
 
     // Expressions
     public Object visitArrayExpression(ArrayExpression ast, Object obj) {
-        writeLineXML("<ArrayExpression>");
+        writeLineHTML("<ArrayExpression>");
         ast.AA.visit(this, null);
-        writeLineXML("</ArrayExpression>");
+        writeLineHTML("</ArrayExpression>");
         return null;
     }
 
     public Object visitBinaryExpression(BinaryExpression ast, Object obj) {
-        writeLineXML("<BinaryExpression>");
+        writeLineHTML("<BinaryExpression>");
         ast.E1.visit(this, null);
         ast.O.visit(this, null);
         ast.E2.visit(this, null);
-        writeLineXML("</BinaryExpression>");
+        writeLineHTML("</BinaryExpression>");
         return null;
     }
 
     public Object visitCallExpression(CallExpression ast, Object obj) {
-        writeLineXML("<CallExpression>");
+        writeLineHTML("<CallExpression>");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineXML("</CallExpression>");
+        writeLineHTML("</CallExpression>");
         return null;
     }
 
     public Object visitCharacterExpression(CharacterExpression ast, Object obj) {
-        writeLineXML("<CharacterExpression>");
+        writeLineHTML("<CharacterExpression>");
         ast.CL.visit(this, null);
-        writeLineXML("</CharacterExpression>");
+        writeLineHTML("</CharacterExpression>");
         return null;
     }
 
     public Object visitEmptyExpression(EmptyExpression ast, Object obj) {
-        writeLineXML("<EmptyExpression/>");
+        writeLineHTML("<EmptyExpression/>");
         return null;
     }
 
     public Object visitIfExpression(IfExpression ast, Object obj) {
-        writeLineXML("<IfExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>if</strong> </br> </p></p>");
         ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>then</strong> </br> </p></p>");
         ast.E2.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>else</strong> </br> </p></p>");
         ast.E3.visit(this, null);
-        writeLineXML("</IfExpression>");
         return null;
     }
 
     public Object visitIntegerExpression(IntegerExpression ast, Object obj) {
-        writeLineXML("<IntegerExpression>");
+        writeLineHTML("<IntegerExpression>");
         ast.IL.visit(this, null);
-        writeLineXML("</IntegerExpression>");
+        writeLineHTML("</IntegerExpression>");
         return null;
     }
 
     public Object visitLetExpression(LetExpression ast, Object obj) {
-        writeLineXML("<LetExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>let</strong> </br> </p></p>");
         ast.D.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>in</strong> </br> </p></p>");
         ast.E.visit(this, null);
-        writeLineXML("</LetExpression>");
         return null;
     }
 
     public Object visitRecordExpression(RecordExpression ast, Object obj) {
-        writeLineXML("<RecordExpression>");
+        writeLineHTML("<RecordExpression>");
         ast.RA.visit(this, null);
-        writeLineXML("</RecordExpression>");
+        writeLineHTML("</RecordExpression>");
         return null;
     }
 
     public Object visitUnaryExpression(UnaryExpression ast, Object obj) {
-        writeLineXML("<UnaryExpression>");
+        writeLineHTML("<UnaryExpression>");
         ast.O.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</UnaryExpression>");
+        writeLineHTML("</UnaryExpression>");
         return null;
     }
 
     public Object visitVnameExpression(VnameExpression ast, Object obj) {
-        writeLineXML("<VnameExpression>");
+        writeLineHTML("<VnameExpression>");
         ast.V.visit(this, null);
-        writeLineXML("</VnameExpression>");
+        writeLineHTML("</VnameExpression>");
         return null;
     }
 
 
     // Declarations
     public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
-        writeLineXML("<BinaryOperatorDeclaration>");
+        writeLineHTML("<BinaryOperatorDeclaration>");
         ast.O.visit(this, null);
         ast.ARG1.visit(this, null);
         ast.ARG2.visit(this, null);
         ast.RES.visit(this, null);
-        writeLineXML("</BinaryOperatorDeclaration>");
+        writeLineHTML("</BinaryOperatorDeclaration>");
         return null;
     }
 
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
-        writeLineXML("<ConstDeclaration>");
+        writeLineHTML("<ConstDeclaration>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</ConstDeclaration>");
+        writeLineHTML("</ConstDeclaration>");
         return null;
     }
 
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
-        writeLineXML("<FuncDeclaration>");
+        writeLineHTML("<FuncDeclaration>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.T.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</FuncDeclaration>");
+        writeLineHTML("</FuncDeclaration>");
         return null;
     }
 
     public Object visitProcDeclaration(ProcDeclaration ast, Object obj) {
-        writeLineXML("<ProcDeclaration>");
+        writeLineHTML("<ProcDeclaration>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.C.visit(this, null);
-        writeLineXML("</ProcDeclaration>");
+        writeLineHTML("</ProcDeclaration>");
         return null;
     }
 
     public Object visitSequentialDeclaration(SequentialDeclaration ast, Object obj) {
-        writeLineXML("<SequentialDeclaration>");
+        writeLineHTML("<SequentialDeclaration>");
         ast.D1.visit(this, null);
         ast.D2.visit(this, null);
-        writeLineXML("</SequentialDeclaration>");
+        writeLineHTML("</SequentialDeclaration>");
         return null;
     }
 
     public Object visitTypeDeclaration(TypeDeclaration ast, Object obj) {
-        writeLineXML("<TypeDeclaration>");
+        writeLineHTML("<TypeDeclaration>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</TypeDeclaration>");
+        writeLineHTML("</TypeDeclaration>");
         return null;
     }
 
     public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object obj) {
-        writeLineXML("<UnaryOperatorDeclaration>");
+        writeLineHTML("<UnaryOperatorDeclaration>");
         ast.O.visit(this, null);
         ast.ARG.visit(this, null);
         ast.RES.visit(this, null);
-        writeLineXML("</UnaryOperatorDeclaration>");
+        writeLineHTML("</UnaryOperatorDeclaration>");
         return null;
     }
 
     public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
-        writeLineXML("<VarDeclaration>");
+        writeLineHTML("<VarDeclaration>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</VarDeclaration>");
+        writeLineHTML("</VarDeclaration>");
         return null;
     }
 
 
     // Array Aggregates
     public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object obj) {
-        writeLineXML("<MultipleArrayAggregate>");
+        writeLineHTML("<MultipleArrayAggregate>");
         ast.E.visit(this, null);
         ast.AA.visit(this, null);
-        writeLineXML("</MultipleArrayAggregate>");
+        writeLineHTML("</MultipleArrayAggregate>");
         return null;
     }
 
     public Object visitSingleArrayAggregate(SingleArrayAggregate ast, Object obj) {
-        writeLineXML("<SingleArrayAggregate>");
+        writeLineHTML("<SingleArrayAggregate>");
         ast.E.visit(this, null);
-        writeLineXML("</SingleArrayAggregate>");
+        writeLineHTML("</SingleArrayAggregate>");
         return null;
     }
 
 
     // Record Aggregates
     public Object visitMultipleRecordAggregate(MultipleRecordAggregate ast, Object obj) {
-        writeLineXML("<MultipleRecordAggregate>");
+        writeLineHTML("<MultipleRecordAggregate>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
         ast.RA.visit(this, null);
-        writeLineXML("</MultipleRecordAggregate>");
+        writeLineHTML("</MultipleRecordAggregate>");
         return null;
     }
 
     public Object visitSingleRecordAggregate(SingleRecordAggregate ast, Object obj) {
-        writeLineXML("<SingleRecordAggregate>");
+        writeLineHTML("<SingleRecordAggregate>");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</SingleRecordAggregate>");
+        writeLineHTML("</SingleRecordAggregate>");
         return null;
     }
 
 
     // Formal Parameters
     public Object visitConstFormalParameter(ConstFormalParameter ast, Object obj) {
-        writeLineXML("<ConstFormalParameter>");
+        writeLineHTML("<ConstFormalParameter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</ConstFormalParameter>");
+        writeLineHTML("</ConstFormalParameter>");
         return null;
     }
 
     public Object visitFuncFormalParameter(FuncFormalParameter ast, Object obj) {
-        writeLineXML("<FuncFormalParameter>");
+        writeLineHTML("<FuncFormalParameter>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("<FuncFormalParameter>");
+        writeLineHTML("<FuncFormalParameter>");
         return null;
     }
 
     public Object visitProcFormalParameter(ProcFormalParameter ast, Object obj) {
-        writeLineXML("<ProcFormalParameter>");
+        writeLineHTML("<ProcFormalParameter>");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
-        writeLineXML("</ProcFormalParameter>");
+        writeLineHTML("</ProcFormalParameter>");
         return null;
     }
 
     public Object visitVarFormalParameter(VarFormalParameter ast, Object obj) {
-        writeLineXML("<VarFormalParameter>");
+        writeLineHTML("<VarFormalParameter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</VarFormalParameter>");
+        writeLineHTML("</VarFormalParameter>");
         return null;
     }
 
 
     public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object obj) {
-        writeLineXML("<EmptyFormalParameterSequence/>");
+        writeLineHTML("<EmptyFormalParameterSequence/>");
         return null;
     }
 
     public Object visitMultipleFormalParameterSequence(MultipleFormalParameterSequence ast, Object obj) {
-        writeLineXML("<MultipleFormalParameterSequence>");
+        writeLineHTML("<MultipleFormalParameterSequence>");
         ast.FP.visit(this, null);
         ast.FPS.visit(this, null);
-        writeLineXML("</MultipleFormalParameterSequence>");
+        writeLineHTML("</MultipleFormalParameterSequence>");
         return null;
     }
 
     public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object obj) {
-        writeLineXML("<SingleFormalParameterSequence>");
+        writeLineHTML("<SingleFormalParameterSequence>");
         ast.FP.visit(this, null);
-        writeLineXML("</SingleFormalParameterSequence>");
+        writeLineHTML("</SingleFormalParameterSequence>");
         return null;
     }
 
 
     // Actual Parameters
     public Object visitConstActualParameter(ConstActualParameter ast, Object obj) {
-        writeLineXML("<ConstActualParameter>");
+        writeLineHTML("<ConstActualParameter>");
         ast.E.visit(this, null);
-        writeLineXML("</ConstActualParameter>");
+        writeLineHTML("</ConstActualParameter>");
         return null;
     }
 
     public Object visitFuncActualParameter(FuncActualParameter ast, Object obj) {
-        writeLineXML("<FuncActualParameter>");
+        writeLineHTML("<FuncActualParameter>");
         ast.I.visit(this, null);
-        writeLineXML("</FuncActualParameter>");
+        writeLineHTML("</FuncActualParameter>");
         return null;
     }
 
     public Object visitProcActualParameter(ProcActualParameter ast, Object obj) {
-        writeLineXML("<ProcActualParameter>");
+        writeLineHTML("<ProcActualParameter>");
         ast.I.visit(this, null);
-        writeLineXML("</ProcActualParameter>");
+        writeLineHTML("</ProcActualParameter>");
         return null;
     }
 
     public Object visitVarActualParameter(VarActualParameter ast, Object obj) {
-        writeLineXML("<VarActualParameter>");
+        writeLineHTML("<VarActualParameter>");
         ast.V.visit(this, null);
-        writeLineXML("</VarActualParameter>");
+        writeLineHTML("</VarActualParameter>");
         return null;
     }
 
 
     public Object visitEmptyActualParameterSequence(EmptyActualParameterSequence ast, Object obj) {
-        writeLineXML("<EmptyActualParameterSequence/>");
+        writeLineHTML("<p class=\"emptyParameterSequence\" style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;\">()</p>");
         return null;
     }
 
     public Object visitMultipleActualParameterSequence(MultipleActualParameterSequence ast, Object obj) {
-        writeLineXML("<MultipleActualParameterSequence>");
+        writeLineHTML("<p class=\"multipleParameterSequence\" style=\"color: #000000;"
+                            + "font-family: courier;"
+                            + "font-size:1em;\">(");
         ast.AP.visit(this, null);
         ast.APS.visit(this, null);
-        writeLineXML("</MultipleActualParameterSequence>");
+        writeLineHTML(")</p>");
         return null;
     }
 
     public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object obj) {
-        writeLineXML("<SingleActualParameterSequence>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">(</p>");
         ast.AP.visit(this, null);
-        writeLineXML("</SingleActualParameterSequence>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">)</p>");
         return null;
     }
 
 
     // Type Denoters
     public Object visitAnyTypeDenoter(AnyTypeDenoter ast, Object obj) {
-        writeLineXML("<AnyTypeDenoter/>");
+        writeLineHTML("<AnyTypeDenoter/>");
         return null;
     }
 
     public Object visitArrayTypeDenoter(ArrayTypeDenoter ast, Object obj) {
-        writeLineXML("<ArrayTypeDenoter>");
+        writeLineHTML("<ArrayTypeDenoter>");
         ast.IL.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</ArrayTypeDenoter>");
+        writeLineHTML("</ArrayTypeDenoter>");
         return null;
     }
 
     public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object obj) {
-        writeLineXML("<BoolTypeDenoter/>");
+        writeLineHTML("<BoolTypeDenoter/>");
         return null;
     }
 
     public Object visitCharTypeDenoter(CharTypeDenoter ast, Object obj) {
-        writeLineXML("<CharTypeDenoter/>");
+        writeLineHTML("<CharTypeDenoter/>");
         return null;
     }
 
     public Object visitErrorTypeDenoter(ErrorTypeDenoter ast, Object obj) {
-        writeLineXML("<ErrorTypeDenoter/>");
+        writeLineHTML("<ErrorTypeDenoter/>");
         return null;
     }
 
     public Object visitSimpleTypeDenoter(SimpleTypeDenoter ast, Object obj) {
-        writeLineXML("<SimpleTypeDenoter>");
+        writeLineHTML("<SimpleTypeDenoter>");
         ast.I.visit(this, null);
-        writeLineXML("</SimpleTypeDenoter>");
+        writeLineHTML("</SimpleTypeDenoter>");
         return null;
     }
 
     public Object visitIntTypeDenoter(IntTypeDenoter ast, Object obj) {
-        writeLineXML("<IntTypeDenoter/>");
+        writeLineHTML("<IntTypeDenoter/>");
         return null;
     }
 
     public Object visitRecordTypeDenoter(RecordTypeDenoter ast, Object obj) {
-        writeLineXML("<RecordTypeDenoter>");
+        writeLineHTML("<RecordTypeDenoter>");
         ast.FT.visit(this, null);
-        writeLineXML("</RecordTypeDenoter>");
+        writeLineHTML("</RecordTypeDenoter>");
         return null;
     }
 
 
     public Object visitMultipleFieldTypeDenoter(MultipleFieldTypeDenoter ast, Object obj) {
-        writeLineXML("<MultipleFieldTypeDenoter>");
+        writeLineHTML("<MultipleFieldTypeDenoter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
         ast.FT.visit(this, null);
-        writeLineXML("</MultipleFieldTypeDenoter>");
+        writeLineHTML("</MultipleFieldTypeDenoter>");
         return null;
     }
 
     public Object visitSingleFieldTypeDenoter(SingleFieldTypeDenoter ast, Object obj) {
-        writeLineXML("<SingleFieldTypeDenoter>");
+        writeLineHTML("<SingleFieldTypeDenoter>");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
-        writeLineXML("</SingleFieldTypeDenoter>");
+        writeLineHTML("</SingleFieldTypeDenoter>");
         return null;
     }
 
 
-    // Literals, Identifiers and Operators
+    // Literals
     public Object visitCharacterLiteral(CharacterLiteral ast, Object obj) {
-        writeLineXML("<CharacterLiteral value=\"" + ast.spelling + "\"/>");
-        return null;
-    }
-
-    public Object visitIdentifier(Identifier ast, Object obj) {
-        writeLineXML("<Identifier value=\"" + ast.spelling + "\"/>");
+        writeLineHTML("\t<p style=\"color: #2E64FE;"
+                                    + "font-family: courier;"
+                                    + "font-size:1em;"
+                                    + "\">" 
+                                + ast.spelling + 
+                        "</p>");
         return null;
     }
 
     public Object visitIntegerLiteral(IntegerLiteral ast, Object obj) {
-        writeLineXML("<IntegerLiteral value=\"" + ast.spelling + "\"/>");
+        writeLineHTML("\t<p style=\"color: #2E64FE;"
+                                    + "font-family: courier;"
+                                    + "font-size:1em;"
+                                    + "\">" 
+                                + ast.spelling + 
+                        "</p>");
+        return null;
+    }
+    
+    //Identifiers and Operators
+    public Object visitIdentifier(Identifier ast, Object obj) {
+        writeLineHTML("\t<p style=\"color: #000000;"
+                                    + "font-family: courier;"
+                                    + "font-size:1em;"
+                                    + "\">" 
+                                + ast.spelling + 
+                        "</p>");
         return null;
     }
 
     public Object visitOperator(Operator ast, Object obj) {
-        writeLineXML("<Operator value=\"" + transformOperator(ast.spelling) + "\"/>");
+        writeLineHTML("\t<p style=\"color: #000000;"
+                                    + "font-family: courier;"
+                                    + "font-size:1em;"
+                                    + "\">" 
+                                + ast.spelling + 
+                        "</p>");
         return null;
     }
 
 
     // Value-or-variable names
     public Object visitDotVname(DotVname ast, Object obj) {
-        writeLineXML("<DotVname>");
+        writeLineHTML("<DotVname>");
         ast.V.visit(this, null);
         ast.I.visit(this, null);
-        writeLineXML("</DotVname>");
+        writeLineHTML("</DotVname>");
         return null;
     }
 
     public Object visitSimpleVname(SimpleVname ast, Object obj) {
-        writeLineXML("<SimpleVname>");
+        writeLineHTML("<SimpleVname>");
         ast.I.visit(this, null);
-        writeLineXML("</SimpleVname>");
+        writeLineHTML("</SimpleVname>");
         return null;
     }
 
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {
-        writeLineXML("<SubscriptVname>");
+        writeLineHTML("<SubscriptVname>");
         ast.V.visit(this, null);
         ast.E.visit(this, null);
-        writeLineXML("</SubscriptVname>");
+        writeLineHTML("</SubscriptVname>");
         return null;
     }
 
 
     // Programs
     public Object visitProgram(Program ast, Object obj) {
-        writeLineXML("<Program>");
+        writeLineHTML("<Program>");
         ast.C.visit(this, null);
-        writeLineXML("</Program>");
+        writeLineHTML("</Program>");
         return null;
     }
-
-    private void writeLineXML(String line) {
+    
+    private void writeLineHTML(String line) {
         try {
             fileWriter.write(line);
             fileWriter.write('\n');
+            
+            
         } catch (IOException e) {
             System.err.println("Error while writing file for print the AST");
             e.printStackTrace();
@@ -590,19 +662,5 @@ public class WriterVisitor implements Visitor {
         else
             return operator;
     }
-
-    public Object visitChooseCommand(ChooseCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+       
 }

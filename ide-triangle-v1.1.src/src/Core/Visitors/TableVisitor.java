@@ -17,6 +17,7 @@ import Triangle.AbstractSyntaxTrees.CallExpression;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
+import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -26,6 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -77,16 +79,10 @@ import Triangle.CodeGenerator.TypeRepresentation;
 import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
 import Triangle.CodeGenerator.UnknownValue;
+import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import javax.swing.table.DefaultTableModel;
 
-/**
- * Implements the Triangle Visitor interface, which is used to
- * visit an entire AST. 
- *
- * Generates a DefaultTableModel, used to draw a Jable.
- *
- * @author Luis Leopoldo Pérez <luiperpe@ns.isi.ulatina.ac.cr>
- */
+
 public class TableVisitor implements Visitor {
     
     /** Creates a new instance of TableDetails */
@@ -109,7 +105,32 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  public Object visitChooseCommand(ChooseCommand ast, Object o) {
+      ast.E.visit(this, null);
+      ast.C1.visit(this, null);
+      
+      return(null);
+  }
+  
   public Object visitEmptyCommand(EmptyCommand ast, Object o) { 
+      return(null);
+  }
+  
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+      ast.I.visit(this, null);
+      ast.E1.visit(this, null);
+      ast.E2.visit(this, null);
+      ast.E3.visit(this, null);
+      ast.C.visit(this, null);
+      return(null);
+  }
+  
+  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+      ast.I.visit(this, null);
+      ast.E1.visit(this, null);
+      ast.E2.visit(this, null);
+      ast.E3.visit(this, null);
+      ast.C.visit(this, null);
       return(null);
   }
   
@@ -631,4 +652,6 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+    
 }
