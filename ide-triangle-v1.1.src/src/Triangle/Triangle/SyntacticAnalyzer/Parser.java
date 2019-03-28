@@ -442,8 +442,7 @@ public class Parser {
         finish(commandPos);
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
-      break;
- 
+      break; 
     case Token.IF:
       {
         acceptIt();
@@ -466,7 +465,7 @@ public class Parser {
         Command commandCaseAST = parseCasesPlural();
         accept(Token.END);
         finish(commandPos);
-        //commandAST = new ChooseCommand(eAST, eAST, commandCaseAST, commandPos);
+        commandAST = new ChooseCommand(eAST, commandCaseAST, commandPos);
       }
       break;
 

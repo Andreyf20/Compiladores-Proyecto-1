@@ -136,13 +136,21 @@ public final class Checker implements Visitor {
   }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-    //VALIDAR IDENTIFICADOR 
-      return null;
+    ast.I.visit(this, null);
+    ast.E1.visit(this, null);
+    ast.E2.visit(this, null);
+    ast.E3.visit(this, null);
+    ast.C.visit(this, null);
+    return null;
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    //VALIDAR IDENTIFICADOR 
-      return null;
+    ast.I.visit(this, null);
+    ast.E1.visit(this, null);
+    ast.E2.visit(this, null);
+    ast.E3.visit(this, null);
+    ast.C.visit(this, null);
+    return null;
   }
   
   public Object visitIfCommand(IfCommand ast, Object o) {

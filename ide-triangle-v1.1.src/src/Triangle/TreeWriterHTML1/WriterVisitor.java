@@ -126,6 +126,10 @@ public class WriterVisitor implements Visitor {
         ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>until</strong> </br> </p>");
+        ast.E3.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>do</strong> </br> </p>");
+        ast.C.visit(this, null);
         return null;
     }
     
@@ -137,6 +141,10 @@ public class WriterVisitor implements Visitor {
         ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>while</strong> </br> </p>");
+        ast.E3.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>do</strong> </br> </p>");
+        ast.C.visit(this, null);
         return null;
     }
     
@@ -174,6 +182,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitUntilCommand(UntilCommand ast, Object o) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>until</strong> </br> </p>");
         ast.E.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p>");
@@ -183,6 +192,7 @@ public class WriterVisitor implements Visitor {
     }
     
     public Object visitWhileCommand(WhileCommand ast, Object obj) {
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>while</strong> </br> </p></p>");
         ast.E.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>do</strong> </br> </p></p>");
