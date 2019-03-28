@@ -65,8 +65,8 @@ public class IDECompiler {
 
         if (success){
             System.out.println("Compilation was successful.");
-            //Writer writer = new Writer(sourceName);
-            //writer.write(rootAST);
+            Writer writer = new Writer(sourceName);
+            writer.write(rootAST);
             
             WriterHTML writerHTML = new WriterHTML(sourceName);
             writerHTML.write(rootAST);

@@ -454,6 +454,7 @@ public class Parser {
         accept(Token.END);
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+        
       }
       break;
 
@@ -849,27 +850,19 @@ public class Parser {
 
             case Token.RECURSIVE:
                 acceptIt();
-                Declaration p2AST = parseProcFunc();
-                finish(declarationPos);
-                declarationAST = new SequentialDeclaration(declarationAST, p2AST,
-                declarationPos);
+                declarationAST = parseProcFunc();
+
                 
                 break;
                 
             case Token.PRIVATE:
                 
                 acceptIt();
-                Declaration d1AST = parseSingleDeclaration();
-                finish(declarationPos);
-                declarationAST = new SequentialDeclaration(declarationAST, d1AST,
-                declarationPos);
+                declarationAST = parseDeclaration();
                 
                 accept(Token.IN);
                 
-                Declaration d2AST = parseSingleDeclaration();
-                finish(declarationPos);
-                declarationAST = new SequentialDeclaration(declarationAST, d2AST,
-                declarationPos);
+                declarationAST = parseDeclaration();
                 
                 accept(Token.END);
                 
@@ -877,34 +870,23 @@ public class Parser {
                 
             case Token.PAR:
                 acceptIt();
-                Declaration d3AST = parseSingleDeclaration();
-                finish(declarationPos);
-                declarationAST = new SequentialDeclaration(declarationAST, d3AST,
-                declarationPos);
+                declarationAST = parseSingleDeclaration();
                 
                 while (currentToken.kind == Token.OR) {
                     acceptIt();
-                    Declaration d4AST = parseSingleDeclaration();
-                    finish(declarationPos);
-                    declarationAST = new SequentialDeclaration(declarationAST, d4AST,
-                    declarationPos);
+                    declarationAST = parseSingleDeclaration();
                 }
                 
                 accept(Token.END);
                 
                 break;
+            case Token.CONST:
+            case Token.VAR:
+            case Token.FUNC:
+            case Token.TYPE:
+                declarationAST = parseSingleDeclaration();
+                break;
             default:
-                
-                if(currentToken.kind == Token.CONST ||
-                   currentToken.kind == Token.VAR ||
-                   currentToken.kind == Token.FUNC ||
-                   currentToken.kind == Token.TYPE){
-                    Declaration d5AST = parseSingleDeclaration();
-                    finish(declarationPos);
-                    declarationAST = new SequentialDeclaration(declarationAST, d5AST,
-                    declarationPos);
-                    return declarationAST;
-                }
                 
                 syntacticError("\"%\" cannot start a compound declaration",
                 currentToken.spelling);
@@ -1026,7 +1008,10 @@ public class Parser {
                 acceptIt();
                 Expression eAST = parseExpression();
                 finish(declarationPos);
+                //
                 declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //debe hacer el new vardeclaration en vez de constdeclaration pero no recibe una expression
                 break;
             default:
                 syntacticError("\"%\" unexpexted token", currentToken.spelling);
