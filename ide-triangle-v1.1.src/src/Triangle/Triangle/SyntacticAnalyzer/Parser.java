@@ -470,6 +470,7 @@ public class Parser {
 
     case Token.PASS:
     {
+      acceptIt();
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;
