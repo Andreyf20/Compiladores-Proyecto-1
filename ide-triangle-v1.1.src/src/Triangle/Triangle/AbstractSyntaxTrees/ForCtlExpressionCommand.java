@@ -5,11 +5,24 @@
  */
 package Triangle.AbstractSyntaxTrees;
 
+import Triangle.SyntacticAnalyzer.SourcePosition;
+
 /**
  *
  * @author Eduardo Jirón
  */
-public class ForCtlExpressionCommand
+public class ForCtlExpressionCommand extends Command
 {
+
+    public ForCtlExpressionCommand(Identifier iAST, Expression eAST, SourcePosition commandPos)
+    {
+        super(commandPos);
+    }
+    
+    @Override
+    public Object visit(Visitor v, Object o)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

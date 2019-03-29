@@ -14,8 +14,6 @@
 
 package Triangle.AbstractSyntaxTrees;
 
-import Triangle.AbstractSyntaxTrees.ForWhileCommand;
-
 public interface Visitor {
 
   // Commands
