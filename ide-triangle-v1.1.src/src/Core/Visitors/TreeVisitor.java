@@ -27,6 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -107,6 +108,12 @@ public class TreeVisitor implements Visitor {
     
     public Object visitEmptyCommand(EmptyCommand ast, Object o) {
         return(createNullary("Empty Command"));
+    }
+    
+    //Visit de ForDoCommand
+    public Object visitForDoCommand(ForDoCommand ast, Object o)
+    {
+        return(createTernary("ForDo Command", ast.FID, ast.E1, ast.C));
     }
     
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
