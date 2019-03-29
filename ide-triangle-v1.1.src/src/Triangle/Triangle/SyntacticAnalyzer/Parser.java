@@ -38,6 +38,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
@@ -332,12 +333,6 @@ public class Parser {
         }
       }
       break;
-
-    case Token.PASS:
-    {
-        acceptIt();
-        break;
-    }
    
     case Token.LOOP:
       {
@@ -354,11 +349,13 @@ public class Parser {
               switch (currentToken.kind) {
                   case Token.DO:
                   {
-                      acceptIt();
-                      commandAST = parseCommand();
-                      accept(Token.END);
-                      break;
-                      //aca falta el forDoCommand
+                    //agregar la creacion del arbol del for do command
+                    acceptIt();
+                    commandAST = parseCommand();
+                    accept(Token.END);
+                    finish(commandPos);
+                    commandAST = new ForDoCommand(iAST, e1AST, e2AST, commandAST, commandPos);
+                    break;
                   }
                   case Token.WHILE: 
                     acceptIt();
@@ -471,15 +468,12 @@ public class Parser {
       }
       break;
 
-    case Token.SEMICOLON:
-    case Token.END:
-    case Token.ELSE:
-    case Token.IN:
-    case Token.EOT:
-
+    case Token.PASS:
+    {
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;
+    }
 
     default:
       syntacticError("\"%\" cannot start a command",
