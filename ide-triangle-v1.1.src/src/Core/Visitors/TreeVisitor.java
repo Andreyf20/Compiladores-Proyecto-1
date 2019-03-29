@@ -27,6 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
 import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -113,7 +114,7 @@ public class TreeVisitor implements Visitor {
     //Visit de ForDoCommand
     public Object visitForDoCommand(ForDoCommand ast, Object o)
     {
-        return(createTernary("ForDo Command", ast.FID, ast.E1, ast.C));
+        return(createTernary("ForDo Command", ast.FCD, ast.E1, ast.C));
     }
     
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
@@ -200,6 +201,12 @@ public class TreeVisitor implements Visitor {
     
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
         return(createBinary("Constant Declaration", ast.I, ast.E));
+    }
+    
+    //Implementacion de visit de ForCtlDeclaration
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+    {
+        return(createBinary("ForCtl Declaration", ast.id, ast.expression));
     }
     
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {

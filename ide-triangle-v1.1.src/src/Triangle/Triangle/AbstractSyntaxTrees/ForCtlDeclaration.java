@@ -11,7 +11,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author Eduardo Jirón
  */
-public abstract class ForCtlDeclaration extends Declaration
+public class ForCtlDeclaration extends Declaration
 {
 
     public ForCtlDeclaration(SourcePosition thePosition)
@@ -23,4 +23,10 @@ public abstract class ForCtlDeclaration extends Declaration
     
     public Identifier id;
     public Expression expression;
+
+    @Override
+    public Object visit(Visitor v, Object o)
+    {
+        return v.visitForCtlDeclaration(this, o);
+    }
 }

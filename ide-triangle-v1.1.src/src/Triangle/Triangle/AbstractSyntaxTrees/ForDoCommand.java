@@ -17,7 +17,7 @@ public class ForDoCommand extends Command
             Command commandAST, SourcePosition commandPos)
     {
     	super(commandPos);
-    	FID = ctlAST;
+    	FCD = ctlAST;
     	E1 = e2AST;
     	C = commandAST;
     }
@@ -28,7 +28,7 @@ public class ForDoCommand extends Command
         return v.visitForDoCommand(this, o);
     }
     
-    public ForCtlDeclaration FID;
+    public ForCtlDeclaration FCD;
     public Expression E1;
     public Command C;
 }
