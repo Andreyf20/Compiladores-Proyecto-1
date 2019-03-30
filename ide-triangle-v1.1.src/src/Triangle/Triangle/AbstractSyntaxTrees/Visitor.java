@@ -23,7 +23,7 @@ public interface Visitor {
   public abstract Object visitEmptyCommand(EmptyCommand ast, Object o);
   public abstract Object visitIfCommand(IfCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
-  public abstract Object visitForDoCommand(ForDoCommand ast, Object o);
+  public abstract Object visitForDoCommand(ForDoCommand ast, Object o); //Visit para ForDoCommand
   public abstract Object visitForUntilCommand(ForUntilCommand ast, Object o);
   public abstract Object visitForWhileCommand(ForWhileCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
