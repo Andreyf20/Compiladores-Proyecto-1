@@ -332,12 +332,6 @@ public class Parser {
         }
       }
       break;
-
-    case Token.PASS:
-    {
-        acceptIt();
-        break;
-    }
    
     case Token.LOOP:
       {
@@ -346,12 +340,15 @@ public class Parser {
           case Token.FOR:
           {
               acceptIt();
-              Identifier iAST = parseIdentifier();
+              Identifier iAST = parseIdentifier(); //un int como const, para que luego no se asigne
               accept(Token.FROM);
-              Expression e1AST = parseExpression();
+              Expression e1AST = parseExpression(); //numeral
               accept(Token.TO);
-              Expression e2AST = parseExpression();
+              Expression e2AST = parseExpression(); //numeral
               switch (currentToken.kind) {
+                  //en estas opciones la variable de control no se puede asignar no pasar por referencia 
+                  //ex1 y ex2 de tipo entero 
+                  //
                   case Token.DO:
                   {
                       acceptIt();
@@ -362,9 +359,9 @@ public class Parser {
                   }
                   case Token.WHILE: 
                     acceptIt();
-                    Expression e3AST = parseExpression();
+                    Expression e3AST = parseExpression(); //booleana
                     accept(Token.DO);
-                    commandAST = parseCommand();
+                    commandAST = parseCommand(); //igual que el while :D
                     accept(Token.END);
                     finish(commandPos);
                     commandAST = new ForWhileCommand(iAST, e1AST, e2AST, e3AST, commandAST, commandPos);
@@ -471,12 +468,15 @@ public class Parser {
       }
       break;
 
-    case Token.SEMICOLON:
-    case Token.END:
-    case Token.ELSE:
-    case Token.IN:
-    case Token.EOT:
-
+      //esta vara no deberia estar, cambiar por pass, ahora serian errores sintacticos 
+    //case Token.SEMICOLON:
+    //case Token.END:
+    //case Token.ELSE:
+    //case Token.IN:
+    //case Token.EOT:
+    
+    case Token.PASS:
+        //acceptIt(); no se si va esto aqui
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;

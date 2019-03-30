@@ -146,11 +146,20 @@ public final class Checker implements Visitor {
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    ast.I.visit(this, null);
-    ast.E1.visit(this, null);
-    ast.E2.visit(this, null);
+      
+      //seria un quaternario compuesto por forDecl (i and E1) --->este seria nuevo, un e2, e3, comand 
+      //pero esto esta bien no tengo que boorrlo, solo me falta algo 
+      //
+      
+    ast.I.visit(this, null); //trabajar i e1 como un solo ast de declaracion, uno nuevo FORDECL 
+    ast.E1.visit(this, null); //validar como tipo entero
+    ast.E2.visit(this, null); //validar como tipo entero
     ast.E3.visit(this, null);
-    ast.C.visit(this, null);
+    ast.C.visit(this, null); //variable de control deberia ser manejada como constante aqui en el command, 
+    //loopCtlVar muy parecido a constante, constDe, ConstFormalParameter
+    //v.const 707 checker
+    //hay que tocar el vName (copiar), añadir un caso adisional, 
+    //en este contexto ya conoce el i entonces deberia ser booleana
     return null;
   }
   

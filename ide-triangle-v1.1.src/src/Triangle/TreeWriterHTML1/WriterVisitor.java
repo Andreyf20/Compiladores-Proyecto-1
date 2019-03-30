@@ -90,16 +90,18 @@ public class WriterVisitor implements Visitor {
     
     // Commands
     public Object visitAssignCommand(AssignCommand ast, Object obj) {
-        writeLineHTML("<AssignCommand>");
+        //writeLineHTML("<AssignCommand>");
         ast.V.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> := </br> </p>");
         ast.E.visit(this, null);
-        writeLineHTML("</AssignCommand>");
         return null;
     }
 
     public Object visitCallCommand(CallCommand ast, Object obj) {
-        writeLineHTML("<p class=\"callCommand\">");
+        //writeLineHTML("<p class=\"callCommand\">");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ( </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ) </br> </p>");
         ast.APS.visit(this, null);
         writeLineHTML("</p>");
         return null;
@@ -115,7 +117,7 @@ public class WriterVisitor implements Visitor {
     }
     
     public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
-        writeLineHTML("<EmptyCommand>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>pass</strong> </br> </p>");
         return null;
     }
 
@@ -170,7 +172,7 @@ public class WriterVisitor implements Visitor {
         ast.D.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>in</strong> </br> </p>");
         ast.C.visit(this, null);
-        writeLineHTML("");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
         return null;
     }
 
@@ -205,33 +207,35 @@ public class WriterVisitor implements Visitor {
 
     // Expressions
     public Object visitArrayExpression(ArrayExpression ast, Object obj) {
-        writeLineHTML("<ArrayExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> [ </br> </p></p>");
         ast.AA.visit(this, null);
-        writeLineHTML("</ArrayExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ] </br> </p></p>");
         return null;
     }
 
     public Object visitBinaryExpression(BinaryExpression ast, Object obj) {
-        writeLineHTML("<BinaryExpression>");
+        //writeLineHTML("<BinaryExpression>");
         ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">" + ast.O.spelling + "</br> </p></p>");
         ast.O.visit(this, null);
         ast.E2.visit(this, null);
-        writeLineHTML("</BinaryExpression>");
+        //writeLineHTML("</BinaryExpression>");
         return null;
     }
 
     public Object visitCallExpression(CallExpression ast, Object obj) {
-        writeLineHTML("<CallExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">" + ast.I.spelling + "</br> </p></p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ( </br> </p></p>");
         ast.APS.visit(this, null);
-        writeLineHTML("</CallExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ) </br> </p></p>");
         return null;
     }
 
     public Object visitCharacterExpression(CharacterExpression ast, Object obj) {
-        writeLineHTML("<CharacterExpression>");
+        writeLineHTML("<p style=\"color: #2E64FE; font-family: courier; font-size:1em;\">"+ ast.CL.spelling + "</br> </p></p>");
         ast.CL.visit(this, null);
-        writeLineHTML("</CharacterExpression>");
+        //writeLineHTML("</CharacterExpression>");
         return null;
     }
 
@@ -251,9 +255,9 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitIntegerExpression(IntegerExpression ast, Object obj) {
-        writeLineHTML("<IntegerExpression>");
+        writeLineHTML("<p style=\"color: #2E64FE; font-family: courier; font-size:1em;\"> "+ ast.IL.spelling + " </br> </p></p>");
         ast.IL.visit(this, null);
-        writeLineHTML("</IntegerExpression>");
+        //writeLineHTML("</IntegerExpression>");
         return null;
     }
 
@@ -266,17 +270,16 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitRecordExpression(RecordExpression ast, Object obj) {
-        writeLineHTML("<RecordExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> { </br> </p></p>");
         ast.RA.visit(this, null);
-        writeLineHTML("</RecordExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> } </br> </p></p>");
         return null;
     }
 
     public Object visitUnaryExpression(UnaryExpression ast, Object obj) {
-        writeLineHTML("<UnaryExpression>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> "+ast.O.spelling + " </br> </p></p>");
         ast.O.visit(this, null);
         ast.E.visit(this, null);
-        writeLineHTML("</UnaryExpression>");
         return null;
     }
 
@@ -300,29 +303,35 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
-        writeLineHTML("<ConstDeclaration>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>const</strong> </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>~</strong> </br> </p>");
         ast.E.visit(this, null);
-        writeLineHTML("</ConstDeclaration>");
         return null;
     }
 
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
-        writeLineHTML("<FuncDeclaration>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>func</strong> </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  ( </br> </p>");
         ast.FPS.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  ) </br> </p>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  ; </br> </p>");
         ast.T.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  is </br> </p>");
         ast.E.visit(this, null);
-        writeLineHTML("</FuncDeclaration>");
         return null;
     }
 
     public Object visitProcDeclaration(ProcDeclaration ast, Object obj) {
-        writeLineHTML("<ProcDeclaration>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>proc</strong> </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  ( </br> </p>");
         ast.FPS.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  ) </br> </p>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> is </br> </p>");
         ast.C.visit(this, null);
-        writeLineHTML("</ProcDeclaration>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>end</strong> </br> </p>");
         return null;
     }
 
@@ -352,18 +361,18 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
-        writeLineHTML("<VarDeclaration>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>var</strong> </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ::= </br> </p>");
         ast.T.visit(this, null);
-        writeLineHTML("</VarDeclaration>");
         return null;
     }
     
     public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object obj) {
-        writeLineHTML("<VarDeclarationInitialized>");
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\">  <strong>var</strong> </br> </p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"> ::= </br> </p>");
         ast.E.visit(this, null);
-        writeLineHTML("</VarDeclarationInitialized>");
         return null;
     }
 
@@ -406,35 +415,41 @@ public class WriterVisitor implements Visitor {
 
     // Formal Parameters
     public Object visitConstFormalParameter(ConstFormalParameter ast, Object obj) {
-        writeLineHTML("<ConstFormalParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"><strong></strong></p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">:</p>");
         ast.T.visit(this, null);
-        writeLineHTML("</ConstFormalParameter>");
+        //writeLineHTML("</ConstFormalParameter>");
         return null;
     }
 
     public Object visitFuncFormalParameter(FuncFormalParameter ast, Object obj) {
-        writeLineHTML("<FuncFormalParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>func</strong></p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">(</p>");
         ast.FPS.visit(this, null);
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">)</p>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">:</p>");
         ast.T.visit(this, null);
         writeLineHTML("<FuncFormalParameter>");
         return null;
     }
 
     public Object visitProcFormalParameter(ProcFormalParameter ast, Object obj) {
-        writeLineHTML("<ProcFormalParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>proc</strong></p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">(</p>");
         ast.FPS.visit(this, null);
-        writeLineHTML("</ProcFormalParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">)</p>");
         return null;
     }
 
     public Object visitVarFormalParameter(VarFormalParameter ast, Object obj) {
-        writeLineHTML("<VarFormalParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>var</strong></p>");
         ast.I.visit(this, null);
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\">:</p>");
         ast.T.visit(this, null);
-        writeLineHTML("</VarFormalParameter>");
+        //writeLineHTML("</VarFormalParameter>");
         return null;
     }
 
@@ -462,30 +477,26 @@ public class WriterVisitor implements Visitor {
 
     // Actual Parameters
     public Object visitConstActualParameter(ConstActualParameter ast, Object obj) {
-        writeLineHTML("<ConstActualParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"> <strong>const</strong></p>");
         ast.E.visit(this, null);
-        writeLineHTML("</ConstActualParameter>");
         return null;
     }
 
     public Object visitFuncActualParameter(FuncActualParameter ast, Object obj) {
-        writeLineHTML("<FuncActualParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"> <strong>func</strong></p>");
         ast.I.visit(this, null);
-        writeLineHTML("</FuncActualParameter>");
         return null;
     }
 
     public Object visitProcActualParameter(ProcActualParameter ast, Object obj) {
-        writeLineHTML("<ProcActualParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"> <strong>proc</strong></p>");
         ast.I.visit(this, null);
-        writeLineHTML("</ProcActualParameter>");
         return null;
     }
 
     public Object visitVarActualParameter(VarActualParameter ast, Object obj) {
-        writeLineHTML("<VarActualParameter>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000;font-family: courier;font-size:1em;\"> <strong>var</strong></p>");
         ast.V.visit(this, null);
-        writeLineHTML("</VarActualParameter>");
         return null;
     }
 
