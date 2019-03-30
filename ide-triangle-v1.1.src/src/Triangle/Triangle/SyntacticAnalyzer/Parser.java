@@ -24,6 +24,9 @@ import Triangle.AbstractSyntaxTrees.AssignCommand;
 import Triangle.AbstractSyntaxTrees.BinaryExpression;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseLiterals;
+import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ChooseCommand;
@@ -38,6 +41,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
@@ -351,11 +355,13 @@ public class Parser {
                   //
                   case Token.DO:
                   {
-                      acceptIt();
-                      commandAST = parseCommand();
-                      accept(Token.END);
-                      break;
-                      //aca falta el forDoCommand
+                    //agregar la creacion del arbol del for do command
+                    acceptIt();
+                    commandAST = parseCommand();
+                    accept(Token.END);
+                    finish(commandPos);
+                    commandAST = new ForDoCommand(iAST, e1AST, e2AST, commandAST, commandPos);
+                    break;
                   }
                   case Token.WHILE: 
                     acceptIt();
@@ -468,18 +474,14 @@ public class Parser {
       }
       break;
 
-      //esta vara no deberia estar, cambiar por pass, ahora serian errores sintacticos 
-    //case Token.SEMICOLON:
-    //case Token.END:
-    //case Token.ELSE:
-    //case Token.IN:
-    //case Token.EOT:
-    
+
     case Token.PASS:
-        //acceptIt(); no se si va esto aqui
+    {
+      acceptIt();
       finish(commandPos);
       commandAST = new EmptyCommand(commandPos);
       break;
+    }
 
     default:
       syntacticError("\"%\" cannot start a command",
@@ -505,7 +507,7 @@ public class Parser {
       
       accept(Token.WHEN);
       
-      Expression expressionAST = parseCaseLiteralsPlural();
+      //Expression expressionAST = parseCaseLiteralsPlural();
       
       accept(Token.THEN);
       
@@ -710,29 +712,46 @@ public class Parser {
       return expressionAST;
   }
   
-  Expression parseCaseRange() throws SyntaxError{
-      Expression expressionAST = null; // in case there's a syntactic error
-
-      expressionAST = parseCaseLiteralSingular();
-
+  CaseRange parseCaseRange() throws SyntaxError{
+      CaseRange caseRangeAST = null; // in case there's a syntactic error
+      Expression e1AST = null;
+      Expression e2AST = null;
+      CaseLiteral cL1 = null;
+      CaseLiteral cL2 = null;
+      
+      e1AST = parseCaseLiteralSingular();
+      
+      SourcePosition rangePos = new SourcePosition();
+      start(rangePos);
       if(currentToken.kind == Token.DOUBLEDOT){          
         acceptIt();
-        expressionAST = parseCaseLiteralSingular();
+        e2AST = parseCaseLiteralSingular();
       }
+      finish(rangePos);
+      cL1 = new CaseLiteral(e1AST, rangePos);
+      cL2 = new CaseLiteral(e2AST, rangePos);
+      caseRangeAST = new CaseRange(cL1, cL2, rangePos);
       
-      
-      return expressionAST;
+      return caseRangeAST;
   }
   
-  Expression parseCaseLiteralsPlural() throws SyntaxError{
-      Expression expressionAST = null; // in case there's a syntactic error
-
-      expressionAST = parseCaseRange();
+  CaseLiterals parseCaseLiteralsPlural() throws SyntaxError{
+      //////////////arreglar////////////////////////
+      CaseLiterals caseLiteralsAST = null; // in case there's a syntactic error
+      CaseRange cR1 = null;
+      CaseRange cR2 = null;
+      
+      SourcePosition caseLiteralPos = new SourcePosition();
+      start(caseLiteralPos);
+      
+      //caseLiteralsAST = parseCaseRange();
       while(currentToken.kind == Token.OR){
           accept(Token.OR);
-          expressionAST = parseCaseRange();
+          cR2 = parseCaseRange();
+          finish(caseLiteralPos);
+          //caseLiteralsAST = new CaseLiterals(caseLiteralsAST, cR2, caseLiteralPos);
       }
-      return expressionAST;
+      return caseLiteralsAST;
   }
   
   

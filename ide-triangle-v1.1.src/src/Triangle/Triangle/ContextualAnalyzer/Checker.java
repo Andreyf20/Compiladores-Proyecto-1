@@ -25,6 +25,11 @@ import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
+import Triangle.AbstractSyntaxTrees.Case;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseLiterals;
+import Triangle.AbstractSyntaxTrees.CaseRange;
+import Triangle.AbstractSyntaxTrees.Cases;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
@@ -125,10 +130,20 @@ public final class Checker implements Visitor {
   }
 
   public Object visitChooseCommand(ChooseCommand ast, Object o) {
+//        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+//        if (! eType.equals(StdEnvironment.booleanType))
+//          reporter.reportError("Boolean expression expected here", "", ast.E.position);
+//        ast.C1.visit(this, null);
+//        return null;
         TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-        if (! eType.equals(StdEnvironment.booleanType))
-          reporter.reportError("Boolean expression expected here", "", ast.E.position);
-        ast.C1.visit(this, null);
+        if(!(eType.equals(StdEnvironment.integerType) || eType.equals(StdEnvironment.charType))){
+          reporter.reportError("the expression type must be char or literal", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
+        else if (! eType.equals(ast.C1.visit(this, null))){
+          reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
         return null;
     }
   
@@ -409,7 +424,69 @@ public final class Checker implements Visitor {
                             ast.I.spelling, ast.position);
     return null;
   }
+  
+  //Cases
+  @Override
+  public Object visitCases(Cases ast, Object o) {
+      if(ast.c1 == null && ast.c2 == null){
+          reporter.reportError (" the range case must have at least one case",
+                            "", ast.position);
+          return StdEnvironment.errorType;
+      }
+      else if(!(ast.c1 == null && ast.c2 == null)){
+          if(ast.c1.visit(this, null) != ast.c2.visit(this, null)){
+            reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
+                            "", ast.c1.position);
+            return StdEnvironment.errorType;
+          }
 
+      }
+      if(ast.command1 != null){
+          ast.command1.visit(this, null);
+      }
+      
+      return ast.c1.visit(this, null);
+  }
+  
+  @Override
+  public Object visitCase(Case ast, Object o) {
+      ast.c1.visit(this, null);
+      return ast.cL1.visit(this, null);
+  }
+
+  @Override
+  public Object visitCaseLiterals(CaseLiterals ast, Object o) {
+      ast.cR2.visit(this, null);
+      return ast.cR1.visit(this, null);
+  }
+
+  @Override
+  public Object visitCaseRange(CaseRange ast, Object o) {
+      if(ast.cL1 == null && ast.cL2 == null){
+          reporter.reportError (" the range case must have at least one range",
+                            "", ast.position);
+          return StdEnvironment.errorType;
+      }
+      else if(!(ast.cL1 == null && ast.cL2 == null)){
+          if(ast.cL1.visit(this, null) != ast.cL2.visit(this, null)){
+            reporter.reportError (" the range case must be charLiteral..charLiteral or intLiteral..intLiteral",
+                            "", ast.cL1.position);
+            return StdEnvironment.errorType;
+          }
+          else{
+              return ast.cL1.visit(this, null);
+          }
+      }
+      else{//en este caso al menos una es nula entonces retorna el tipo de la primera
+          return ast.cL1.visit(this, null);
+      }
+  }
+
+  @Override
+  public Object visitCaseLiteral(CaseLiteral ast, Object o) {
+      return ast.E1.type;
+  }
+  
   // Array Aggregates
 
   // Returns the TypeDenoter for the Array Aggregate. Does not use the
@@ -995,4 +1072,6 @@ public final class Checker implements Visitor {
     StdEnvironment.unequalDecl = declareStdBinaryOp("\\=", StdEnvironment.anyType, StdEnvironment.anyType, StdEnvironment.booleanType);
 
   }
+
+
 }

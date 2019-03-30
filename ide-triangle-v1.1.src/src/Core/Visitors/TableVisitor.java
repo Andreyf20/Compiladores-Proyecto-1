@@ -81,6 +81,11 @@ import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
 import Triangle.CodeGenerator.UnknownValue;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.Case;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseLiterals;
+import Triangle.AbstractSyntaxTrees.CaseRange;
+import Triangle.AbstractSyntaxTrees.Cases;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -366,9 +371,48 @@ public class TableVisitor implements Visitor {
 
       return(null);
   }
+  // </editor-fold>
+  
+  // <editor-fold defaultstate="collapsed" desc=" Cases ">
+  @Override
+  public Object visitCases(Cases ast, Object o) {
+      ast.c1.visit(this, null);
+      ast.c2.visit(this, null);
+      if(ast.command1 != null){
+          ast.command1.visit(this, null);
+      }
+      return(null);
+  }
+
+  @Override
+  public Object visitCase(Case ast, Object o) {
+      ast.c1.visit(this, null);
+      ast.cL1.visit(this, null);
+      return(null);
+  }
+
+  @Override
+  public Object visitCaseLiterals(CaseLiterals ast, Object o) {
+      ast.cR1.visit(this, null);
+      ast.cR2.visit(this, null);
+      return(null);
+  }
+
+  @Override
+  public Object visitCaseRange(CaseRange ast, Object o) {
+      ast.cL1.visit(this, null);
+      ast.cL2.visit(this, null);
+      return(null);
+  }
+
+  @Override
+  public Object visitCaseLiteral(CaseLiteral ast, Object o) {
+      ast.E1.visit(this, null);
+      return(null);
+  }
   
   // </editor-fold>
-
+  
   // <editor-fold defaultstate="collapsed" desc=" Aggregates ">
   // Array Aggregates
   public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o) { 
@@ -680,6 +724,8 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+    
 
     
 }
