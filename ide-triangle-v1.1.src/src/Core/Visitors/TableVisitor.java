@@ -27,6 +27,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -117,9 +119,16 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-      ast.I.visit(this, null);
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      ast.FCD.visit(this,null);
       ast.E1.visit(this, null);
+      ast.C.visit(this, null);
+      return null;
+  }
+  
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+      ast.D.visit(this, null);
       ast.E2.visit(this, null);
       ast.E3.visit(this, null);
       ast.C.visit(this, null);
@@ -127,8 +136,7 @@ public class TableVisitor implements Visitor {
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-      ast.I.visit(this, null);
-      ast.E1.visit(this, null);
+      ast.D.visit(this, null);
       ast.E2.visit(this, null);
       ast.E3.visit(this, null);
       ast.C.visit(this, null);
@@ -247,6 +255,13 @@ public class TableVisitor implements Visitor {
   
   // <editor-fold defaultstate="collapsed" desc=" Declarations ">
   // Declarations
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+  {
+      ast.id.visit(this, null);
+      ast.expression.visit(this,null);
+      return null;
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o) {        
       return(null);
   }

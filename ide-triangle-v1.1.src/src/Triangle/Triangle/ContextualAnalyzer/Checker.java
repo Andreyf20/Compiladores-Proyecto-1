@@ -40,6 +40,8 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
@@ -134,6 +136,15 @@ public final class Checker implements Visitor {
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
     return null;
+  }
+  
+  //Visit del checker para ForDoCommand
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      ast.FCD.visit(this, null);
+      ast.E1.visit(this, null);
+      ast.C.visit(this, null);
+      return null;
   }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
@@ -335,6 +346,17 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  //Implementacion de visit del checker para ForCtlDeclaration
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+  {
+    TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
+    idTable.enter(ast.id.spelling, ast);
+    if (ast.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+                            ast.id.spelling, ast.position);
+    return null;
+  }
+  
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
     ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast); // permits recursion

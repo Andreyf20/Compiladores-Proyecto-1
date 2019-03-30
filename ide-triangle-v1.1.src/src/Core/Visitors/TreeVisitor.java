@@ -27,6 +27,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -109,12 +111,18 @@ public class TreeVisitor implements Visitor {
         return(createNullary("Empty Command"));
     }
     
+    //Visit de ForDoCommand
+    public Object visitForDoCommand(ForDoCommand ast, Object o)
+    {
+        return(createTernary("ForDo Command", ast.FCD, ast.E1, ast.C));
+    }
+    
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        return(createQuinary("ForWhile Command", ast.I, ast.E1, ast.E2, ast.E3, ast.C));
+        return(createQuaternary("ForWhile Command", ast.D, ast.E2, ast.E3, ast.C));
     }
     
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        return(createQuinary("ForWhile Command", ast.I, ast.E1, ast.E2, ast.E3, ast.C));
+        return(createQuaternary("ForWhile Command", ast.D, ast.E2, ast.E3, ast.C));
     }
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
@@ -193,6 +201,12 @@ public class TreeVisitor implements Visitor {
     
     public Object visitConstDeclaration(ConstDeclaration ast, Object obj) {
         return(createBinary("Constant Declaration", ast.I, ast.E));
+    }
+    
+    //Implementacion de visit de ForCtlDeclaration
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+    {
+        return(createBinary("ForCtl Declaration", ast.id, ast.expression));
     }
     
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
