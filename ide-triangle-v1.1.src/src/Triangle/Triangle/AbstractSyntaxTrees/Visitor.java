@@ -55,6 +55,14 @@ public interface Visitor {
   public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
   public abstract Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object o);
+  
+  //Cases
+  public abstract Object visitCases(Cases ast, Object o);
+  public abstract Object visitCase(Case ast, Object o);
+  public abstract Object visitCaseLiterals(CaseLiterals ast, Object o);
+  public abstract Object visitCaseRange(CaseRange ast, Object o);
+  public abstract Object visitCaseLiteral(CaseLiteral ast, Object o);
+  
 
   // Array Aggregates
   public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);
@@ -110,5 +118,6 @@ public interface Visitor {
 
   // Programs
   public abstract Object visitProgram(Program ast, Object o);
+
 
 }
