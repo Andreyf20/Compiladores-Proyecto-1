@@ -14,6 +14,11 @@ import Triangle.AbstractSyntaxTrees.BinaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.BoolTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CallCommand;
 import Triangle.AbstractSyntaxTrees.CallExpression;
+import Triangle.AbstractSyntaxTrees.Case;
+import Triangle.AbstractSyntaxTrees.CaseLiteral;
+import Triangle.AbstractSyntaxTrees.CaseLiterals;
+import Triangle.AbstractSyntaxTrees.CaseRange;
+import Triangle.AbstractSyntaxTrees.Cases;
 import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
@@ -235,6 +240,48 @@ public class TreeVisitor implements Visitor {
     
     public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object obj) {
         return(createBinary("Variable Declaration Initialized", ast.I, ast.E));
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc=" cases ">
+    @Override
+    public Object visitCases(Cases ast, Object o) {
+        if(ast.command1 == null){
+            return(createBinary("Cases", ast.c1, ast.c2));
+        }
+        else{
+            return(createTernary("Cases", ast.c1, ast.c2, ast.command1));
+        }   
+    }
+
+    @Override
+    public Object visitCase(Case ast, Object o) {
+        return(createBinary("Case", ast.cL1, ast.c1));
+    }
+
+    @Override
+    public Object visitCaseLiterals(CaseLiterals ast, Object o) {
+        if(ast.cR2 == null){
+            return(createUnary("CaseLiterals", ast.cR1));
+        }
+        else{
+            return(createBinary("CaseLiterals", ast.cR1, ast.cR2));
+        }
+    }
+
+    @Override
+    public Object visitCaseRange(CaseRange ast, Object o) {
+        if(ast.cL2 == null){
+            return(createUnary("CaseRange", ast.cL1));
+        }
+        else{
+            return(createBinary("CaseRange", ast.cL1, ast.cL2));
+        }
+    }
+
+    @Override
+    public Object visitCaseLiteral(CaseLiteral ast, Object o) {
+        return(createUnary("CaseLiteral", ast.E1));
     }
     // </editor-fold>
     
