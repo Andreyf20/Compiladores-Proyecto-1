@@ -13,7 +13,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  */
 public class ForDoCommand extends Command
 {
-    public ForDoCommand(ForCtlDeclaration ctlAST, Expression e2AST,
+    public ForDoCommand(Declaration ctlAST, Expression e2AST,
             Command commandAST, SourcePosition commandPos)
     {
     	super(commandPos);
@@ -28,7 +28,7 @@ public class ForDoCommand extends Command
         return v.visitForDoCommand(this, o);
     }
     
-    public ForCtlDeclaration FCD;
+    public Declaration FCD;
     public Expression E1;
     public Command C;
 }

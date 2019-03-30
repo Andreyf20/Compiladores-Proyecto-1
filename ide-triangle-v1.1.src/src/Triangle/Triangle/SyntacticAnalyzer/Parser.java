@@ -38,6 +38,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
 import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
@@ -341,9 +342,7 @@ public class Parser {
           case Token.FOR:
           {
               acceptIt();
-              Identifier iAST = parseIdentifier();
-              accept(Token.FROM);
-              Expression e1AST = parseExpression();
+              Declaration dAST = parseForCtlDeclaration();
               accept(Token.TO);
               Expression e2AST = parseExpression();
               switch (currentToken.kind) {
@@ -354,7 +353,7 @@ public class Parser {
                     commandAST = parseCommand();
                     accept(Token.END);
                     finish(commandPos);
-                    commandAST = new ForDoCommand(iAST, e1AST, e2AST, commandAST, commandPos);
+                    commandAST = new ForDoCommand(dAST, e2AST, commandAST, commandPos);
                     break;
                   }
                   case Token.WHILE: 
@@ -364,7 +363,7 @@ public class Parser {
                     commandAST = parseCommand();
                     accept(Token.END);
                     finish(commandPos);
-                    commandAST = new ForWhileCommand(iAST, e1AST, e2AST, e3AST, commandAST, commandPos);
+                    commandAST = new ForWhileCommand(dAST, e2AST, e3AST, commandAST, commandPos);
                   case Token.UNTIL:
                     acceptIt();
                     Expression e4AST = parseExpression();
@@ -372,7 +371,7 @@ public class Parser {
                     commandAST = parseCommand();
                     accept(Token.END);
                     finish(commandPos);
-                    commandAST = new ForUntilCommand(iAST, e1AST, e2AST, e4AST, commandAST, commandPos);
+                    commandAST = new ForUntilCommand(dAST, e2AST, e4AST, commandAST, commandPos);
                   break;
                   
               }
@@ -820,6 +819,19 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+  //Parse para ForCtlDeclaration
+  Declaration parseForCtlDeclaration() throws SyntaxError
+  {
+      Declaration declarationAST = null; //si hay un error de sintaxis
+      SourcePosition declarationPos = new SourcePosition();
+      start(declarationPos);
+      Identifier iAST = parseIdentifier();
+      accept(Token.FROM);
+      Expression eAST = parseExpression();
+      declarationAST = new ForCtlDeclaration(iAST, eAST, declarationPos);
+      return declarationAST;
+  }
+  
   Declaration parseDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
 

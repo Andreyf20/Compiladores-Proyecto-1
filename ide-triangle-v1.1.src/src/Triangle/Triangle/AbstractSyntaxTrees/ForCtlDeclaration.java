@@ -14,11 +14,11 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 public class ForCtlDeclaration extends Declaration
 {
 
-    public ForCtlDeclaration(SourcePosition thePosition)
+    public ForCtlDeclaration(Identifier iAST, Expression eAST, SourcePosition thePosition)
     {
         super(thePosition);
-        id = null;
-        expression = null;
+        id = iAST;
+        expression = eAST;
     }
     
     public Identifier id;
