@@ -88,6 +88,8 @@ import Triangle.AbstractSyntaxTrees.CaseLiteral;
 import Triangle.AbstractSyntaxTrees.CaseLiterals;
 import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.Cases;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -391,10 +393,18 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Cases ">
   @Override
   public Object visitCases(Cases ast, Object o) {
-      ast.c1.visit(this, null);
-      ast.c2.visit(this, null);
+      ast.SC1.visit(this, null);
       if(ast.command1 != null){
           ast.command1.visit(this, null);
+      }
+      return(null);
+  }
+  
+  @Override
+  public Object visitSequentialCase(SequentialCase ast, Object o) {
+      ast.C2.visit(this, null);
+      if(ast.C1 != null){
+          ast.C1.visit(this, null);
       }
       return(null);
   }
@@ -405,11 +415,19 @@ public class TableVisitor implements Visitor {
       ast.cL1.visit(this, null);
       return(null);
   }
+  
+  @Override
+  public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+      ast.cR2.visit(this, null);
+      if(ast.SC1 != null){
+          ast.SC1.visit(this, null);
+      }
+      return(null);
+  }
 
   @Override
   public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-      ast.cR1.visit(this, null);
-      ast.cR2.visit(this, null);
+      ast.SCL1.visit(this, null);
       return(null);
   }
 
@@ -422,9 +440,12 @@ public class TableVisitor implements Visitor {
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      ast.E1.visit(this, null);
+      ast.CL1.visit(this, null);
+      ast.IL1.visit(this, null);
       return(null);
   }
+  
+  
   
   // </editor-fold>
   
@@ -739,6 +760,10 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+    
+
+    
 
     
 

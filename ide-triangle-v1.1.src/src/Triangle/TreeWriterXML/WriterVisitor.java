@@ -32,6 +32,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -78,6 +80,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -314,6 +318,102 @@ public class WriterVisitor implements Visitor {
         ast.I.visit(this, null);
         ast.E.visit(this, null);
         writeLineXML("</VarDeclarationInitialized>");
+        return null;
+    }
+    
+    //Cases
+    
+    public Object visitChooseCommand(ChooseCommand ast, Object o) {
+        writeLineXML("<ChooseCommand>");
+        ast.E.visit(this, null);
+        if(ast.C1 != null){
+            ast.C1.visit(this, null);
+        }
+        writeLineXML("</ChooseCommand>");
+        return null;
+    }
+    
+    @Override
+    public Object visitCases(Cases ast, Object o) {
+        writeLineXML("<Cases>");
+        if(ast.SC1 != null){
+            ast.SC1.visit(this, null);
+        }
+        if(ast.command1 != null){
+            ast.command1.visit(this, null);
+        }
+        writeLineXML("</Cases>");
+        return null;
+    }
+    
+    @Override
+    public Object visitSequentialCase(SequentialCase ast, Object o) {
+        if(ast.C1 != null){
+        writeLineXML("<SequentialCase>");
+        ast.C1.visit(this, null);
+        ast.C2.visit(this, null);
+        writeLineXML("</SequentialCase>");
+        }
+        else{
+            ast.C2.visit(this, null);
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitCase(Case ast, Object o) {
+        writeLineXML("<Case>");
+        ast.cL1.visit(this, null);
+        ast.c1.visit(this, null);
+        writeLineXML("</Case>");
+        return null;
+    }
+    
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+        if(ast.SC1 != null){
+            writeLineXML("<SequentialCaseLiterals>");
+            ast.SC1.visit(this, null);
+            ast.cR2.visit(this, null);
+            writeLineXML("</SequentialCaseLiterals>");
+        }
+        else{
+            ast.cR2.visit(this, null);
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitCaseLiterals(CaseLiterals ast, Object o) {
+        writeLineXML("<CaseLiterals>");
+        if(ast.SCL1 != null){
+            ast.SCL1.visit(this, null);
+        }
+        writeLineXML("</CaseLiterals>");
+        return null;
+    }
+
+    @Override
+    public Object visitCaseRange(CaseRange ast, Object o) {
+        writeLineXML("<CaseRange>");
+        ast.cL1.visit(this, null);
+        if(ast.cL2 != null){
+            ast.cL2.visit(this, null);
+        }
+        writeLineXML("</CaseRange>");
+        return null;
+    }
+
+    @Override
+    public Object visitCaseLiteral(CaseLiteral ast, Object o) {
+        writeLineXML("<CaseLiteral>");
+        if(ast.CL1 == null){
+            ast.IL1.visit(this, null);
+        }
+        else{
+            ast.CL1.visit(this, null);
+        }
+        writeLineXML("</CaseLiteral>");
         return null;
     }
 
@@ -605,9 +705,7 @@ public class WriterVisitor implements Visitor {
             return operator;
     }
 
-    public Object visitChooseCommand(ChooseCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     @Override
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
@@ -620,28 +718,17 @@ public class WriterVisitor implements Visitor {
     }
 
     @Override
-    public Object visitCases(Cases ast, Object o) {
+    public Object visitForDoCommand(ForDoCommand ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitCase(Case ast, Object o) {
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
-    @Override
-    public Object visitCaseRange(CaseRange ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

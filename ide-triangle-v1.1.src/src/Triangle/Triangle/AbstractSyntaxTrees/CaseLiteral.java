@@ -16,18 +16,23 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class CaseLiteral extends AST {
+public class CaseLiteral extends SwitchCase {
 
-  public CaseLiteral (Triangle.AbstractSyntaxTrees.Expression E1, SourcePosition thePosition) {
+  public CaseLiteral (
+          IntegerLiteral IL1,
+          CharacterLiteral CL1,
+          SourcePosition thePosition) {
     super (thePosition);
     
-    this.E1 = E1;
+    this.IL1 = IL1;
+    this.CL1 = CL1;
   }
   
   public Object visit(Visitor v, Object o) {
     return v.visitCaseLiteral(this, o);
   }
 
-  public Triangle.AbstractSyntaxTrees.Expression E1;
+  public IntegerLiteral IL1 = null;
+  public CharacterLiteral CL1 = null;
 
 }

@@ -62,6 +62,8 @@ public interface Visitor {
   public abstract Object visitCaseLiterals(CaseLiterals ast, Object o);
   public abstract Object visitCaseRange(CaseRange ast, Object o);
   public abstract Object visitCaseLiteral(CaseLiteral ast, Object o);
+  public abstract Object visitSequentialCase(SequentialCase ast, Object o);
+  public abstract Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o);
   
 
   // Array Aggregates
@@ -118,6 +120,9 @@ public interface Visitor {
 
   // Programs
   public abstract Object visitProgram(Program ast, Object o);
+
+    
+
 
 
 }

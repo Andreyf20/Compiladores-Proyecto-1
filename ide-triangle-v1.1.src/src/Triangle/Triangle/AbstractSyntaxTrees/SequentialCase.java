@@ -1,5 +1,5 @@
 /*
- * @(#)CaseRange.java                        2.1 2003/10/07
+ * @(#)SequentialDeclaration.java                2.1 2003/10/07
  *
  * Copyright (C) 1999, 2003 D.A. Watt and D.F. Brown
  * Dept. of Computing Science, University of Glasgow, Glasgow G12 8QQ Scotland
@@ -16,21 +16,19 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class CaseRange extends SwitchCase {
+public class SequentialCase extends SwitchCase {
 
-  public CaseRange (CaseLiteral cL1
-          , CaseLiteral cL2
-          , SourcePosition thePosition) {
+  public SequentialCase (SequentialCase c1AST, Case c2AST,
+                       SourcePosition thePosition) {
     super (thePosition);
-    this.cL1 = cL1;
-    this.cL2 = cL2;
+    C1 = c1AST;
+    C2 = c2AST;
   }
-  
+
   public Object visit(Visitor v, Object o) {
-    return v.visitCaseRange(this, o);
+    return v.visitSequentialCase(this, o);
   }
 
-  public CaseLiteral cL1;
-  public CaseLiteral cL2 = null;
-
+  public SequentialCase C1 = null;
+  public Case C2;
 }

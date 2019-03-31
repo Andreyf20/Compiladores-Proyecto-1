@@ -52,6 +52,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -98,6 +100,8 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 public final class Encoder implements Visitor {
 
@@ -418,7 +422,17 @@ public final class Encoder implements Visitor {
     }
     
     @Override
+    public Object visitSequentialCase(SequentialCase ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
     public Object visitCase(Case ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -436,6 +450,8 @@ public final class Encoder implements Visitor {
     public Object visitCaseLiteral(CaseLiteral ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
   // Array Aggregates
   public Object visitMultipleArrayAggregate(MultipleArrayAggregate ast,
@@ -1076,5 +1092,19 @@ public final class Encoder implements Visitor {
       }
     }
   } 
+
+    @Override
+    public Object visitForDoCommand(ForDoCommand ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    
 
 }
