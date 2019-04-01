@@ -662,21 +662,4 @@ public class LayoutVisitor implements Visitor {
 
     return r;
   }
-
-    @Override
-    public Object visitForDoCommand(ForDoCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-
-  
-
-    
-  
 }
