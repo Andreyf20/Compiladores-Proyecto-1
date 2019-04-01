@@ -44,6 +44,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -118,13 +120,19 @@ public class LayoutVisitor implements Visitor {
   public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
     return layoutNullary("EmptyCom.");
   }
+  
+  //Visit para ForDoCommand
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      return layoutTernary("ForDoCom.", ast.FCD, ast.E1, ast.C);
+  }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-    return layoutQuinary("ForUntilCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForUntilCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    return layoutQuinary("ForWhileCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForWhileCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitIfCommand(IfCommand ast, Object obj) {
@@ -195,6 +203,12 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
+  //Visit para ForDtlDeclaration
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object obj)
+  {
+      return layoutBinary("ForCtlDecl", ast.id, ast.expression);
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
     return layoutQuaternary("Bin.Op.Decl.", ast.O, ast.ARG1, ast.ARG2, ast.RES);
   }

@@ -52,6 +52,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -124,6 +126,12 @@ public final class Encoder implements Visitor {
     
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
     return null;
+  }
+  
+  //Visit para ForDoCommand
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   public Object visitForUntilCommand(Triangle.AbstractSyntaxTrees.ForUntilCommand ast, Object o) {
@@ -289,6 +297,12 @@ public final class Encoder implements Visitor {
 
 
   // Declarations
+  //Visit para ForDoCommand
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+  {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast,
 					       Object o){
     return new Integer(0);
