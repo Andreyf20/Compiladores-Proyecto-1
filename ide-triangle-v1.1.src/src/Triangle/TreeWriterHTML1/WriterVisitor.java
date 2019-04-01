@@ -32,6 +32,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -78,6 +80,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -127,9 +131,8 @@ public class WriterVisitor implements Visitor {
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
-        ast.I.visit(this, null);
+        ast.D.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
-        ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>until</strong> </br> </p>");
@@ -142,9 +145,8 @@ public class WriterVisitor implements Visitor {
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
-        ast.I.visit(this, null);
+        ast.D.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
-        ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>while</strong> </br> </p>");
@@ -377,9 +379,19 @@ public class WriterVisitor implements Visitor {
     public Object visitCases(Cases ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public Object visitSequentialCase(SequentialCase aThis, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public Object visitCase(Case ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -711,6 +723,19 @@ public class WriterVisitor implements Visitor {
         else
             return operator;
     }
+
+    @Override
+    public Object visitForDoCommand(ForDoCommand ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
 
     
        

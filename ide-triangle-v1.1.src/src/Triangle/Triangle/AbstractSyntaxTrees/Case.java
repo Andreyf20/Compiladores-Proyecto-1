@@ -16,7 +16,7 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class Case extends AST {
+public class Case extends SwitchCase {
 
   public Case (CaseLiterals cL1, Command c1AST, SourcePosition thePosition) {
     super (thePosition);
@@ -29,6 +29,6 @@ public class Case extends AST {
     return v.visitCase(this, o);
   }
 
-  public Triangle.AbstractSyntaxTrees.CaseLiterals cL1;
-  public Triangle.AbstractSyntaxTrees.Command c1;
+  public CaseLiterals cL1;
+  public Command c1;
 }

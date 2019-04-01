@@ -12,7 +12,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  * @author kduran
  */
 public class ChooseCommand extends Command{
-    public ChooseCommand (Triangle.AbstractSyntaxTrees.Expression eAST, Triangle.AbstractSyntaxTrees.Command c1AST,
+    public ChooseCommand (Expression eAST, Cases c1AST,
                     SourcePosition thePosition) {
     super (thePosition);
     E = eAST;
@@ -23,7 +23,7 @@ public class ChooseCommand extends Command{
     return v.visitChooseCommand(this, o);
   }
 
-  public Triangle.AbstractSyntaxTrees.Expression E;
-  public Triangle.AbstractSyntaxTrees.Command C1;
+  public Expression E;
+  public Cases C1;
 }
 

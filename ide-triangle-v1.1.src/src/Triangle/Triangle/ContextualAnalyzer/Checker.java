@@ -98,6 +98,8 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 public final class Checker implements Visitor {
 
@@ -131,23 +133,7 @@ public final class Checker implements Visitor {
     return null;
   }
 
-  public Object visitChooseCommand(ChooseCommand ast, Object o) {
-//        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-//        if (! eType.equals(StdEnvironment.booleanType))
-//          reporter.reportError("Boolean expression expected here", "", ast.E.position);
-//        ast.C1.visit(this, null);
-//        return null;
-        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-        if(!(eType.equals(StdEnvironment.integerType) || eType.equals(StdEnvironment.charType))){
-          reporter.reportError("the expression type must be char or literal", "", ast.E.position);
-          return StdEnvironment.errorType;
-        }
-        else if (! eType.equals(ast.C1.visit(this, null))){
-          reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
-          return StdEnvironment.errorType;
-        }
-        return null;
-    }
+  
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
     return null;
@@ -437,26 +423,48 @@ public final class Checker implements Visitor {
   }
   
   //Cases
+  
+  public Object visitChooseCommand(ChooseCommand ast, Object o) {
+      
+        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+        if(!(eType.equals(StdEnvironment.integerType) || eType.equals(StdEnvironment.charType))){
+          reporter.reportError("the expression type must be char or integer", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
+        else if (! eType.equals(ast.C1.visit(this, null))){
+          reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
+        return null;
+    }
+  
   @Override
   public Object visitCases(Cases ast, Object o) {
-      if(ast.c1 == null && ast.c2 == null){
+      if(ast.SC1 == null){
           reporter.reportError (" the range case must have at least one case",
                             "", ast.position);
           return StdEnvironment.errorType;
-      }
-      else if(!(ast.c1 == null && ast.c2 == null)){
-          if(ast.c1.visit(this, null) != ast.c2.visit(this, null)){
-            reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
-                            "", ast.c1.position);
-            return StdEnvironment.errorType;
-          }
-
       }
       if(ast.command1 != null){
           ast.command1.visit(this, null);
       }
       
-      return ast.c1.visit(this, null);
+      return ast.SC1.visit(this, null);
+  }
+  
+  @Override
+  public Object visitSequentialCase(SequentialCase ast, Object o) {
+      
+    TypeDenoter eType = (TypeDenoter) ast.C2.visit(this, null);
+    if(ast.C1 != null){
+       TypeDenoter eType2 = (TypeDenoter)ast.C1.visit(this, null);
+       if(!eType.equals(eType2)){
+         reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
+                          "", ast.position);
+         return StdEnvironment.errorType;
+       }
+    }
+    return eType;
   }
   
   @Override
@@ -464,11 +472,24 @@ public final class Checker implements Visitor {
       ast.c1.visit(this, null);
       return ast.cL1.visit(this, null);
   }
+  
+  @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+        TypeDenoter eType = (TypeDenoter) ast.cR2.visit(this, null);
+        if(ast.SC1 != null){
+           TypeDenoter eType2 = (TypeDenoter)ast.SC1.visit(this, null);
+           if(!eType.equals(eType2)){
+             reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
+                              "", ast.position);
+             return StdEnvironment.errorType;
+           }
+        }
+        return eType;
+    }
 
   @Override
   public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-      ast.cR2.visit(this, null);
-      return ast.cR1.visit(this, null);
+      return ast.SCL1.visit(this, null);
   }
 
   @Override
@@ -495,8 +516,15 @@ public final class Checker implements Visitor {
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      return ast.E1.type;
+      if(ast.CL1 == null){
+          return StdEnvironment.charType;
+      }
+      else{
+          return StdEnvironment.integerType;
+      }
   }
+  
+    
   
   // Array Aggregates
 
@@ -1083,6 +1111,10 @@ public final class Checker implements Visitor {
     StdEnvironment.unequalDecl = declareStdBinaryOp("\\=", StdEnvironment.anyType, StdEnvironment.anyType, StdEnvironment.booleanType);
 
   }
+
+    
+
+    
 
 
 }

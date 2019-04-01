@@ -16,12 +16,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-public class Cases extends AST {
+public class Cases extends SwitchCase {
 
-  public Cases (Triangle.AbstractSyntaxTrees.Case c1, Triangle.AbstractSyntaxTrees.Case c2, Triangle.AbstractSyntaxTrees.Command command1, SourcePosition thePosition) {
+  public Cases (SequentialCase SC1, Command command1, SourcePosition thePosition) {
     super (thePosition);
-    this.c1 = c1;
-    this.c2 = c2;
+    this.SC1 = SC1;
     this.command1 = command1;
 
   }
@@ -30,7 +29,6 @@ public class Cases extends AST {
     return v.visitCases(this, o);
   }
 
-  public Triangle.AbstractSyntaxTrees.Case c1;
-  public Triangle.AbstractSyntaxTrees.Case c2;
-  public Triangle.AbstractSyntaxTrees.Command command1;
+  public SequentialCase SC1 = null;
+  public Command command1 = null;
 }
