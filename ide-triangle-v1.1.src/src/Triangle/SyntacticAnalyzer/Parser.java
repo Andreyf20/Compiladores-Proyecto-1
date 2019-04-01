@@ -372,6 +372,7 @@ public class Parser {
                     accept(Token.END);
                     finish(commandPos);
                     commandAST = new ForWhileCommand(dAST, e2AST, e3AST, commandAST, commandPos);
+                    break;
                   case Token.UNTIL:
                     acceptIt();
                     Expression e4AST = parseExpression();
@@ -380,9 +381,10 @@ public class Parser {
                     accept(Token.END);
                     finish(commandPos);
                     commandAST = new ForUntilCommand(dAST, e2AST, e4AST, commandAST, commandPos);
-                  break;
+                    break;
                   
               }
+              break;
           }
           case Token.WHILE:
           {

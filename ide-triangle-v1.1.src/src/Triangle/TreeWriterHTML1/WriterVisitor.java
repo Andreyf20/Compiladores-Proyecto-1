@@ -131,9 +131,8 @@ public class WriterVisitor implements Visitor {
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
-        ast.I.visit(this, null);
+        ast.D.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
-        ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>until</strong> </br> </p>");
@@ -146,9 +145,8 @@ public class WriterVisitor implements Visitor {
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>loop</strong> </br> </p>");
         writeLineHTML("\t<p style=\"color: #000000;font-family: courier;font-size:1em;\"><strong>for</strong> </br> </p>" );
-        ast.I.visit(this, null);
+        ast.D.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>from</strong> </br> </p>");
-        ast.E1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>to</strong> </br> </p>");
         ast.E2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; font-family: courier; font-size:1em;\"><strong>while</strong> </br> </p>");

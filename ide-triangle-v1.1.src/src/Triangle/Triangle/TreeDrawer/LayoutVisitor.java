@@ -124,11 +124,11 @@ public class LayoutVisitor implements Visitor {
   }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-    return layoutQuinary("ForUntilCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForUntilCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    return layoutQuinary("ForWhileCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForWhileCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitIfCommand(IfCommand ast, Object obj) {
@@ -522,7 +522,8 @@ public class LayoutVisitor implements Visitor {
     DrawingTree d3 = (DrawingTree) child3.visit(this, null);
     DrawingTree d4 = (DrawingTree) child4.visit(this, null);
     DrawingTree d5 = (DrawingTree) child4.visit(this, null);
-    dt.setChildren(new DrawingTree[] {d1, d2, d3, d4, d5});
+    DrawingTree d6 = (DrawingTree) child5.visit(this, null);
+    dt.setChildren(new DrawingTree[] {d1, d2, d3, d4, d5, d6});
     attachParent(dt, join(dt));
     return dt;
   }
