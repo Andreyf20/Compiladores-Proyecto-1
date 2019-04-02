@@ -709,22 +709,43 @@ public class WriterVisitor implements Visitor {
 
     @Override
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineXML("<ForWhileCommand>");
+        ast.D.visit(this, null);
+        ast.E2.visit(this, null);
+        ast.E3.visit(this, null);
+        ast.C.visit(this, null);
+        writeLineXML("</ForWhileCommand>");
+        return null;
     }
 
     @Override
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineXML("<ForUntilCommand>");
+        ast.D.visit(this, null);
+        ast.E2.visit(this, null);
+        ast.E3.visit(this, null);
+        ast.C.visit(this, null);
+        writeLineXML("</ForUntilCommand>");
+        return null;
     }
 
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineXML("<ForDoCommand>");
+        ast.FCD.visit(this, null);
+        ast.E1.visit(this, null);
+        ast.C.visit(this, null);
+        writeLineXML("</ForDoCommand>");
+        return null;
     }
 
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineXML("<ForCtlDeclaration>");
+        ast.id.visit(this, null);
+        ast.expression.visit(this, null);
+        writeLineXML("</ForCtlDeclaration>");
+        return null;
     }
 
     

@@ -377,37 +377,81 @@ public class WriterVisitor implements Visitor {
     //Cases
     @Override
     public Object visitCases(Cases ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<Cases>");
+        ast.SC1.visit(this, null);
+        if(ast.command1 != null){
+            ast.command1.visit(this, null);
+        }
+        writeLineHTML("</Cases>");
+        return null;
     }
     
     @Override
-    public Object visitSequentialCase(SequentialCase aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object visitSequentialCase(SequentialCase ast, Object o) {
+        writeLineHTML("<SequentialCase>");
+        if(ast.C1 != null){
+            ast.C1.visit(this, null);
+        }
+        ast.C2.visit(this, null);
+        writeLineHTML("</SequentialCase>");
+        return null;
     }
 
     @Override
     public Object visitCase(Case ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<Case>");
+        ast.cL1.visit(this, null);
+        ast.c1.visit(this, null);
+        writeLineHTML("</Case>");
+        return null;
     }
     
     @Override
     public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(ast.SC1 != null){
+            writeLineHTML("<SequentialCase>");
+            ast.SC1.visit(this, null);
+            ast.cR2.visit(this, null);
+            writeLineHTML("</SequentialCase>"); 
+        }
+        else{
+            ast.cR2.visit(this, null);
+        }
+        return null;
     }
 
     @Override
     public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<CaseLiterals>");
+        ast.SCL1.visit(this, null);
+        writeLineHTML("</CaseLiterals>"); 
+        return null;
     }
 
     @Override
     public Object visitCaseRange(CaseRange ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<CaseRange>");
+        ast.cL1.visit(this, null);
+        if(ast.cL2 != null){
+            ast.cL2.visit(this, null);
+        }
+        writeLineHTML("</CaseRange>"); 
+        return null;
     }
 
     @Override
     public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(ast.CL1 == null){
+            writeLineHTML("<IntLiteral>");
+            ast.IL1.visit(this, null);
+            writeLineHTML("</IntLiteral>"); 
+        }
+        else{
+            writeLineHTML("<CharLiteral>");
+            ast.CL1.visit(this, null);
+            writeLineHTML("</CharLiteral>"); 
+        }
+        return null;
     }
 
     // Array Aggregates

@@ -714,16 +714,28 @@ public class Parser {
       //de existir m�s cases, si no continua con el elseCase
       SourcePosition casesPos = new SourcePosition();
       start (casesPos);
+      
       while(currentToken.kind == Token.WHEN){
+          
           Case c2AST = parseCaseSingular();
           
-          //en caso de existir el else de un elseCase lo parsea
-          if(currentToken.kind == Token.ELSE){
-            elseCommand = parseElseCase();
-          }
           finish(casesPos);
           caseAST = new SequentialCase(caseAST, c2AST, casesPos);
+          
+          if(currentToken.kind == Token.ELSE){
+            break;
+          }
+          
       }
+      //en caso de existir el else de un elseCase lo parsea
+      if(currentToken.kind == Token.ELSE){
+        elseCommand = parseElseCase();
+      }
+      if(currentToken.kind == Token.WHEN){
+        syntacticError("\"%\" there cannot be an else before a choose case",
+        currentToken.spelling);
+      }
+      
       casesAST = new Cases(caseAST, elseCommand, casesPos);
       return casesAST;
   }
@@ -779,6 +791,10 @@ public class Parser {
       if(currentToken.kind == Token.DOUBLEDOT){          
         acceptIt();
         cL2 = parseCaseLiteralSingular();
+      }
+      else if(currentToken.kind == Token.DOT){
+        syntacticError("\"%\" found expected .. ",
+        currentToken.spelling);
       }
       finish(rangePos);
       caseRangeAST = new CaseRange(cL1, cL2, rangePos);
