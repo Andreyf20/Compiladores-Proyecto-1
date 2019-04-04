@@ -9,7 +9,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
  *
- * @author Eduardo Jirón
+ * @author Eduardo Jirn
  */
 public class ForCtlDeclaration extends Declaration
 {

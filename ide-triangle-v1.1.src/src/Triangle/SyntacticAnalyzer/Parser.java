@@ -350,13 +350,13 @@ public class Parser {
           case Token.FOR:
           {
               acceptIt();
+
               Declaration dAST = parseForCtlDeclaration();
               accept(Token.TO);
               Expression e2AST = parseExpression();
               switch (currentToken.kind) {
                   case Token.DO:
                   {
-                    //agregar la creacion del arbol del for do command
                     acceptIt();
                     commandAST = parseCommand();
                     accept(Token.END);
@@ -476,6 +476,7 @@ public class Parser {
         commandAST = new ChooseCommand(eAST, commandCaseAST, commandPos);
       }
       break;
+
 
     case Token.PASS:
     {
