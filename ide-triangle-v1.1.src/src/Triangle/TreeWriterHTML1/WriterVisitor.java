@@ -770,12 +770,21 @@ public class WriterVisitor implements Visitor {
 
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<ForDoCommand>");
+        ast.FCD.visit(this, null);
+        ast.E1.visit(this, null);
+        ast.C.visit(this, null);
+        writeLineHTML("</ForDoCommand>");
+        return null;
     }
 
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        writeLineHTML("<ForCtlDeclaration>");
+        ast.id.visit(this, null);
+        ast.expression.visit(this, null);
+        writeLineHTML("</ForCtlDeclaration>");
+        return null;
     }
 
     

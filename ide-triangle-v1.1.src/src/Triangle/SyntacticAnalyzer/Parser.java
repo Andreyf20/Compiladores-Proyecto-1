@@ -964,13 +964,14 @@ public class Parser {
   }
   
   Declaration parseProcFunc() throws SyntaxError{
-      Declaration declarationAST = null;
+      Declaration declarationAST = null; // inicia en nulo
       
-      SourcePosition declarationPos = new SourcePosition();
+      SourcePosition declarationPos = new SourcePosition(); // posicion de la declaracion
       start(declarationPos);
       
+      // Se revisa si es un proc o un func si no es ninguno entonces error
       switch(currentToken.kind) {
-          
+          // En caso de proc se necesita un id, secuencia de parametros y un comando
           case Token.PROC:
             {
                 acceptIt();
@@ -985,7 +986,7 @@ public class Parser {
                 declarationAST = new ProcDeclaration(iAST, fpsAST, cmdAST, declarationPos);
             }
             break;
-            
+          // En caso de func se necesita un id, secuencia de parametros, un tipo y una expresion
           case Token.FUNC:
             {
                 acceptIt();
@@ -1001,7 +1002,7 @@ public class Parser {
                 declarationAST = new FuncDeclaration(iAST, fpsAST, tAST, eAST, declarationPos);
             }
             break;
-            
+          // Si no es un proc ni un func entonces error
           default:
               syntacticError("\"%\" error parsing proc-func, unexpected token", currentToken.spelling);
               break;
@@ -1011,31 +1012,38 @@ public class Parser {
   }
   
   SequentialDeclaration parseProcFuncs() throws SyntaxError{
-      SequentialDeclaration declarationAST = null;
+      SequentialDeclaration declarationAST = null; // inicia nulo
       
-      SourcePosition declarationPos = new SourcePosition();
+      SourcePosition declarationPos = new SourcePosition(); // posicion de las declaraciones
       start(declarationPos);
       
+      Declaration dAST1 = null; // inicia nulo
+      
+      // Se verifica que se esta recibiendo un proc o un func
       if(currentToken.kind == Token.PROC || currentToken.kind == Token.FUNC) {
-          declarationAST = new SequentialDeclaration(parseProcFunc(), null, declarationPos);
+          dAST1 = parseProcFunc();
           finish(declarationPos);
       } else {
           syntacticError("\"%\" error parsing proc-funcs, unexpected token", currentToken.spelling);
       }
       
+      // Si se llega aqui debe haber una o mas "|" proc-func
       if(currentToken.kind == Token.OR) {
             acceptIt();
-            Declaration dAST = parseProcFunc();
+            start(declarationPos);
+            Declaration dAST2 = parseProcFunc();
             finish(declarationPos);
-            declarationAST = new SequentialDeclaration(declarationAST, dAST, declarationPos);
+            declarationAST = new SequentialDeclaration(dAST1, dAST2, declarationPos);
+            // Aqui se verifica que se haya terminado de parsear todas las procs o funcs que hayan
             while(currentToken.kind == Token.OR){
                 acceptIt();
-                dAST = parseProcFunc();
+                start(declarationPos);
+                dAST1 = parseProcFunc();
                 finish(declarationPos);
-                declarationAST = new SequentialDeclaration(declarationAST, dAST, declarationPos);
+                declarationAST = new SequentialDeclaration(declarationAST, dAST1, declarationPos);
             }
       } else {
-          syntacticError("\"%\" error parsing proc-funcs, unexpected token", currentToken.spelling);
+          syntacticError("\"%\" error parsing proc-funcs, expected |", currentToken.spelling);
       }
       
       return declarationAST;
@@ -1076,13 +1084,12 @@ public class Parser {
                 acceptIt();
                 Expression eAST = parseExpression();
                 finish(declarationPos);
-                //
+                // Se crea una nueva variable con la expresion en vez del tipo
                 declarationAST = new VarDeclarationInitialized(iAST, eAST, declarationPos);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //debe hacer el new vardeclaration en vez de constdeclaration pero no recibe una expression
                 break;
             default:
-                syntacticError("\"%\" unexpexted token", currentToken.spelling);
+                syntacticError("\"%\" unexpexted token in var", currentToken.spelling);
                 break;
         }
       }
