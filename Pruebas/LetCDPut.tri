@@ -1,0 +1,10 @@
+if (3>1) then
+let
+	var x ::= 1;
+	var y ::= 1
+in
+	if (x>y) then puteol() else puteol() end
+end
+else
+	puteol()
+end

@@ -918,7 +918,7 @@ public class Parser {
 
             case Token.RECURSIVE:
                 acceptIt();
-                declarationAST = parseProcFunc();
+                declarationAST = parseProcFuncs();
 
                 
                 break;
@@ -994,7 +994,7 @@ public class Parser {
                 accept(Token.LPAREN);
                 FormalParameterSequence fpsAST = parseFormalParameterSequence();
                 accept(Token.RPAREN);
-                accept(Token.SEMICOLON);
+                accept(Token.COLON);
                 TypeDenoter tAST = parseTypeDenoter();
                 accept(Token.IS);
                 Expression eAST = parseExpression();
