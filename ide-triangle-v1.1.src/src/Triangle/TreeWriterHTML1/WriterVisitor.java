@@ -26,6 +26,8 @@ import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -121,6 +123,28 @@ public class WriterVisitor implements Visitor {
             ast.C1.visit(this, null);
         }
         writeLineHTML("<p style=\"color: #000000; \">  </br><strong>end</strong>   </p>");
+        return null;
+    }
+    
+    //Visit de DoUntilCommand
+    public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+    {
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong> </p>");
+        ast.cAST.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>until</strong> </p>");
+        ast.eAST.visit(this, null);
+        return null;
+    }
+    
+    //Visit de DoWhileCommand
+    public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+    {
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong> </p>");
+        ast.cAST.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>while</strong> </p>");
+        ast.eAST.visit(this, null);
         return null;
     }
     

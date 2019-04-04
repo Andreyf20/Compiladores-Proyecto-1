@@ -88,6 +88,8 @@ import Triangle.AbstractSyntaxTrees.CaseLiteral;
 import Triangle.AbstractSyntaxTrees.CaseLiterals;
 import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.Cases;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import javax.swing.table.DefaultTableModel;
@@ -120,6 +122,22 @@ public class TableVisitor implements Visitor {
       ast.C1.visit(this, null);
       
       return(null);
+  }
+  
+  //Visit de DoUntilCommand
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
+  }
+  
+  //Visit de DoWhileCommand
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
   }
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) { 

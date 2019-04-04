@@ -26,6 +26,8 @@ import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -108,6 +110,26 @@ public class WriterVisitor implements Visitor {
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
         writeLineXML("</CallCommand>");
+        return null;
+    }
+    
+    //Visit de DoUntilCommand
+    public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+    {
+        writeLineXML("<DoUntilCommand>");
+        ast.cAST.visit(this, null);
+        ast.eAST.visit(this, null);
+        writeLineXML("</DoUntilCommand>");
+        return null;
+    }
+    
+    //Visit de DoWhileCommand
+    public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+    {
+        writeLineXML("<DoWhileCommand>");
+        ast.cAST.visit(this, null);
+        ast.eAST.visit(this, null);
+        writeLineXML("</DoWhileCommand>");
         return null;
     }
 

@@ -38,6 +38,8 @@ import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.Declaration;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -132,8 +134,22 @@ public final class Checker implements Visitor {
                            ast.I.spelling, ast.I.position);
     return null;
   }
-
   
+  //Visit de DoUntilCommand
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
+  }
+
+  //Visit de DoWhileCommand
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
+  }
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
     return null;

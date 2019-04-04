@@ -1,35 +1,18 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<SequentialCommand>
-<WhileCommand>
-<BinaryExpression>
-<VnameExpression>
+<DoUntilCommand>
+<AssignCommand>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
-</VnameExpression>
-<Operator value="&lt;"/>
 <IntegerExpression>
-<IntegerLiteral value="3"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
-</BinaryExpression>
-<EmptyCommand/>
-</WhileCommand>
-<WhileCommand>
-<BinaryExpression>
+</AssignCommand>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value="&lt;"/>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="r"/>
-</SimpleVname>
-</VnameExpression>
-</BinaryExpression>
-<EmptyCommand/>
-</WhileCommand>
-</SequentialCommand>
+</DoUntilCommand>
 </Program>
