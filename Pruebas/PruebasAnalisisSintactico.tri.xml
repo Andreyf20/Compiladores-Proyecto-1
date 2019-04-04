@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="e"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</VarDeclaration>
+<ForDoCommand>
+<ForCtlDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ForCtlDeclaration>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="e"/>
+</SimpleVname>
+</VnameExpression>
+<WhileCommand>
+<BinaryExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="e"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="e"/>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="e"/>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+</AssignCommand>
+</WhileCommand>
+</ForDoCommand>
+</LetCommand>
+</Program>
