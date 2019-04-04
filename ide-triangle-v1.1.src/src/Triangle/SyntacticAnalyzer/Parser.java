@@ -350,13 +350,13 @@ public class Parser {
           case Token.FOR:
           {
               acceptIt();
+
               Declaration dAST = parseForCtlDeclaration();
               accept(Token.TO);
               Expression e2AST = parseExpression();
               switch (currentToken.kind) {
                   case Token.DO:
                   {
-                    //agregar la creacion del arbol del for do command
                     acceptIt();
                     commandAST = parseCommand();
                     accept(Token.END);
@@ -476,6 +476,7 @@ public class Parser {
         commandAST = new ChooseCommand(eAST, commandCaseAST, commandPos);
       }
       break;
+
 
     case Token.PASS:
     {
@@ -943,7 +944,7 @@ public class Parser {
 
             case Token.RECURSIVE:
                 acceptIt();
-                declarationAST = parseProcFunc();
+                declarationAST = parseProcFuncs();
 
                 
                 break;
@@ -1019,7 +1020,7 @@ public class Parser {
                 accept(Token.LPAREN);
                 FormalParameterSequence fpsAST = parseFormalParameterSequence();
                 accept(Token.RPAREN);
-                accept(Token.SEMICOLON);
+                accept(Token.COLON);
                 TypeDenoter tAST = parseTypeDenoter();
                 accept(Token.IS);
                 Expression eAST = parseExpression();

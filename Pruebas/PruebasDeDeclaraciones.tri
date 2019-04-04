@@ -1,0 +1,7 @@
+let
+	recursive proc prueba1 () ~ pass end | func prueba2 () : Integer ~ x>1;
+	private var x ::= 1 in var y ::= x+2 end;
+	par var x : Integer | var y : Integer end
+in
+	pass
+end

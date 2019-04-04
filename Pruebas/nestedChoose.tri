@@ -1,0 +1,29 @@
+choose 1 
+from 
+	when 1..2|4..5|6
+	then
+		choose 2 
+		from 
+			when 8..9|10..11|12
+			then
+				if 5
+				then 
+					puteol()
+				else
+					puteol() 
+				end
+	when 'a'..4
+	then
+		puteol()
+	else!<--defaultcase 
+		puteol()
+end
+
+	when 'a'..4
+	then
+		puteol()
+	else!<--defaultcase 
+		puteol()
+end
+
+	
