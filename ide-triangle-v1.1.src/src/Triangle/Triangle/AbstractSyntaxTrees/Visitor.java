@@ -14,8 +14,6 @@
 
 package Triangle.AbstractSyntaxTrees;
 
-import Triangle.AbstractSyntaxTrees.ForWhileCommand;
-
 public interface Visitor {
 
   // Commands
@@ -25,6 +23,7 @@ public interface Visitor {
   public abstract Object visitEmptyCommand(EmptyCommand ast, Object o);
   public abstract Object visitIfCommand(IfCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
+  public abstract Object visitForDoCommand(ForDoCommand ast, Object o); //Visit para ForDoCommand
   public abstract Object visitForUntilCommand(ForUntilCommand ast, Object o);
   public abstract Object visitForWhileCommand(ForWhileCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
@@ -47,6 +46,7 @@ public interface Visitor {
 
   // Declarations
   public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o);
+  public abstract Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o); //visit de ForCtlDeclaration
   public abstract Object visitConstDeclaration(ConstDeclaration ast, Object o);
   public abstract Object visitFuncDeclaration(FuncDeclaration ast, Object o);
   public abstract Object visitProcDeclaration(ProcDeclaration ast, Object o);
@@ -62,6 +62,8 @@ public interface Visitor {
   public abstract Object visitCaseLiterals(CaseLiterals ast, Object o);
   public abstract Object visitCaseRange(CaseRange ast, Object o);
   public abstract Object visitCaseLiteral(CaseLiteral ast, Object o);
+  public abstract Object visitSequentialCase(SequentialCase ast, Object o);
+  public abstract Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o);
   
 
   // Array Aggregates
@@ -118,6 +120,9 @@ public interface Visitor {
 
   // Programs
   public abstract Object visitProgram(Program ast, Object o);
+
+    
+
 
 
 }

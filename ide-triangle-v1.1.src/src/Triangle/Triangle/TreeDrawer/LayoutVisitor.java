@@ -44,6 +44,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -90,6 +92,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 public class LayoutVisitor implements Visitor {
 
@@ -118,13 +122,19 @@ public class LayoutVisitor implements Visitor {
   public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
     return layoutNullary("EmptyCom.");
   }
+  
+  //Visit para ForDoCommand
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      return layoutTernary("ForDoCom.", ast.FCD, ast.E1, ast.C);
+  }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-    return layoutQuinary("ForUntilCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForUntilCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-    return layoutQuinary("ForWhileCom.", ast.I, ast.E1, ast.E2, ast.E3, ast.C);
+    return layoutQuaternary("ForWhileCom.", ast.D, ast.E2, ast.E3, ast.C);
   }
   
   public Object visitIfCommand(IfCommand ast, Object obj) {
@@ -195,6 +205,12 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
+  //Visit para ForDtlDeclaration
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object obj)
+  {
+      return layoutBinary("ForCtlDecl", ast.id, ast.expression);
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
     return layoutQuaternary("Bin.Op.Decl.", ast.O, ast.ARG1, ast.ARG2, ast.RES);
   }
@@ -234,11 +250,21 @@ public class LayoutVisitor implements Visitor {
   //cases
   @Override
     public Object visitCases(Cases ast, Object o) {
-        if(ast.command1 == null){
-            return(layoutBinary("Cases.", ast.c1, ast.c2));
+        if(ast.SC1 == null){
+            return(layoutUnary("Cases.", ast.command1));
         }
         else{
-            return(layoutTernary("Cases.", ast.c1, ast.c2, ast.command1));
+            return(layoutBinary("Cases.", ast.SC1, ast.command1));
+        }   
+    }
+    
+    @Override
+    public Object visitSequentialCase(SequentialCase ast, Object o) {
+        if(ast.C1 == null){
+            return(layoutUnary("SequentialCases.", ast.C2));
+        }
+        else{
+            return(layoutBinary("SequentialCases.", ast.C1, ast.C2));
         }   
     }
 
@@ -246,14 +272,24 @@ public class LayoutVisitor implements Visitor {
     public Object visitCase(Case ast, Object o) {
         return(layoutBinary("Case.", ast.cL1, ast.c1));
     }
+    
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+        if(ast.SC1 == null){
+            return(layoutUnary("SequentialCaseLiterals.", ast.cR2));
+        }
+        else{
+            return(layoutBinary("SequentialCaseLiterals.", ast.SC1, ast.cR2));
+        } 
+    }
 
     @Override
     public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-        if(ast.cR2 == null){
-            return(layoutUnary("CaseLiterals.", ast.cR1));
+        if(ast.SCL1 == null){
+            return(layoutNullary("CaseLiterals."));
         }
         else{
-            return(layoutBinary("CaseLiterals.", ast.cR1, ast.cR2));
+            return(layoutUnary("CaseLiterals.", ast.SCL1));
         }
     }
 
@@ -269,7 +305,7 @@ public class LayoutVisitor implements Visitor {
 
     @Override
     public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-        return(layoutUnary("CaseLiteral.", ast.E1));
+        return(layoutUnary("CaseLiteral.", ast.CL1));
     }
   
   // Array Aggregates
@@ -498,7 +534,8 @@ public class LayoutVisitor implements Visitor {
     DrawingTree d3 = (DrawingTree) child3.visit(this, null);
     DrawingTree d4 = (DrawingTree) child4.visit(this, null);
     DrawingTree d5 = (DrawingTree) child4.visit(this, null);
-    dt.setChildren(new DrawingTree[] {d1, d2, d3, d4, d5});
+    DrawingTree d6 = (DrawingTree) child5.visit(this, null);
+    dt.setChildren(new DrawingTree[] {d1, d2, d3, d4, d5, d6});
     attachParent(dt, join(dt));
     return dt;
   }
@@ -625,7 +662,4 @@ public class LayoutVisitor implements Visitor {
 
     return r;
   }
-
-    
-  
 }

@@ -11,24 +11,22 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author Eduardo Jirn
  */
-public class ForDoCommand extends Command
+public class ForCtlDeclaration extends Declaration
 {
-    public ForDoCommand(Declaration ctlAST, Expression e2AST,
-            Command commandAST, SourcePosition commandPos)
+
+    public ForCtlDeclaration(Identifier iAST, Expression eAST, SourcePosition thePosition)
     {
-    	super(commandPos);
-    	FCD = ctlAST;
-    	E1 = e2AST;
-    	C = commandAST;
+        super(thePosition);
+        id = iAST;
+        expression = eAST;
     }
+    
+    public Identifier id;
+    public Expression expression;
 
     @Override
     public Object visit(Visitor v, Object o)
     {
-        return v.visitForDoCommand(this, o);
+        return v.visitForCtlDeclaration(this, o);
     }
-    
-    public Declaration FCD;
-    public Expression E1;
-    public Command C;
 }

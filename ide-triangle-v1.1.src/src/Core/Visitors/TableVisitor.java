@@ -27,6 +27,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -86,6 +88,8 @@ import Triangle.AbstractSyntaxTrees.CaseLiteral;
 import Triangle.AbstractSyntaxTrees.CaseLiterals;
 import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.Cases;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -122,9 +126,16 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-      ast.I.visit(this, null);
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      ast.FCD.visit(this,null);
       ast.E1.visit(this, null);
+      ast.C.visit(this, null);
+      return null;
+  }
+  
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
+      ast.D.visit(this, null);
       ast.E2.visit(this, null);
       ast.E3.visit(this, null);
       ast.C.visit(this, null);
@@ -132,8 +143,7 @@ public class TableVisitor implements Visitor {
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-      ast.I.visit(this, null);
-      ast.E1.visit(this, null);
+      ast.D.visit(this, null);
       ast.E2.visit(this, null);
       ast.E3.visit(this, null);
       ast.C.visit(this, null);
@@ -252,6 +262,13 @@ public class TableVisitor implements Visitor {
   
   // <editor-fold defaultstate="collapsed" desc=" Declarations ">
   // Declarations
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+  {
+      ast.id.visit(this, null);
+      ast.expression.visit(this,null);
+      return null;
+  }
+  
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o) {        
       return(null);
   }
@@ -376,10 +393,18 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Cases ">
   @Override
   public Object visitCases(Cases ast, Object o) {
-      ast.c1.visit(this, null);
-      ast.c2.visit(this, null);
+      ast.SC1.visit(this, null);
       if(ast.command1 != null){
           ast.command1.visit(this, null);
+      }
+      return(null);
+  }
+  
+  @Override
+  public Object visitSequentialCase(SequentialCase ast, Object o) {
+      ast.C2.visit(this, null);
+      if(ast.C1 != null){
+          ast.C1.visit(this, null);
       }
       return(null);
   }
@@ -390,11 +415,19 @@ public class TableVisitor implements Visitor {
       ast.cL1.visit(this, null);
       return(null);
   }
+  
+  @Override
+  public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+      ast.cR2.visit(this, null);
+      if(ast.SC1 != null){
+          ast.SC1.visit(this, null);
+      }
+      return(null);
+  }
 
   @Override
   public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-      ast.cR1.visit(this, null);
-      ast.cR2.visit(this, null);
+      ast.SCL1.visit(this, null);
       return(null);
   }
 
@@ -407,9 +440,12 @@ public class TableVisitor implements Visitor {
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      ast.E1.visit(this, null);
+      ast.CL1.visit(this, null);
+      ast.IL1.visit(this, null);
       return(null);
   }
+  
+  
   
   // </editor-fold>
   
@@ -724,6 +760,10 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+    
+
+    
 
     
 

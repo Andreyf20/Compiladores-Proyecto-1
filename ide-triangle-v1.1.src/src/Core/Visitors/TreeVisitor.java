@@ -32,6 +32,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
@@ -78,6 +80,8 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -114,12 +118,18 @@ public class TreeVisitor implements Visitor {
         return(createNullary("Empty Command"));
     }
     
+    //Visit de ForDoCommand
+    public Object visitForDoCommand(ForDoCommand ast, Object o)
+    {
+        return(createTernary("ForDo Command", ast.FCD, ast.E1, ast.C));
+    }
+    
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-        return(createQuinary("ForWhile Command", ast.I, ast.E1, ast.E2, ast.E3, ast.C));
+        return(createQuaternary("ForWhile Command", ast.D, ast.E2, ast.E3, ast.C));
     }
     
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-        return(createQuinary("ForWhile Command", ast.I, ast.E1, ast.E2, ast.E3, ast.C));
+        return(createQuaternary("ForWhile Command", ast.D, ast.E2, ast.E3, ast.C));
     }
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
@@ -200,6 +210,12 @@ public class TreeVisitor implements Visitor {
         return(createBinary("Constant Declaration", ast.I, ast.E));
     }
     
+    //Implementacion de visit de ForCtlDeclaration
+    public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+    {
+        return(createBinary("ForCtl Declaration", ast.id, ast.expression));
+    }
+    
     public Object visitFuncDeclaration(FuncDeclaration ast, Object obj) {
         return(createQuaternary("Function Declaration", ast.I, ast.FPS, ast.T, ast.E));
     }
@@ -232,26 +248,54 @@ public class TreeVisitor implements Visitor {
     // <editor-fold defaultstate="collapsed" desc=" cases ">
     @Override
     public Object visitCases(Cases ast, Object o) {
-        if(ast.command1 == null){
-            return(createBinary("Cases", ast.c1, ast.c2));
+        
+        if(ast.SC1 == null && ast.command1 == null){
+            return(createNullary("Cases"));
+        }
+        else if(ast.SC1 == null){
+            return(createUnary("SequentialCase", ast.command1));
+        }
+        else if(ast.command1 == null){
+            return(createUnary("SequentialCase", ast.SC1));
+        
         }
         else{
-            return(createTernary("Cases", ast.c1, ast.c2, ast.command1));
-        }   
+            return(createBinary("SequentialCase", ast.SC1, ast.command1));
+        }
+    }
+    
+    @Override
+    public Object visitSequentialCase(SequentialCase ast, Object o) {
+        if(ast.C1 != null){
+            return(createBinary("SequentialCase", ast.C1, ast.C2));
+        }
+        else{
+            return(createUnary("Case", ast.C2));
+        }
     }
 
     @Override
     public Object visitCase(Case ast, Object o) {
         return(createBinary("Case", ast.cL1, ast.c1));
     }
+    
+    @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+        if(ast.SC1 != null){
+            return(createBinary("SequentialCase", ast.SC1, ast.cR2));
+        }
+        else{
+            return(createUnary("Case", ast.cR2));
+        }
+    }
 
     @Override
     public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-        if(ast.cR2 == null){
-            return(createUnary("CaseLiterals", ast.cR1));
+        if(ast.SCL1 == null){
+            return(createNullary("CaseLiterals"));
         }
         else{
-            return(createBinary("CaseLiterals", ast.cR1, ast.cR2));
+            return(createUnary("SequentialCaseLiterals", ast.SCL1));
         }
     }
 
@@ -267,7 +311,13 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-        return(createUnary("CaseLiteral", ast.E1));
+        if(ast.CL1 == null){
+          return(createUnary("CaseLiteral", ast.IL1));
+        }
+        else{
+          return(createUnary("CaseLiteral", ast.CL1));
+        }
+        
     }
     // </editor-fold>
     
@@ -530,4 +580,8 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
+    
+
+    
 }

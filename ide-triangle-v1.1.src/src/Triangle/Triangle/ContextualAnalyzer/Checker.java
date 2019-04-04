@@ -45,6 +45,8 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
+import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
@@ -96,6 +98,8 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.SequentialCase;
+import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 
 public final class Checker implements Visitor {
 
@@ -129,31 +133,23 @@ public final class Checker implements Visitor {
     return null;
   }
 
-  public Object visitChooseCommand(ChooseCommand ast, Object o) {
-//        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-//        if (! eType.equals(StdEnvironment.booleanType))
-//          reporter.reportError("Boolean expression expected here", "", ast.E.position);
-//        ast.C1.visit(this, null);
-//        return null;
-        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-        if(!(eType.equals(StdEnvironment.integerType) || eType.equals(StdEnvironment.charType))){
-          reporter.reportError("the expression type must be char or literal", "", ast.E.position);
-          return StdEnvironment.errorType;
-        }
-        else if (! eType.equals(ast.C1.visit(this, null))){
-          reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
-          return StdEnvironment.errorType;
-        }
-        return null;
-    }
+  
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
     return null;
   }
+  
+  //Visit del checker para ForDoCommand
+  public Object visitForDoCommand(ForDoCommand ast, Object o)
+  {
+      ast.FCD.visit(this, null);
+      ast.E1.visit(this, null);
+      ast.C.visit(this, null);
+      return null;
+  }
 
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
-    ast.I.visit(this, null);
-    ast.E1.visit(this, null);
+    ast.D.visit(this, null);
     ast.E2.visit(this, null);
     ast.E3.visit(this, null);
     ast.C.visit(this, null);
@@ -161,6 +157,7 @@ public final class Checker implements Visitor {
   }
   
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
+/*<<<<<<< HEAD
       
       //seria un quaternario compuesto por forDecl (i and E1) --->este seria nuevo, un e2, e3, comand 
       //pero esto esta bien no tengo que boorrlo, solo me falta algo 
@@ -169,6 +166,10 @@ public final class Checker implements Visitor {
     ast.I.visit(this, null); //trabajar i e1 como un solo ast de declaracion, uno nuevo FORDECL 
     ast.E1.visit(this, null); //validar como tipo entero
     ast.E2.visit(this, null); //validar como tipo entero
+=======*/
+    ast.D.visit(this, null);
+    ast.E2.visit(this, null);
+//>>>>>>> 268286af70c9d4e810b1d228c6ebc2c2b710d944
     ast.E3.visit(this, null);
     ast.C.visit(this, null); //variable de control deberia ser manejada como constante aqui en el command, 
     //loopCtlVar muy parecido a constante, constDe, ConstFormalParameter
@@ -359,6 +360,17 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  //Implementacion de visit del checker para ForCtlDeclaration
+  public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
+  {
+    TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
+    idTable.enter(ast.id.spelling, ast);
+    if (ast.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+                            ast.id.spelling, ast.position);
+    return null;
+  }
+  
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
     ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast); // permits recursion
@@ -426,26 +438,48 @@ public final class Checker implements Visitor {
   }
   
   //Cases
+  
+  public Object visitChooseCommand(ChooseCommand ast, Object o) {
+      
+        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+        if(!(eType.equals(StdEnvironment.integerType) || eType.equals(StdEnvironment.charType))){
+          reporter.reportError("the expression type must be char or integer", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
+        else if (! eType.equals(ast.C1.visit(this, null))){
+          reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
+          return StdEnvironment.errorType;
+        }
+        return null;
+    }
+  
   @Override
   public Object visitCases(Cases ast, Object o) {
-      if(ast.c1 == null && ast.c2 == null){
+      if(ast.SC1 == null){
           reporter.reportError (" the range case must have at least one case",
                             "", ast.position);
           return StdEnvironment.errorType;
-      }
-      else if(!(ast.c1 == null && ast.c2 == null)){
-          if(ast.c1.visit(this, null) != ast.c2.visit(this, null)){
-            reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
-                            "", ast.c1.position);
-            return StdEnvironment.errorType;
-          }
-
       }
       if(ast.command1 != null){
           ast.command1.visit(this, null);
       }
       
-      return ast.c1.visit(this, null);
+      return ast.SC1.visit(this, null);
+  }
+  
+  @Override
+  public Object visitSequentialCase(SequentialCase ast, Object o) {
+      
+    TypeDenoter eType = (TypeDenoter) ast.C2.visit(this, null);
+    if(ast.C1 != null){
+       TypeDenoter eType2 = (TypeDenoter)ast.C1.visit(this, null);
+       if(!eType.equals(eType2)){
+         reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
+                          "", ast.position);
+         return StdEnvironment.errorType;
+       }
+    }
+    return eType;
   }
   
   @Override
@@ -453,11 +487,24 @@ public final class Checker implements Visitor {
       ast.c1.visit(this, null);
       return ast.cL1.visit(this, null);
   }
+  
+  @Override
+    public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
+        TypeDenoter eType = (TypeDenoter) ast.cR2.visit(this, null);
+        if(ast.SC1 != null){
+           TypeDenoter eType2 = (TypeDenoter)ast.SC1.visit(this, null);
+           if(!eType.equals(eType2)){
+             reporter.reportError (" all the cases literals must match all charLiteral or all intLiteral",
+                              "", ast.position);
+             return StdEnvironment.errorType;
+           }
+        }
+        return eType;
+    }
 
   @Override
   public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-      ast.cR2.visit(this, null);
-      return ast.cR1.visit(this, null);
+      return ast.SCL1.visit(this, null);
   }
 
   @Override
@@ -484,8 +531,15 @@ public final class Checker implements Visitor {
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      return ast.E1.type;
+      if(ast.CL1 == null){
+          return StdEnvironment.charType;
+      }
+      else{
+          return StdEnvironment.integerType;
+      }
   }
+  
+    
   
   // Array Aggregates
 
@@ -1072,6 +1126,10 @@ public final class Checker implements Visitor {
     StdEnvironment.unequalDecl = declareStdBinaryOp("\\=", StdEnvironment.anyType, StdEnvironment.anyType, StdEnvironment.booleanType);
 
   }
+
+    
+
+    
 
 
 }

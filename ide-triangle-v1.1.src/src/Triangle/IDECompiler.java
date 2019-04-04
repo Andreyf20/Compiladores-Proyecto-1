@@ -65,11 +65,13 @@ public class IDECompiler {
 
         if (success){
             System.out.println("Compilation was successful.");
+            WriterHTML writerHTML = new WriterHTML(sourceName);
+            writerHTML.write(rootAST);
+            
             Writer writer = new Writer(sourceName);
             writer.write(rootAST);
             
-            WriterHTML writerHTML = new WriterHTML(sourceName);
-            writerHTML.write(rootAST);
+            
         }
         else{
             System.out.println("Compilation was unsuccessful.");
