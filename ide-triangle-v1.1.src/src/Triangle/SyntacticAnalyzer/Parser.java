@@ -501,9 +501,14 @@ public class Parser {
   Command parseElseCase() throws SyntaxError{
       
       Command commandAST = null; // in case there's a syntactic error
-      accept(Token.ELSE);
-      commandAST = parseCommand();
-
+      if(currentToken.kind == Token.ELSE){
+        acceptIt();
+        commandAST = parseCommand();
+      }
+      else{
+          syntacticError("expected else, found \"%\"",
+        currentToken.spelling);
+      }
       return commandAST;
   }
   
@@ -718,25 +723,34 @@ public class Parser {
       SourcePosition casesPos = new SourcePosition();
       start (casesPos);
       
-      while(currentToken.kind == Token.WHEN){
-          
-          Case c2AST = parseCaseSingular();
-          
-          finish(casesPos);
-          caseAST = new SequentialCase(caseAST, c2AST, casesPos);
-          
-          if(currentToken.kind == Token.ELSE){
-            break;
-          }
-          
-      }
-      //en caso de existir el else de un elseCase lo parsea
-      if(currentToken.kind == Token.ELSE){
-        elseCommand = parseElseCase();
-      }
       if(currentToken.kind == Token.WHEN){
-        syntacticError("\"%\" there cannot be an else before a choose case",
-        currentToken.spelling);
+        while(currentToken.kind == Token.WHEN){
+
+            Case c2AST = parseCaseSingular();
+            
+            finish(casesPos);
+            caseAST = new SequentialCase(caseAST, c2AST, casesPos);
+
+            if(currentToken.kind == Token.ELSE){
+              break;
+            }
+        }
+        //en caso de existir el else de un elseCase lo parsea
+        if(currentToken.kind == Token.ELSE){
+          elseCommand = parseElseCase();
+        }
+        else if(currentToken.kind != Token.END){
+            syntacticError("exprected when found, \"%\"",
+            currentToken.spelling);
+        }
+        if(currentToken.kind == Token.WHEN){
+          syntacticError("\"%\" there cannot be an else before a choose case",
+          currentToken.spelling);
+        }
+      }
+      else{
+          syntacticError("expected when, found \"%\"",
+          currentToken.spelling);
       }
       
       casesAST = new Cases(caseAST, elseCommand, casesPos);
@@ -747,17 +761,28 @@ public class Parser {
       Case caseAST = null; // in case thre�s a syntactic error
       SourcePosition casePos = new SourcePosition();
       start (casePos);
-      accept(Token.WHEN);
       
-      CaseLiterals cL1 = parseCaseLiteralsPlural();
-      
-      accept(Token.THEN);
-      
-      Command c1 = parseCommand();
-      finish(casePos);
-      
-      caseAST = new Case(cL1, c1, casePos);
-      
+      if(currentToken.kind == Token.WHEN){
+        accept(Token.WHEN);
+        CaseLiterals cL1 = parseCaseLiteralsPlural();
+
+        if(currentToken.kind == Token.THEN){
+            accept(Token.THEN);
+        }
+        else{
+            syntacticError("expected then, found: \"%\"",
+          currentToken.spelling);
+        }
+        
+        Command c1 = parseCommand();
+        finish(casePos);
+
+        caseAST = new Case(cL1, c1, casePos);
+      }
+      else{
+          syntacticError("expected when, found: \"%\"",
+          currentToken.spelling);
+      }
       return caseAST;
       
   }
@@ -828,7 +853,7 @@ public class Parser {
           break;
           
         default:
-          syntacticError("\"%\" cannot start an expression",
+          syntacticError("expected a char (int | literal), found: \"%\"",
           currentToken.spelling);
           break;
       }
