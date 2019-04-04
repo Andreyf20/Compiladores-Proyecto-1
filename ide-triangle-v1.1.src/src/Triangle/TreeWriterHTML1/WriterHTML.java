@@ -22,6 +22,7 @@ public class WriterHTML {
     public void write(Program ast) {
         // Prepare the file to write
         try {
+            
             FileWriter fileWriter = new FileWriter(fileName + ".html");
 
             //HTML header
@@ -29,9 +30,15 @@ public class WriterHTML {
                              "<head>\n" +
                              "  \t<meta charset=\"utf-8\">\n" +
                              "  \t<title>FileHTML</title>\n" +
-                             "</head>\n" +
-                             "<body>" +
-                             "  \t<span style=\"color: #0000ff;\">");
+                             "</head>\n"+
+                             "<style type=\"text/css\">\n"
+                    + "p {display: inline;" +
+                             "      font-family: courier;" +
+                             "      font-size:1em;" +
+                             "    }" +
+                             "\n" +
+                             "</style>" +
+                             "<body>");
                              //<p><span style="font-family: courier new; font-size: 1em;"> &ensp; &ensp; text as it would appear on a teletype. </span></p>
                              // tab --->&ensp;
                              // salto linea </br>
@@ -39,8 +46,7 @@ public class WriterHTML {
             ast.visit(layout, null);
             
             //HTML footer
-            fileWriter.write("  \t</span>\n" +
-                             "</body>\n" +
+            fileWriter.write("</body>\n" +
                              "</html>");
             
             fileWriter.close();
