@@ -12,10 +12,10 @@
 !let var a:Integer in pass end
 !if a < a then pass else pass end
 !choose a from when 3 then pass when 4 then pass else pass end
-let var e:Integer in
-	loop for a from 1 to e do
-		loop while e > a + 1 do
-			e := a + e
-		end
-	end
-end
+!let var e:Integer in
+!	loop for a from 1 to e do
+!		loop while e > a + 1 do
+!			e := a + e
+!		end
+!	end
+!end

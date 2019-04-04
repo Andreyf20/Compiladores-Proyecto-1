@@ -1,63 +1,35 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<LetCommand>
-<VarDeclaration>
-<Identifier value="e"/>
-<SimpleTypeDenoter>
-<Identifier value="Integer"/>
-</SimpleTypeDenoter>
-</VarDeclaration>
-<ForDoCommand>
-<ForCtlDeclaration>
-<Identifier value="a"/>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</ForCtlDeclaration>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="e"/>
-</SimpleVname>
-</VnameExpression>
+<SequentialCommand>
 <WhileCommand>
 <BinaryExpression>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="e"/>
-</SimpleVname>
-</VnameExpression>
-<Operator value=">"/>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-</BinaryExpression>
-<Operator value="+"/>
+<Operator value="&lt;"/>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="3"/>
 </IntegerExpression>
 </BinaryExpression>
-<AssignCommand>
-<SimpleVname>
-<Identifier value="e"/>
-</SimpleVname>
+<EmptyCommand/>
+</WhileCommand>
+<WhileCommand>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value="+"/>
+<Operator value="&lt;"/>
 <VnameExpression>
 <SimpleVname>
-<Identifier value="e"/>
+<Identifier value="r"/>
 </SimpleVname>
 </VnameExpression>
 </BinaryExpression>
-</AssignCommand>
+<EmptyCommand/>
 </WhileCommand>
-</ForDoCommand>
-</LetCommand>
+</SequentialCommand>
 </Program>
