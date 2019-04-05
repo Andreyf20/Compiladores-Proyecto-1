@@ -125,58 +125,57 @@ public class WriterVisitor implements Visitor {
     }
     
     public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>pass</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000; \"><strong>&ensp;pass</strong> </p>");
         return null;
     }
 
     public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong></p>");
-        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>for</strong>   </p>" );
+        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>for</strong></br></p>" );
         ast.D.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>from</strong>   </p>");
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>to</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>to</strong></br></p>");
         ast.E2.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>until</strong>  </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>until</strong></br></p>");
         ast.E3.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong></br></p>");
         ast.C.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>end</strong></br></p>");
         return null;
     }
     
     public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong></p>");
-        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>for</strong>   </p>" );
+        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>for</strong></br></p>" );
         ast.D.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>from</strong>   </p>");
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>to</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>to</strong></br></p>");
         ast.E2.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>while</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>while</strong></br></p>");
         ast.E3.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong></br></p>");
         ast.C.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>end</strong></br></p>");
         return null;
     }
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
         writeLineHTML("\t<p style=\"color: #000000;"
                             + "\">" 
-                                + "</br><strong>if</strong><p style=\"color: #000000;\">&ensp;(</p>" );
+                                + "</br></br><strong>if</strong><p style=\"color: #000000;\">(</p>" );
         ast.E.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; \">)</br><strong>then</strong></br></p>");
         ast.C1.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>else</strong></br></p>");
         ast.C2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>end</strong></br></p>");
-        
         return null;
     }
 
     public Object visitLetCommand(LetCommand ast, Object obj) {
-        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>&ensp.let</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>let</strong></p>");
         ast.D.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>&ensp.in</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>in</strong> </br></p>");
         ast.C.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>&ensp.end</strong>   </p>");
+        writeLineHTML("<p style=\"color: #000000; \"> </br><strong>end</strong></br></p>");
         return null;
     }
 
@@ -218,7 +217,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitBinaryExpression(BinaryExpression ast, Object obj) {
-        //writeLineHTML("<BinaryExpression>");
+        writeLineHTML("<BinaryExpression>");
         ast.E1.visit(this, null);
         //writeLineHTML("<p style=\"color: #000000; \">" + ast.O.spelling + "</p>");
         ast.O.visit(this, null);
@@ -228,6 +227,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitCallExpression(CallExpression ast, Object obj) {
+        System.out.println(ast.I.spelling);
         writeLineHTML("<p style=\"color: #2E6FE; \">" + ast.I.spelling + "</p>");
         ast.I.visit(this, null);
         ast.APS.visit(this, null);
@@ -235,6 +235,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitCharacterExpression(CharacterExpression ast, Object obj) {
+        System.out.println(ast.CL.spelling);
         writeLineHTML("<p style=\"color: #2E64FE; \">"+ ast.CL.spelling + "</p>");
         ast.CL.visit(this, null);
         //writeLineHTML("</CharacterExpression>");
@@ -247,9 +248,9 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitIfExpression(IfExpression ast, Object obj) {
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>if</strong></p></p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br></br><strong>if</strong></p>");
         ast.E1.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000; \"></br><strong>then</strong></p></p>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>then</strong></p>");
         ast.E2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"></br><strong>else</strong></p></p>");
         ast.E3.visit(this, null);
@@ -258,6 +259,7 @@ public class WriterVisitor implements Visitor {
 
     public Object visitIntegerExpression(IntegerExpression ast, Object obj) {
         writeLineHTML("<p style=\"color: #2E64FE;\">"+ ast.IL.spelling + "</p>");
+        System.out.println(ast.IL.spelling);
         ast.IL.visit(this, null);
         //writeLineHTML("</IntegerExpression>");
         return null;
@@ -279,6 +281,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitUnaryExpression(UnaryExpression ast, Object obj) {
+        System.out.println(ast.O.spelling);
         writeLineHTML("<p style=\"color: #000000;\">"+ast.O.spelling + "</p>");
         ast.O.visit(this, null);
         ast.E.visit(this, null);
@@ -318,9 +321,9 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("<p style=\"color: #000000;\"> ( </p>");
         ast.FPS.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"> ) </p>");
-        writeLineHTML("<p style=\"color: #000000;\"> ; </p>");
+        writeLineHTML("<p style=\"color: #000000;\"> : </p>");
         ast.T.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000;\"> is </p>");
+        writeLineHTML("<p style=\"color: #000000;\">~</p>");
         ast.E.visit(this, null);
         return null;
     }
@@ -330,18 +333,17 @@ public class WriterVisitor implements Visitor {
         ast.I.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"> (</p>");
         ast.FPS.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000;\"> ) </p>");
-        writeLineHTML("<p style=\"color: #000000;\">is</p>");
+        writeLineHTML("<p style=\"color: #000000;\"> )</p>");
+        writeLineHTML("<p style=\"color: #000000;\">~</p>");
         ast.C.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"></br><strong>end</strong>   </p>");
         return null;
     }
 
     public Object visitSequentialDeclaration(SequentialDeclaration ast, Object obj) {
-        writeLineHTML("<SequentialDeclaration>");
+        writeLineHTML("<p class=\"SequentialDeclaration\"style=\"color: #000000;\"></p>");
         ast.D1.visit(this, null);
         ast.D2.visit(this, null);
-        writeLineHTML("</SequentialDeclaration>");
         return null;
     }
 
@@ -363,16 +365,16 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitVarDeclaration(VarDeclaration ast, Object obj) {
-        writeLineHTML("<p style=\"color: #000000;\"></br><strong>var</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000;\"></br><strong>&ensp;var</strong> </p>");
         ast.I.visit(this, null);
-        writeLineHTML("<p style=\"color: #000000;\"> ::= </p>");
+        writeLineHTML("<p style=\"color: #000000;\"> : </p>");
         ast.T.visit(this, null);
         
         return null;
     }
     
     public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object obj) {
-        writeLineHTML("<p style=\"color: #000000;\"></br><strong>var</strong> </p>");
+        writeLineHTML("<p style=\"color: #000000;\"></br><strong>&ensp;var</strong> </p>");
         ast.I.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"> ::= </p>");
         ast.E.visit(this, null);
@@ -538,7 +540,7 @@ public class WriterVisitor implements Visitor {
     }
 
     public Object visitVarFormalParameter(VarFormalParameter ast, Object obj) {
-        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"></br><strong>var</strong></p>");
+        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"></br><strong>&ensp;var</strong></p>");
         ast.I.visit(this, null);
         writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \">:</p>");
         ast.T.visit(this, null);
@@ -570,25 +572,21 @@ public class WriterVisitor implements Visitor {
 
     // Actual Parameters
     public Object visitConstActualParameter(ConstActualParameter ast, Object obj) {
-        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"> </br><strong>const</strong></p>");
         ast.E.visit(this, null);
         return null;
     }
 
     public Object visitFuncActualParameter(FuncActualParameter ast, Object obj) {
-        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"> </br><strong>func</strong></p>");
         ast.I.visit(this, null);
         return null;
     }
 
     public Object visitProcActualParameter(ProcActualParameter ast, Object obj) {
-        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"> </br><strong>proc</strong></p>");
         ast.I.visit(this, null);
         return null;
     }
 
     public Object visitVarActualParameter(VarActualParameter ast, Object obj) {
-        writeLineHTML("<p class=\"SingleActualParameterSequence\" style=\"color: #000000; \"> </br><strong>var</strong></p>");
         ast.V.visit(this, null);
         return null;
     }
@@ -702,7 +700,7 @@ public class WriterVisitor implements Visitor {
     //Identifiers and Operators
     public Object visitIdentifier(Identifier ast, Object obj) {
         writeLineHTML("\t<p style=\"color: #000000;"
-                                    + "\">" 
+                                    + "\">&ensp;" 
                                 + ast.spelling + 
                         "</p>");
         return null;
@@ -710,7 +708,7 @@ public class WriterVisitor implements Visitor {
 
     public Object visitOperator(Operator ast, Object obj) {
         writeLineHTML("\t<p style=\"color: #000000;"
-                                    + "\">" 
+                                    + "\">&ensp;" 
                                 + ast.spelling + 
                         "</p>");
         return null;
@@ -776,20 +774,22 @@ public class WriterVisitor implements Visitor {
 
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
-        writeLineHTML("<ForDoCommand>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong></p>");
+        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>for</strong></br></p>" );
         ast.FCD.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>to</strong></br></p>");
         ast.E1.visit(this, null);
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>do</strong></br></p>");
         ast.C.visit(this, null);
-        writeLineHTML("</ForDoCommand>");
+        writeLineHTML("<p style=\"color: #000000; \"></br><strong>end</strong></br></p>");
         return null;
     }
 
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
-        writeLineHTML("<ForCtlDeclaration>");
         ast.id.visit(this, null);
+        writeLineHTML("\t<p style=\"color: #000000; \"></br><strong>from</strong></br></p>" );
         ast.expression.visit(this, null);
-        writeLineHTML("</ForCtlDeclaration>");
         return null;
     }
 
