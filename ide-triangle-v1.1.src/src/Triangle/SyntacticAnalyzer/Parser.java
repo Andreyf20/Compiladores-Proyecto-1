@@ -437,10 +437,12 @@ public class Parser {
                   }
                   default:
                       syntacticError("expected while or until, found \"%\"", currentToken.spelling);
-      break;
+                      break;
               }
               break;
           }
+          default:
+              syntacticError("expected for, while, until or do, found \"%\"", currentToken.spelling);
       }
     }
       break;  
