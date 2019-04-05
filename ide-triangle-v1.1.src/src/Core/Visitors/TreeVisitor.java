@@ -80,8 +80,14 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -580,6 +586,51 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
+    @Override
+    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
+        if(ast.func == null){
+            return(createUnary("Proc_FuncDec", ast.proc));
+        }
+        else{
+            return(createUnary("Proc_FuncDec", ast.func));
+        }
+    }
+
+    @Override
+    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
+        if(ast.rootSPF == null){
+            return(createUnary("Proc_FuncDec", ast.leafProc));
+        }
+        else{
+            return(createBinary("SequentialProc_FuncDec", ast.rootSPF, ast.leafProc));
+        }
+    }
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        return(createUnary("RecursiveDeclaration", ast.ProcFuncAST));
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        return(createBinary("PrivateDeclaration", ast.dcl1, ast.dcl2));
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        return(createUnary("ParDeckaratuib", ast.sdeclAST));
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object object) {
+        if(ast.optionalIdentifier1 == null){
+            return(createUnary("LongIdentifier", ast.identifier2));
+        }
+        else{
+            return(createBinary("LongIdentifier", ast.optionalIdentifier1, ast.identifier2));
+        }
+    }
 
     
 

@@ -80,8 +80,14 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -793,9 +799,69 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
-    
-    
+    @Override
+    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
+        if(ast.func == null){
+            ast.proc.visit(this, null);
+        }
+        else{
+            ast.func.visit(this, null);
+        }  
+        return null;
+    }       
+
+    @Override
+    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
+        writeLineHTML("<SequentialProcFuncs>");
+        if(ast.rootSPF == null){
+            ast.leafProc.visit(this, null);
+        }
+        else{
+            ast.leafProc.visit(this, null);
+            ast.rootSPF.visit(this, null);
+        }
+        writeLineHTML("</SequentialProcFuncs>");
+        return(null);
+    }
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        writeLineHTML("<RecursiveDeclaration>");
+        ast.ProcFuncAST.visit(this, null);
+        writeLineHTML("</RecursiveDeclaration>");
+        return(null);
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        writeLineHTML("<PrivateDeclaration>");
+        ast.dcl1.visit(this, null);
+        ast.dcl2.visit(this, null);
+        writeLineHTML("</PrivateDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        writeLineHTML("<ParDeclaration>");
+        ast.sdeclAST.visit(this, null);
+        writeLineHTML("</ParDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object o) {
+        writeLineHTML("<LongIdentifier>");
+        if(ast.optionalIdentifier1 == null){
+            ast.identifier2.visit(this, null);
+        }else{
+            ast.optionalIdentifier1.visit(this, null);
+            ast.identifier2.visit(this, null);
+        }
+        writeLineHTML("</LongIdentifier>");
+        return null;
+    }
 
     
-       
 }
+        

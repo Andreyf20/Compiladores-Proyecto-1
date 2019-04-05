@@ -88,8 +88,14 @@ import Triangle.AbstractSyntaxTrees.CaseLiteral;
 import Triangle.AbstractSyntaxTrees.CaseLiterals;
 import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.Cases;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -760,6 +766,65 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+
+
+    @Override
+    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
+        if(ast.func == null){
+            ast.proc.visit(this, null);
+        }
+        else{
+            ast.func.visit(this, null);
+        }
+        return (null);
+    }
+
+    @Override
+    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
+        if(ast.rootSPF == null){
+            ast.leafProc.visit(this, null);
+        }
+        else{
+            ast.leafProc.visit(this, null);
+            ast.rootSPF.visit(this, null);
+        }
+        return(null);
+    }
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        ast.ProcFuncAST.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        ast.dcl1.visit(this, null);
+        ast.dcl2.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        ast.sdeclAST.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object o) {
+        if(ast.optionalIdentifier1 == null){
+            ast.identifier2.visit(this, null);
+        }
+        else{
+            ast.optionalIdentifier1.visit(this, null);
+            ast.identifier2.visit(this, null);
+        }
+        return(null);
+    }
+
+
+
 
     
 

@@ -14,6 +14,7 @@
 
 package Triangle.AbstractSyntaxTrees;
 
+
 public interface Visitor {
 
   // Commands
@@ -120,6 +121,17 @@ public interface Visitor {
 
   // Programs
   public abstract Object visitProgram(Program ast, Object o);
+
+  
+  
+  public abstract Object visitProc_FuncDec(Proc_FuncDec ast, Object o);
+  public abstract Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o);
+  public abstract Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o);
+  public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
+  public abstract Object visitParDeclaration(ParDeclaration ast, Object o);
+  public abstract Object visitLong_Identifier(Long_Identifier ast, Object object);
+
+  public abstract Object visitPackageDeclaration(PackageDeclaration aThis, Object o);
 
     
 
