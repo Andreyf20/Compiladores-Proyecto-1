@@ -90,6 +90,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -491,6 +492,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitSimpleVname(SimpleVname ast, Object obj) {
         return(createUnary("Simple Vname", ast.I));
+    }
+    
+    public Object visitPackageVname(PackageVname ast, Object obj) {
+        return(createBinary("Package Vname", ast.pI, ast.I));
     }
     
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {

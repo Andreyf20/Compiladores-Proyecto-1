@@ -103,7 +103,7 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.SwitchCase;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 public class Parser {
 
@@ -369,7 +369,7 @@ public class Parser {
 
         } else {
 
-          Vname vAST = parseRestOfVname(iAST);
+          Vname vAST = parseRestOfVname(null, iAST);
           accept(Token.BECOMES);
           Expression eAST = parseExpression();
           finish(commandPos);
@@ -670,7 +670,7 @@ public class Parser {
           expressionAST = new CallExpression(iAST, apsAST, expressionPos);
 
         } else {
-          Vname vAST = parseRestOfVname(iAST);
+          Vname vAST = parseRestOfVname(null, iAST);
           finish(expressionPos);
           expressionAST = new VnameExpression(vAST, expressionPos);
         }
@@ -906,22 +906,26 @@ public class Parser {
 ///////////////////////////////////////////////////////////////////////////////
 
   Vname parseVname () throws SyntaxError {
-      
+    Identifier packageID = null;
     if(currentToken.kind == Token.IDENTIFIER){
-        parsePackageIdentifier();
+        packageID = parsePackageIdentifier();
         accept(Token.DOLLAR);
     }
       
     Vname vnameAST = null; // in case there's a syntactic error
     Identifier iAST = parseIdentifier();
-    vnameAST = parseRestOfVname(iAST);
+    vnameAST = parseRestOfVname(packageID, iAST);
     return vnameAST;
   }
 
-  Vname parseRestOfVname(Identifier identifierAST) throws SyntaxError {
+  Vname parseRestOfVname(Identifier packageID, Identifier identifierAST) throws SyntaxError {
     SourcePosition vnamePos = new SourcePosition();
     vnamePos = identifierAST.position;
-    Vname vAST = new SimpleVname(identifierAST, vnamePos);
+    Vname vAST = null;
+    if(packageID == null)
+        vAST = new SimpleVname(identifierAST, vnamePos);
+    else
+        vAST = new PackageVname(packageID, identifierAST, vnamePos);
 
     while (currentToken.kind == Token.DOT ||
            currentToken.kind == Token.LBRACKET) {

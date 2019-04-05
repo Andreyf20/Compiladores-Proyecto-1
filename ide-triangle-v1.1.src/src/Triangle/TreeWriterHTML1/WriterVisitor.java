@@ -90,6 +90,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -760,6 +761,14 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("<SimpleVname>");
         ast.I.visit(this, null);
         writeLineHTML("</SimpleVname>");
+        return null;
+    }
+    
+    public Object visitPackageVname(PackageVname ast, Object obj) {
+        writeLineHTML("<PackageVname>");
+        ast.pI.visit(this, null);
+        ast.I.visit(this, null);
+        writeLineHTML("</PackageVname>");
         return null;
     }
 

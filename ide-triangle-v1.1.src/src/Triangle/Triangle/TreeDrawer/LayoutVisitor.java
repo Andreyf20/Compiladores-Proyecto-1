@@ -102,6 +102,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 public class LayoutVisitor implements Visitor {
 
@@ -478,6 +479,10 @@ public class LayoutVisitor implements Visitor {
 
   public Object visitSimpleVname(SimpleVname ast, Object obj) {
     return layoutUnary("Sim.Vname", ast.I);
+  }
+  
+  public Object visitPackageVname(PackageVname ast, Object obj) {
+    return layoutBinary("Pack.Vname", ast.pI, ast.I);
   }
 
   public Object visitSubscriptVname(SubscriptVname ast, Object obj) {

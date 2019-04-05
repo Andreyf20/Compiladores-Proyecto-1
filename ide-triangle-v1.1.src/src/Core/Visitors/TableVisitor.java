@@ -99,6 +99,7 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import javax.swing.table.DefaultTableModel;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 
 public class TableVisitor implements Visitor {
@@ -732,6 +733,13 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  public Object visitPackageVname(PackageVname ast, Object o) {
+      ast.pI.visit(this, null);
+      ast.I.visit(this, null);
+  
+      return(null);
+  }
+  
   public Object visitSubscriptVname(SubscriptVname ast, Object o) { 
       ast.E.visit(this, null);
       ast.V.visit(this, null);
@@ -832,12 +840,5 @@ public class TableVisitor implements Visitor {
         ast.decl1.visit(this, null);
         ast.decl2.visit(this, null);
         return(null);
-    }
-    
-
-    
-
-    
-
-    
+    }    
 }
