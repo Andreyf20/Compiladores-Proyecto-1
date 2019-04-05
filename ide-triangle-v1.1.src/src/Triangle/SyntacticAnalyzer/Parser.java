@@ -384,7 +384,8 @@ public class Parser {
                     finish(commandPos);
                     commandAST = new ForUntilCommand(dAST, e2AST, e4AST, commandAST, commandPos);
                     break;
-                  
+                  default:
+                      syntacticError("expected do, while or until, found \"%\"", currentToken.spelling);
               }
               break;
           }
@@ -434,6 +435,9 @@ public class Parser {
                       commandAST = new DoUntilCommand(c1AST, e1AST, commandPos); //DoUntilCommand
                       break;
                   }
+                  default:
+                      syntacticError("expected while or until, found \"%\"", currentToken.spelling);
+      break;
               }
               break;
           }
