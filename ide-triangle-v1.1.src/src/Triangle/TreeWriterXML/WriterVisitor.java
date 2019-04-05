@@ -83,12 +83,14 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 
 import java.io.FileWriter;
@@ -706,6 +708,9 @@ public class WriterVisitor implements Visitor {
     // Programs
     public Object visitProgram(Program ast, Object obj) {
         writeLineXML("<Program>");
+        if(ast.packageAST != null){
+            ast.packageAST.visit(this, null);
+        }
         ast.C.visit(this, null);
         writeLineXML("</Program>");
         return null;
@@ -838,6 +843,24 @@ public class WriterVisitor implements Visitor {
             ast.identifier2.visit(this, null);
         }
         writeLineXML("</LongIdentifier>");
+        return null;
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        writeLineXML("<PackageDeclaration>");
+        ast.identifier.visit(this, null);
+        ast.decl.visit(this, null);
+        writeLineXML("</PackageDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        writeLineXML("<SequentialPackageDeclaration>");
+        ast.decl1.visit(this, null);
+        ast.decl2.visit(this, null);
+        writeLineXML("</SequentialPackageDeclaration>");
         return null;
     }
 

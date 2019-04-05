@@ -98,6 +98,7 @@ import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.table.DefaultTableModel;
 
@@ -744,6 +745,9 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Table Creation Methods ">
   // Programs
   public Object visitProgram(Program ast, Object o) { 
+      if(ast.packageAST != null){
+          ast.packageAST.visit(this, null);
+      }
       ast.C.visit(this, null);
       
       return(null);
@@ -849,14 +853,12 @@ public class TableVisitor implements Visitor {
         return(null);
     }
 
-
-//
-//public Object visitSequentialCommand(SequentialCommand ast, Object o) { 
-//      ast.C1.visit(this, null);
-//      ast.C2.visit(this, null);
-//      
-//      return(null);
-//  }
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        ast.decl1.visit(this, null);
+        ast.decl2.visit(this, null);
+        return(null);
+    }
     
 
     

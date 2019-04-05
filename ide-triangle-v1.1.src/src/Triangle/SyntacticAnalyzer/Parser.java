@@ -178,6 +178,7 @@ public class Parser {
       start(pos);
       if(currentToken.kind == Token.PACKAGE){
           packageDecl = parsePackageDeclaration();
+          accept(Token.SEMICOLON);
       }
       while(currentToken.kind == Token.PACKAGE){
           Declaration decl2 = parsePackageDeclaration();
@@ -269,9 +270,9 @@ public class Parser {
       decl = parseDeclaration();
       accept(Token.END);
       finish(positionPackage);
-      decl = new PackageDeclaration(I, decl, positionPackage, currentToken.spelling);//0
+      Declaration result = new PackageDeclaration(I, decl, positionPackage, currentToken.spelling);//0
       
-      return decl;
+      return result;
   }
   
   Identifier parsePackageIdentifier() throws SyntaxError{
@@ -982,7 +983,6 @@ public class Parser {
                 finish(declarationPos);
                 declarationAST = new RecursiveDeclaration(declarationAST, declarationPos);
                 break;
-                
             case Token.PRIVATE:
                 
                 acceptIt();

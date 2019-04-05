@@ -132,8 +132,8 @@ public interface Visitor {
   public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
   public abstract Object visitParDeclaration(ParDeclaration ast, Object o);
   public abstract Object visitLong_Identifier(Long_Identifier ast, Object object);
-
-  public abstract Object visitPackageDeclaration(PackageDeclaration aThis, Object o);
+  public abstract Object visitPackageDeclaration(PackageDeclaration ast, Object o);
+  public abstract Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o);
 
     
 

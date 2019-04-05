@@ -95,12 +95,14 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 
 public class LayoutVisitor implements Visitor {
@@ -488,7 +490,12 @@ public class LayoutVisitor implements Visitor {
 
   // Programs
   public Object visitProgram(Program ast, Object obj) {
-    return layoutUnary("Program", ast.C);
+      if(ast.packageAST != null){
+        return layoutBinary("Program", ast.packageAST, ast.C);
+      }
+      else{
+          return layoutUnary("Program", ast.C);
+      }
   }
 
   private DrawingTree layoutCaption (String name) {
@@ -726,6 +733,16 @@ public class LayoutVisitor implements Visitor {
         else{
             return layoutBinary("LongIdentifier", ast.optionalIdentifier1, ast.identifier2);
         }
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        return layoutBinary("PackageDecl", ast.identifier, ast.decl);
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        return layoutBinary("SequentialPackageDecl", ast.decl1, ast.decl2);
     }
    
 }

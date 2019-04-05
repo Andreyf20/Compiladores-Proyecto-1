@@ -83,12 +83,14 @@ import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
 import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -498,7 +500,12 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitProgram(Program ast, Object obj) {
-        return(createUnary("Program", ast.C));
+        if(ast.packageAST != null){
+            return(createBinary("Program", ast.packageAST, ast.C));
+        }
+        else{
+            return(createUnary("Program", ast.C));
+        }
     }
     // </editor-fold>
 
@@ -644,6 +651,16 @@ public class TreeVisitor implements Visitor {
         else{
             return(createBinary("LongIdentifier", ast.optionalIdentifier1, ast.identifier2));
         }
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        return(createBinary("PackageDeclaration", ast.identifier, ast.decl));
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        return(createBinary("SequentialPackageDeclaration", ast.decl1, ast.decl2));
     }
 
     

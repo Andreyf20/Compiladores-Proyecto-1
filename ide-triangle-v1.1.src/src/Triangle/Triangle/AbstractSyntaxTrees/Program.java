@@ -18,7 +18,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public class Program extends AST {
 
-  public Program (SequentialPackageDeclaration packageAST, Command cAST, SourcePosition thePosition) {
+  public Program (Declaration packageAST, Command cAST, SourcePosition thePosition) {
     super (thePosition);
     this.packageAST = packageAST;
     C = cAST;
