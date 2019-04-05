@@ -93,6 +93,9 @@ import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
@@ -126,6 +129,22 @@ public class TableVisitor implements Visitor {
       ast.C1.visit(this, null);
       
       return(null);
+  }
+  
+  //Visit de DoUntilCommand
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
+  }
+  
+  //Visit de DoWhileCommand
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+  {
+      ast.cAST.visit(this, null);
+      ast.eAST.visit(this, null);
+      return null;
   }
   
   public Object visitEmptyCommand(EmptyCommand ast, Object o) { 
@@ -823,9 +842,21 @@ public class TableVisitor implements Visitor {
         return(null);
     }
 
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        ast.identifier.visit(this, null);
+        ast.decl.visit(this, null);
+        return(null);
+    }
 
 
-
+//
+//public Object visitSequentialCommand(SequentialCommand ast, Object o) { 
+//      ast.C1.visit(this, null);
+//      ast.C2.visit(this, null);
+//      
+//      return(null);
+//  }
     
 
     

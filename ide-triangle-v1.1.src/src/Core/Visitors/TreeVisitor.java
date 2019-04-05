@@ -26,6 +26,8 @@ import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -118,6 +120,18 @@ public class TreeVisitor implements Visitor {
     
     public Object visitChooseCommand(ChooseCommand ast, Object o) {
         return(createBinary("Choose Command", ast.E, ast.C1));
+    }
+    
+    //Visit de DoUntilCommand
+    public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+    {
+        return createBinary("DoUntil Command", ast.cAST, ast.eAST);
+    }
+    
+    //Visit de DoWhileCommand
+    public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+    {
+        return createBinary("DoWhile Command", ast.cAST, ast.eAST);
     }
     
     public Object visitEmptyCommand(EmptyCommand ast, Object o) {
