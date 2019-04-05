@@ -126,8 +126,6 @@ public interface Visitor {
 
   
   
-  public abstract Object visitProc_FuncDec(Proc_FuncDec ast, Object o);
-  public abstract Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o);
   public abstract Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o);
   public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
   public abstract Object visitParDeclaration(ParDeclaration ast, Object o);

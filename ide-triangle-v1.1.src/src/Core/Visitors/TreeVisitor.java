@@ -86,12 +86,10 @@ import Triangle.AbstractSyntaxTrees.Long_Identifier;
 import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
-import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
-import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -607,26 +605,6 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
-
-    @Override
-    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
-        if(ast.func == null){
-            return(createUnary("Proc_FuncDec", ast.proc));
-        }
-        else{
-            return(createUnary("Proc_FuncDec", ast.func));
-        }
-    }
-
-    @Override
-    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
-        if(ast.rootSPF == null){
-            return(createUnary("Proc_FuncDec", ast.leafProc));
-        }
-        else{
-            return(createBinary("SequentialProc_FuncDec", ast.rootSPF, ast.leafProc));
-        }
-    }
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
