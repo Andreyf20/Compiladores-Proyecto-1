@@ -906,11 +906,15 @@ public class Parser {
 ///////////////////////////////////////////////////////////////////////////////
 
   Vname parseVname () throws SyntaxError {
+    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
     Identifier packageID = null;
     if(currentToken.kind == Token.IDENTIFIER){
         packageID = parsePackageIdentifier();
         accept(Token.DOLLAR);
     }
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
       
     Vname vnameAST = null; // in case there's a syntactic error
     Identifier iAST = parseIdentifier();
@@ -922,10 +926,14 @@ public class Parser {
     SourcePosition vnamePos = new SourcePosition();
     vnamePos = identifierAST.position;
     Vname vAST = null;
+    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
     if(packageID == null)
         vAST = new SimpleVname(identifierAST, vnamePos);
     else
         vAST = new PackageVname(packageID, identifierAST, vnamePos);
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     while (currentToken.kind == Token.DOT ||
            currentToken.kind == Token.LBRACKET) {
@@ -1041,6 +1049,9 @@ public class Parser {
       return declarationAST;
   }
   
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////// CAMBIOS EN PROC Y FUNC //////////////////////////////////////////////////////
+  
   Declaration parseProcFunc() throws SyntaxError{
       Declaration declarationAST = null; // inicia en nulo
       
@@ -1089,6 +1100,11 @@ public class Parser {
       return declarationAST;
   }
   
+  ///////////////// CAMBIOS EN PROC Y FUNC //////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////// NUEVA REGLA DE PROC-FUNCS /////////////////////////////////////////////////
   SequentialDeclaration parseProcFuncs() throws SyntaxError{
       SequentialDeclaration declarationAST = null; // inicia nulo
       
@@ -1126,7 +1142,8 @@ public class Parser {
       
       return declarationAST;
   }
-  
+   ///////////////// NUEVA REGLA DE PROC-FUNCS /////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////  
 
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
@@ -1151,6 +1168,8 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
+        //////////////////////////////////////////////////////////////////////////////
+        ////////////// NUEVA VARIABLE INICIALIZADA /////////////////////////
         switch (currentToken.kind) {
             case Token.COLON:
                 acceptIt();
@@ -1166,6 +1185,8 @@ public class Parser {
                 declarationAST = new VarDeclarationInitialized(iAST, eAST, declarationPos);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 break;
+        ////////////// NUEVA VARIABLE INICIALIZADA /////////////////////////
+        //////////////////////////////////////////////////////////////////////////////        
             default:
                 syntacticError("\"%\" unexpexted token in var", currentToken.spelling);
                 break;
