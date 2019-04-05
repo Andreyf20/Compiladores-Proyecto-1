@@ -98,12 +98,10 @@ import Triangle.AbstractSyntaxTrees.Long_Identifier;
 import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
-import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
-import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 
 public class LayoutVisitor implements Visitor {
 
@@ -690,25 +688,6 @@ public class LayoutVisitor implements Visitor {
     return r;
   }
 
-    @Override
-    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
-        if(ast.func == null){
-            return layoutUnary("Proc.Func.Decl", ast.proc);
-        }
-        else{
-            return layoutUnary("Proc.Func.Decl", ast.func);
-        }
-    }
-
-    @Override
-    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
-        if(ast.rootSPF == null){
-            return layoutUnary("Proc.Func", ast.leafProc);
-        }
-        else{
-            return layoutBinary("Sec.Proc.Func.Decl", ast.rootSPF, ast.leafProc);
-        }
-    }
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {

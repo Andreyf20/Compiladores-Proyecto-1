@@ -91,7 +91,6 @@ import Triangle.AbstractSyntaxTrees.Cases;
 import Triangle.AbstractSyntaxTrees.Long_Identifier;
 import Triangle.AbstractSyntaxTrees.ParDeclaration;
 import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
-import Triangle.AbstractSyntaxTrees.Proc_FuncDec;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.DoUntilCommand;
 import Triangle.AbstractSyntaxTrees.DoWhileCommand;
@@ -99,7 +98,6 @@ import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
-import Triangle.AbstractSyntaxTrees.SequentialProcFuncs;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -790,30 +788,6 @@ public class TableVisitor implements Visitor {
     private DefaultTableModel model;
     // </editor-fold>
 
-
-
-    @Override
-    public Object visitProc_FuncDec(Proc_FuncDec ast, Object o) {
-        if(ast.func == null){
-            ast.proc.visit(this, null);
-        }
-        else{
-            ast.func.visit(this, null);
-        }
-        return (null);
-    }
-
-    @Override
-    public Object visitSequentialProcFuncs(SequentialProcFuncs ast, Object o) {
-        if(ast.rootSPF == null){
-            ast.leafProc.visit(this, null);
-        }
-        else{
-            ast.leafProc.visit(this, null);
-            ast.rootSPF.visit(this, null);
-        }
-        return(null);
-    }
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
