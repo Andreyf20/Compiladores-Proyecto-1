@@ -174,8 +174,6 @@ public class Parser {
 
     try {
       Declaration packageDecl = null;
-      SourcePosition pos = new SourcePosition();
-      start(pos);
       if(currentToken.kind == Token.PACKAGE){
           packageDecl = parsePackageDeclaration();
           accept(Token.SEMICOLON);
@@ -183,10 +181,8 @@ public class Parser {
       while(currentToken.kind == Token.PACKAGE){
           Declaration decl2 = parsePackageDeclaration();
           accept(Token.SEMICOLON);
-          finish(pos);
-          packageDecl = new SequentialPackageDeclaration(packageDecl, decl2, pos);
+          packageDecl = new SequentialPackageDeclaration(packageDecl, decl2, previousTokenPosition);
       }
-        
       Command cAST = parseCommand();
       programAST = new Program(packageDecl, cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
@@ -215,7 +211,8 @@ public class Parser {
       String spelling = currentToken.spelling;
       IL = new IntegerLiteral(spelling, previousTokenPosition);
       currentToken = lexicalAnalyser.scan();
-    } else {
+    } 
+    else{
       IL = null;
       syntacticError("integer literal expected here", "");
     }
@@ -251,7 +248,8 @@ public class Parser {
       String spelling = currentToken.spelling;
       I = new Identifier(spelling, previousTokenPosition);
       currentToken = lexicalAnalyser.scan();
-    } else {
+    } 
+    else {
       I = null;
       syntacticError("identifier expected here", "");
     }
@@ -261,17 +259,22 @@ public class Parser {
   Declaration parsePackageDeclaration() throws SyntaxError{
       Identifier I = null;
       Declaration decl = null;
+      Declaration result = null;
       
       SourcePosition positionPackage = new SourcePosition();
       start(positionPackage);
-      accept(Token.PACKAGE);
-      I = parsePackageIdentifier();
-      accept(Token.IS);
-      decl = parseDeclaration();
-      accept(Token.END);
-      finish(positionPackage);
-      Declaration result = new PackageDeclaration(I, decl, positionPackage, currentToken.spelling);//0
-      
+      if(currentToken.kind == Token.PACKAGE){
+        accept(Token.PACKAGE);
+        I = parsePackageIdentifier();
+        accept(Token.IS);
+        decl = parseDeclaration();
+        accept(Token.END);
+        finish(positionPackage);
+        result = new PackageDeclaration(I, decl, positionPackage, currentToken.spelling);
+      }
+      else{
+        syntacticError("expected package, found \"%\"", currentToken.spelling);
+      }
       return result;
   }
   
@@ -296,6 +299,9 @@ public class Parser {
               finish(positionLong);
               I = new Long_Identifier(null, optional, positionLong, currentToken.spelling);
           }          
+      }
+      else{
+          syntacticError("expected identifier, found \"%\"", currentToken.spelling);
       }
       return I;
   }
