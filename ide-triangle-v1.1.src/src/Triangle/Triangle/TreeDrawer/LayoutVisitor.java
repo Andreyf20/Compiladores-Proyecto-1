@@ -38,6 +38,8 @@ import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
+import Triangle.AbstractSyntaxTrees.DoUntilCommand;
+import Triangle.AbstractSyntaxTrees.DoWhileCommand;
 import Triangle.AbstractSyntaxTrees.DotVname;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
@@ -118,7 +120,19 @@ public class LayoutVisitor implements Visitor {
   public Object visitChooseCommand(ChooseCommand ast, Object o) {
     return layoutBinary("ChooseCom.", ast.E, ast.C1);
   }
+  
+  //Visit de DoUntilCommand
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
+  {
+      return layoutBinary("DoUntilCom.", ast.cAST, ast.eAST);
+  }
 
+  //Visit de DoWhileCommand
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
+  {
+      return layoutBinary("DoWhileCom.", ast.cAST, ast.eAST);
+  }
+  
   public Object visitEmptyCommand(EmptyCommand ast, Object obj) {
     return layoutNullary("EmptyCom.");
   }
