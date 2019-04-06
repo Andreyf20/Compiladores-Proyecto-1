@@ -383,7 +383,8 @@ public class Parser {
         }
       }
       break;
-   
+    
+    //Cambio: se agrego el case de loop y sus casos
     case Token.LOOP:
       {
       acceptIt();
@@ -524,7 +525,7 @@ public class Parser {
       }
       break;
 
-
+    //Cambio: se agrego el case de pass
     case Token.PASS:
     {
       acceptIt();
@@ -982,7 +983,7 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-  //Parse para ForCtlDeclaration
+  //Cambio: se agrego Parse para ForCtlDeclaration
   Declaration parseForCtlDeclaration() throws SyntaxError
   {
       Declaration declarationAST = null; //si hay un error de sintaxis

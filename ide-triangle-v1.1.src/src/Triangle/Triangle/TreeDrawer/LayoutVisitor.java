@@ -128,13 +128,13 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("ChooseCom.", ast.E, ast.C1);
   }
   
-  //Visit de DoUntilCommand
+  //Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       return layoutBinary("DoUntilCom.", ast.cAST, ast.eAST);
   }
 
-  //Visit de DoWhileCommand
+  //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       return layoutBinary("DoWhileCom.", ast.cAST, ast.eAST);
@@ -144,7 +144,7 @@ public class LayoutVisitor implements Visitor {
     return layoutNullary("EmptyCom.");
   }
   
-  //Visit para ForDoCommand
+  //Cambio: se agrego Visit para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       return layoutTernary("ForDoCom.", ast.FCD, ast.E1, ast.C);
@@ -226,7 +226,7 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
-  //Visit para ForDtlDeclaration
+  //Cambio: se agrego Visit para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object obj)
   {
       return layoutBinary("ForCtlDecl", ast.id, ast.expression);

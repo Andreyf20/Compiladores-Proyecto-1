@@ -133,7 +133,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoUntilCommand
+    //Cambio: se agrego Visit de DoUntilCommand
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
     {
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong> </p>");
@@ -144,7 +144,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoWhileCommand
+    //Cambio: se agrego Visit de DoWhileCommand
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
     {
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>loop</strong> </p>");
@@ -816,6 +816,7 @@ public class WriterVisitor implements Visitor {
             return operator;
     }
 
+    //Cambio: se agrego visit para ForDoCommand
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
         writeLineHTML("<ForDoCommand>");
@@ -826,6 +827,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    //Cambio: se agrego visit para ForCtlDeclaration
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
         writeLineHTML("<ForCtlDeclaration>");

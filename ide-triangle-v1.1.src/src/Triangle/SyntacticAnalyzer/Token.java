@@ -57,7 +57,7 @@ final class Token extends Object {
   }
 
   // Token classes...
-
+  //Cambio: se agrego los token necesarios para los cambios sintacticos
   public static final int
 
     // literals, identifiers, operators...

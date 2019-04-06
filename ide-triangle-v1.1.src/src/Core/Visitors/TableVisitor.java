@@ -131,7 +131,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  //Visit de DoUntilCommand
+  ////Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -139,7 +139,7 @@ public class TableVisitor implements Visitor {
       return null;
   }
   
-  //Visit de DoWhileCommand
+  ////Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -151,6 +151,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  //Cambio: se agrego Visit ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       ast.FCD.visit(this,null);
@@ -287,6 +288,7 @@ public class TableVisitor implements Visitor {
   
   // <editor-fold defaultstate="collapsed" desc=" Declarations ">
   // Declarations
+  //Cambio: se agrego Visit de ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
       ast.id.visit(this, null);

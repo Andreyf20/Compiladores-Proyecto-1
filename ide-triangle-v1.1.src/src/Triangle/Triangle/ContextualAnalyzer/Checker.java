@@ -142,7 +142,7 @@ public final class Checker implements Visitor {
     return null;
   }
   
-  //Visit de DoUntilCommand
+  //Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -150,7 +150,7 @@ public final class Checker implements Visitor {
       return null;
   }
 
-  //Visit de DoWhileCommand
+  //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -162,7 +162,7 @@ public final class Checker implements Visitor {
     return null;
   }
   
-  //Visit del checker para ForDoCommand
+  //Cambio: se agrego Visit del checker para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       ast.FCD.visit(this, null);
@@ -383,7 +383,7 @@ public final class Checker implements Visitor {
     return null;
   }
 
-  //Implementacion de visit del checker para ForCtlDeclaration
+  //Cambio: se agrego Implementacion de visit del checker para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
     TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);

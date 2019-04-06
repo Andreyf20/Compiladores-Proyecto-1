@@ -21,12 +21,12 @@ public interface Visitor {
   public abstract Object visitAssignCommand(AssignCommand ast, Object o);
   public abstract Object visitCallCommand(CallCommand ast, Object o);
   public abstract Object visitChooseCommand(ChooseCommand ast, Object o);
-  public abstract Object visitDoUntilCommand(DoUntilCommand ast, Object o); //Visit para DoUntilCommand
-  public abstract Object visitDoWhileCommand(DoWhileCommand ast, Object o); //Visit para DoWhileCommand
+  public abstract Object visitDoUntilCommand(DoUntilCommand ast, Object o); //Cambio: se agrego Visit para DoUntilCommand
+  public abstract Object visitDoWhileCommand(DoWhileCommand ast, Object o); //Cambio: se agrego Visit para DoWhileCommand
   public abstract Object visitEmptyCommand(EmptyCommand ast, Object o);
   public abstract Object visitIfCommand(IfCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
-  public abstract Object visitForDoCommand(ForDoCommand ast, Object o); //Visit para ForDoCommand
+  public abstract Object visitForDoCommand(ForDoCommand ast, Object o); //Cambio: se agrego Visit para ForDoCommand
   public abstract Object visitForUntilCommand(ForUntilCommand ast, Object o);
   public abstract Object visitForWhileCommand(ForWhileCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
@@ -49,7 +49,7 @@ public interface Visitor {
 
   // Declarations
   public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o);
-  public abstract Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o); //visit de ForCtlDeclaration
+  public abstract Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o); //Cambio: se agrego visit de ForCtlDeclaration
   public abstract Object visitConstDeclaration(ConstDeclaration ast, Object o);
   public abstract Object visitFuncDeclaration(FuncDeclaration ast, Object o);
   public abstract Object visitProcDeclaration(ProcDeclaration ast, Object o);
