@@ -1,5 +1,0 @@
-let 
-	var x::=1
-in
-	hola(var x $ y)
-end

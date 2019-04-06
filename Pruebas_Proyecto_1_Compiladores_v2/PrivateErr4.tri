@@ -1,0 +1,13 @@
+let
+	private
+		var a::=5;
+		var b::=15
+	in
+	
+	end;
+	var d::= 5
+in
+	putint(c)
+end
+
+! Error: Falta declaración en private que usa la local

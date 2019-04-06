@@ -1,0 +1,12 @@
+let
+	private
+	
+	in
+		var c::=a*b*2
+	end;
+	var d::= 5
+in
+	putint(c)
+end
+
+! Error: Falta declaración local en el private

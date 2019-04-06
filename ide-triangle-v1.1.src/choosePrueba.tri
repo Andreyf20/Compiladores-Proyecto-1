@@ -1,8 +1,0 @@
-choose 3 from
-	when 1..2
-	then 
-		choose 2 from
-		 when 1..2
-		 then puteol()
-end
-end
