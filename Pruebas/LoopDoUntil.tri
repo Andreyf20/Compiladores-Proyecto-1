@@ -1,1 +1,0 @@
-loop do pass until x>1 end

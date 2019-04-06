@@ -189,10 +189,10 @@ public class Parser {
       }
       Command cAST = parseCommand();
       
-      if(currentToken.kind == Token.COMMENTARY){
-          acceptIt();
-          System.out.println(lexicalAnalyser.getComment());
-      }
+      //if(currentToken.kind == Token.COMMENTARY){
+          //acceptIt();
+          //System.out.println(lexicalAnalyser.getComment());
+      //}
       
       programAST = new Program(packageDecl, cAST, previousTokenPosition, lexicalAnalyser.getComment());
       if (currentToken.kind != Token.EOT) {

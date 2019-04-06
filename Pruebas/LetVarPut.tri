@@ -1,5 +1,0 @@
-let
-	var x ::= 'a'
-in
-	if (x>1) then pass else puteol(x) end
-end
