@@ -1,0 +1,13 @@
+let
+	recursive
+		func doble(var i : Integer) : Integer ~
+			triplicar(i)/3*2
+		|
+		proc triplicar(var i : Integer) ~
+			i := i + doble(i)
+		end
+in
+	pass
+end
+
+! Error: Falta el end del recursive

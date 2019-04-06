@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<ConstDeclaration>
+<Identifier value="variableName"/>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+</ConstDeclaration>
+<CallCommand>
+<LongIdentifier>
+<Identifier value="puteol"/>
+</LongIdentifier>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</LetCommand>
+</Program>

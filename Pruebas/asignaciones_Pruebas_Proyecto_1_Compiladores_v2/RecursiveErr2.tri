@@ -1,0 +1,12 @@
+let
+	recursive
+		func doble(var i : Integer) : Integer ~
+			i*2
+		|
+		var i : Integer
+	end
+in
+	pass
+end
+
+! Error: una de las alternativas no es un proc o func

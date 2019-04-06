@@ -1,0 +1,3 @@
+loop do pass until 4=4 end
+
+! OK

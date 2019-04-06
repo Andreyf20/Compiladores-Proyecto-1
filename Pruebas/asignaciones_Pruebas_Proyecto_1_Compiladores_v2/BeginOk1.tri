@@ -1,0 +1,9 @@
+let
+  var begin: Integer
+in
+  putint (begin);
+  puteol ()
+end
+
+! OK: begin ya no es palabra reservada
+! y el comando puede ser compuesto

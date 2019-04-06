@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<RecursiveDeclaration>
+<SequentialDeclaration>
+<VarDeclarationInitialized>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</VarDeclarationInitialized>
+<VarDeclarationInitialized>
+<Identifier value="b"/>
+<IntegerExpression>
+<IntegerLiteral value="15"/>
+</IntegerExpression>
+</VarDeclarationInitialized>
+</SequentialDeclaration>
+<VarDeclarationInitialized>
+<Identifier value="c"/>
+<BinaryExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="a"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+<Operator value="*"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="b"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+<Operator value="*"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+</VarDeclarationInitialized>
+</RecursiveDeclaration>
+<VarDeclarationInitialized>
+<Identifier value="d"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</VarDeclarationInitialized>
+</SequentialDeclaration>
+<CallCommand>
+<LongIdentifier>
+<Identifier value="putint"/>
+</LongIdentifier>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="c"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</Program>

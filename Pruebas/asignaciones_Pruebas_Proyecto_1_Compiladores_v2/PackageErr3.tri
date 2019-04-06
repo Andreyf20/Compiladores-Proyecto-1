@@ -1,0 +1,11 @@
+package myP ~
+	var a: Integer
+;
+let
+	var b: Integer;
+	b:= myP $ a
+in
+	pass
+end
+
+!Error: falta el end del package

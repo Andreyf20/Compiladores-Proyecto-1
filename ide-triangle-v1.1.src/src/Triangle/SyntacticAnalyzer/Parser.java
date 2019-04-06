@@ -33,6 +33,7 @@ import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.Command;
+import Triangle.AbstractSyntaxTrees.Comment;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -174,7 +175,8 @@ public class Parser {
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
-
+    String comment = lexicalAnalyser.getComment();
+    
     try {
       Declaration packageDecl = null;
       if(currentToken.kind == Token.PACKAGE){
@@ -187,6 +189,10 @@ public class Parser {
           packageDecl = new SequentialPackageDeclaration(packageDecl, decl2, previousTokenPosition);
       }
       Command cAST = parseCommand();
+      
+      Comment comAST = new Comment(previousTokenPosition);
+      comAST.spelling = comment;
+      
       programAST = new Program(packageDecl, cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
         syntacticError("\"%\" not expected after end of program",
@@ -557,8 +563,6 @@ public class Parser {
       }
       return commandAST;
   }
-  
-  
 
 ///////////////////////////////////////////////////////////////////////////////
 //

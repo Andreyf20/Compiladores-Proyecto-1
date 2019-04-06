@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+      
 package Triangle.TreeWriterHTML1;
 
 import Triangle.AbstractSyntaxTrees.Program;
@@ -22,7 +23,7 @@ public class WriterHTML {
     public void write(Program ast) {
         // Prepare the file to write
         try {
-            
+            //this code was modified------------------------------------------------------------------------
             FileWriter fileWriter = new FileWriter(fileName + ".html");
 
             //HTML header
@@ -32,6 +33,10 @@ public class WriterHTML {
                              "  \t<title>FileHTML</title>\n" +
                              "</head>\n"+
                              "<style type=\"text/css\">\n"
+                    + "div {display: inline;" +
+                             "      font-family: courier;" +
+                             "      font-size:1em;" +
+                             "    }"
                     + "p {display: inline;" +
                              "      font-family: courier;" +
                              "      font-size:1em;" +
@@ -39,9 +44,6 @@ public class WriterHTML {
                              "\n" +
                              "</style>" +
                              "<body>");
-                             //<p><span style="font-family: courier new; font-size: 1em;"> &ensp; &ensp; text as it would appear on a teletype. </span></p>
-                             // tab --->&ensp;
-                             // salto linea </br>
             WriterVisitor layout = new WriterVisitor(fileWriter);
             ast.visit(layout, null);
             

@@ -8,8 +8,7 @@ package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
- * Cambio: se agrego la clase para DoUntilCommand
- * @author Eduardo Jirón
+ * @author Eduardo Jirn
  */
 public class DoUntilCommand extends Command
 {

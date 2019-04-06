@@ -1,0 +1,3 @@
+if 1=1 do puteol() else puteol() end
+
+! Error: Puso do en vez de then

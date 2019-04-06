@@ -8,8 +8,7 @@ package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
- * Cambio: se agrego la clase para DoWhileCommand
- * @author Eduardo Jirón
+ * @author Eduardo Jirn
  */
 public class DoWhileCommand extends Command
 {

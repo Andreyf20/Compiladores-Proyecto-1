@@ -90,6 +90,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.Comment;
 import Triangle.AbstractSyntaxTrees.PackageVname;
 
 import java.io.FileWriter;
@@ -846,6 +847,12 @@ public class WriterVisitor implements Visitor {
         ast.decl1.visit(this, null);
         ast.decl2.visit(this, null);
         writeLineXML("</SequentialPackageDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitComment(Comment ast, Object o) {
+        writeLineXML("<Comment>");
         return null;
     }
 

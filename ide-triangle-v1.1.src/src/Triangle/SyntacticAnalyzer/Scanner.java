@@ -14,6 +14,8 @@
 
 package Triangle.SyntacticAnalyzer;
 
+import Triangle.AbstractSyntaxTrees.Comment;
+
 
 public final class Scanner {
 
@@ -24,6 +26,12 @@ public final class Scanner {
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
 
+  private String comment;
+
+  public String getComment() {
+      return comment;
+  }  
+  
   private boolean isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
   }
@@ -70,10 +78,14 @@ public final class Scanner {
     case '!':
       {
         takeIt();
-        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT))
-          takeIt();
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
+            takeIt();
+            comment += currentChar;
+        }
+          
         if (currentChar == SourceFile.EOL)
           takeIt();
+          
       }
       break;
 
