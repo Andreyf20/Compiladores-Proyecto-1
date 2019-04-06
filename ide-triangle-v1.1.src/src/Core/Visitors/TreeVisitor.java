@@ -91,6 +91,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -123,13 +124,13 @@ public class TreeVisitor implements Visitor {
         return(createBinary("Choose Command", ast.E, ast.C1));
     }
     
-    //Visit de DoUntilCommand
+    //Cambio: se agrego Visit de DoUntilCommand
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
     {
         return createBinary("DoUntil Command", ast.cAST, ast.eAST);
     }
     
-    //Visit de DoWhileCommand
+    //Cambio: se agrego Visit de DoWhileCommand
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
     {
         return createBinary("DoWhile Command", ast.cAST, ast.eAST);
@@ -139,7 +140,7 @@ public class TreeVisitor implements Visitor {
         return(createNullary("Empty Command"));
     }
     
-    //Visit de ForDoCommand
+    //Cambio: se agrego Visit de ForDoCommand
     public Object visitForDoCommand(ForDoCommand ast, Object o)
     {
         return(createTernary("ForDo Command", ast.FCD, ast.E1, ast.C));
@@ -231,7 +232,7 @@ public class TreeVisitor implements Visitor {
         return(createBinary("Constant Declaration", ast.I, ast.E));
     }
     
-    //Implementacion de visit de ForCtlDeclaration
+    ////Cambio: se agrego Implementacion de visit de ForCtlDeclaration
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
     {
         return(createBinary("ForCtl Declaration", ast.id, ast.expression));
@@ -492,6 +493,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitSimpleVname(SimpleVname ast, Object obj) {
         return(createUnary("Simple Vname", ast.I));
+    }
+    
+    public Object visitPackageVname(PackageVname ast, Object obj) {
+        return(createBinary("Package Vname", ast.pI, ast.I));
     }
     
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {

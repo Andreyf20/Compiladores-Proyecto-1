@@ -8,8 +8,8 @@ package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
- *
- * @author Eduardo Jirn
+ * Cambio: se agrego la clase para el FoCtlDeclaration
+ * @author Eduardo Jiron
  */
 public class ForCtlDeclaration extends Declaration
 {

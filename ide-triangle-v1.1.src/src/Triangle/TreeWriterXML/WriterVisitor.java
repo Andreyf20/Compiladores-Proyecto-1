@@ -91,6 +91,7 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -120,7 +121,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoUntilCommand
+    //Cambio: se agrego Visit de DoUntilCommand
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
     {
         writeLineXML("<DoUntilCommand>");
@@ -130,7 +131,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoWhileCommand
+    //Cambio: se agrego Visit de DoWhileCommand
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
     {
         writeLineXML("<DoWhileCommand>");
@@ -694,6 +695,14 @@ public class WriterVisitor implements Visitor {
         writeLineXML("</SimpleVname>");
         return null;
     }
+    
+    public Object visitPackageVname(PackageVname ast, Object obj) {
+        writeLineXML("<PackageVname>");
+        ast.pI.visit(this, null);
+        ast.I.visit(this, null);
+        writeLineXML("</PackageVname>");
+        return null;
+    }
 
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {
         writeLineXML("<SubscriptVname>");
@@ -761,6 +770,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    //Cambio: se agrego visit para ForDoCommand
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
         writeLineXML("<ForDoCommand>");
@@ -771,6 +781,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    //Cambio: se agrego visit para ForCtlDeclaration
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
         writeLineXML("<ForCtlDeclaration>");

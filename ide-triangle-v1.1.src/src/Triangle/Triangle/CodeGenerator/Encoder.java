@@ -111,6 +111,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 public final class Encoder implements Visitor {
 
@@ -135,13 +136,13 @@ public final class Encoder implements Visitor {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
   
-  //Visit para DoUntilCommand
+  //Cambio: se agrego Visit para DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
   
-  //Visit de DoWhileCommand
+  //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -151,7 +152,7 @@ public final class Encoder implements Visitor {
     return null;
   }
   
-  //Visit para ForDoCommand
+  //Cambio: se agrego Visit para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -320,7 +321,7 @@ public final class Encoder implements Visitor {
 
 
   // Declarations
-  //Visit para ForDoCommand
+  //Cambio: se agrego Visit para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -1161,6 +1162,11 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitComment(Comment ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.    
+    }
+    
+    @Override
+    public Object visitPackageVname(PackageVname ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

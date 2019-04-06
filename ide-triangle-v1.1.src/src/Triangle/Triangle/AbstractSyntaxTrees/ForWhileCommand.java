@@ -12,6 +12,9 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  * @author kduran
  */
 public class ForWhileCommand extends Command{
+    
+    //Cambio: se cambio Identifier y Expression1 por ForCtlDeclaration que las contiene
+    //Se modifico el constructor para adaptarlo a los cambios de la clase
     public ForWhileCommand (Triangle.AbstractSyntaxTrees.Declaration dAST, Triangle.AbstractSyntaxTrees.Expression e2AST, Triangle.AbstractSyntaxTrees.Expression e3AST, Triangle.AbstractSyntaxTrees.Command cAST,
                     SourcePosition thePosition) {
     super (thePosition);

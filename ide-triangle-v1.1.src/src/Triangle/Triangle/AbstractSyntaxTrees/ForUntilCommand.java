@@ -13,6 +13,8 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  */
 public class ForUntilCommand extends Command{
 
+    //Cambio: se cambio Identifier y Expression1 por ForCtlDeclaration que las contiene
+    //Se modifico el constructor para adaptarlo a los cambios de la clase
     public ForUntilCommand (Triangle.AbstractSyntaxTrees.Declaration dAST, Triangle.AbstractSyntaxTrees.Expression e2AST, Triangle.AbstractSyntaxTrees.Expression e3AST,
                     Triangle.AbstractSyntaxTrees.Command cAST, SourcePosition thePosition) {
         super (thePosition);

@@ -103,6 +103,7 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 public class LayoutVisitor implements Visitor {
 
@@ -128,13 +129,13 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("ChooseCom.", ast.E, ast.C1);
   }
   
-  //Visit de DoUntilCommand
+  //Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       return layoutBinary("DoUntilCom.", ast.cAST, ast.eAST);
   }
 
-  //Visit de DoWhileCommand
+  //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       return layoutBinary("DoWhileCom.", ast.cAST, ast.eAST);
@@ -144,7 +145,7 @@ public class LayoutVisitor implements Visitor {
     return layoutNullary("EmptyCom.");
   }
   
-  //Visit para ForDoCommand
+  //Cambio: se agrego Visit para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       return layoutTernary("ForDoCom.", ast.FCD, ast.E1, ast.C);
@@ -226,7 +227,7 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
-  //Visit para ForDtlDeclaration
+  //Cambio: se agrego Visit para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object obj)
   {
       return layoutBinary("ForCtlDecl", ast.id, ast.expression);
@@ -479,6 +480,10 @@ public class LayoutVisitor implements Visitor {
 
   public Object visitSimpleVname(SimpleVname ast, Object obj) {
     return layoutUnary("Sim.Vname", ast.I);
+  }
+  
+  public Object visitPackageVname(PackageVname ast, Object obj) {
+    return layoutBinary("Pack.Vname", ast.pI, ast.I);
   }
 
   public Object visitSubscriptVname(SubscriptVname ast, Object obj) {

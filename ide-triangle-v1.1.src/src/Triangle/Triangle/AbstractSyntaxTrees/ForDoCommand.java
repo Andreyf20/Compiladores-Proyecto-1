@@ -8,8 +8,8 @@ package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
- *
- * @author Eduardo Jirn
+ * //Cambio se agrego la clase para ForDoCommand
+ * @author Eduardo Jiron
  */
 public class ForDoCommand extends Command
 {

@@ -91,6 +91,7 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -139,7 +140,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoUntilCommand
+    //Cambio: se agrego Visit de DoUntilCommand
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
     {
         writeLineHTML("<div class=\"DoUntilCommand\">");
@@ -152,7 +153,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    //Visit de DoWhileCommand
+    //Cambio: se agrego Visit de DoWhileCommand
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
     {
         writeLineHTML("<div class=\"DoWhileCommand\">");
@@ -844,6 +845,14 @@ public class WriterVisitor implements Visitor {
         writeLineHTML("</div>");
         return null;
     }
+    
+    public Object visitPackageVname(PackageVname ast, Object obj) {
+        writeLineHTML("<PackageVname>");
+        ast.pI.visit(this, null);
+        ast.I.visit(this, null);
+        writeLineHTML("</PackageVname>");
+        return null;
+    }
 
     public Object visitSubscriptVname(SubscriptVname ast, Object obj) {
         writeLineHTML("<div class=\"SubscriptVname\">");
@@ -887,6 +896,7 @@ public class WriterVisitor implements Visitor {
             return operator;
     }
 
+    //Cambio: se agrego visit para ForDoCommand
     @Override
     public Object visitForDoCommand(ForDoCommand ast, Object o) {
         writeLineHTML("<div class=\"ForDoCommand\">");
@@ -902,6 +912,7 @@ public class WriterVisitor implements Visitor {
         return null;
     }
 
+    //Cambio: se agrego visit para ForCtlDeclaration
     @Override
     public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o) {
         writeLineHTML("<div class=\"ForCtlDeclaration\">");

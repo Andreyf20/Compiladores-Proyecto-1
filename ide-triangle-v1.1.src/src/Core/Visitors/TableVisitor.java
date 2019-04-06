@@ -100,6 +100,7 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import javax.swing.table.DefaultTableModel;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 
 public class TableVisitor implements Visitor {
@@ -131,7 +132,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  //Visit de DoUntilCommand
+  ////Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -139,7 +140,7 @@ public class TableVisitor implements Visitor {
       return null;
   }
   
-  //Visit de DoWhileCommand
+  ////Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
       ast.cAST.visit(this, null);
@@ -151,6 +152,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  //Cambio: se agrego Visit ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       ast.FCD.visit(this,null);
@@ -287,6 +289,7 @@ public class TableVisitor implements Visitor {
   
   // <editor-fold defaultstate="collapsed" desc=" Declarations ">
   // Declarations
+  //Cambio: se agrego Visit de ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
       ast.id.visit(this, null);
@@ -733,6 +736,13 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
+  public Object visitPackageVname(PackageVname ast, Object o) {
+      ast.pI.visit(this, null);
+      ast.I.visit(this, null);
+  
+      return(null);
+  }
+  
   public Object visitSubscriptVname(SubscriptVname ast, Object o) { 
       ast.E.visit(this, null);
       ast.V.visit(this, null);
@@ -834,16 +844,10 @@ public class TableVisitor implements Visitor {
         ast.decl2.visit(this, null);
         return(null);
     }
-
+    
     @Override
     public Object visitComment(Comment ast, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-
-    
-
-    
-
     
 }

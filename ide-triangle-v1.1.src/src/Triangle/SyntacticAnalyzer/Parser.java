@@ -104,7 +104,7 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.UntilCommand;
-import Triangle.AbstractSyntaxTrees.SwitchCase;
+import Triangle.AbstractSyntaxTrees.PackageVname;
 
 public class Parser {
 
@@ -158,7 +158,10 @@ public class Parser {
     errorReporter.reportError(messageTemplate, tokenQuoted, pos);
     throw(new SyntaxError());
   }
-
+////////////////////////////////////////////////////////////////////////////////
+//
+//Cambios
+//
 ///////////////////////////////////////////////////////////////////////////////
 //
 // PROGRAMS
@@ -199,7 +202,7 @@ public class Parser {
     catch (SyntaxError s) { return null; }
     return programAST;
   }
-
+////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 //
 // LITERALS
@@ -261,7 +264,10 @@ public class Parser {
     }
     return I;
   }
-  
+  ////////////////////////////////////////////////////////////////////////////////
+  //
+  //Cambios
+  //
   Declaration parsePackageDeclaration() throws SyntaxError{
       Identifier I = null;
       Declaration decl = null;
@@ -311,7 +317,7 @@ public class Parser {
       }
       return I;
   }
-
+////////////////////////////////////////////////////////////////////////////////
 // parseOperator parses an operator, and constructs a leaf AST to
 // represent it.
 
@@ -375,7 +381,7 @@ public class Parser {
 
         } else {
 
-          Vname vAST = parseRestOfVname(iAST);
+          Vname vAST = parseRestOfVname(null, iAST);
           accept(Token.BECOMES);
           Expression eAST = parseExpression();
           finish(commandPos);
@@ -383,7 +389,8 @@ public class Parser {
         }
       }
       break;
-   
+    
+    //Cambio: se agrego el case de loop y sus casos
     case Token.LOOP:
       {
       acceptIt();
@@ -524,7 +531,7 @@ public class Parser {
       }
       break;
 
-
+    //Cambio: se agrego el case de pass
     case Token.PASS:
     {
       acceptIt();
@@ -674,7 +681,7 @@ public class Parser {
           expressionAST = new CallExpression(iAST, apsAST, expressionPos);
 
         } else {
-          Vname vAST = parseRestOfVname(iAST);
+          Vname vAST = parseRestOfVname(null, iAST);
           finish(expressionPos);
           expressionAST = new VnameExpression(vAST, expressionPos);
         }
@@ -749,7 +756,10 @@ public class Parser {
     }
     return aggregateAST;
   }
-
+////////////////////////////////////////////////////////////////////////////////
+//
+//Cambios
+//
 ///////////////////////////////////////////////////////////////////////////////
 //
 //CASES
@@ -902,7 +912,15 @@ public class Parser {
       }
       return caseLiteralAST;
   }
+////////////////////////////////////////////////////////////////////////////////
   
+  
+  
+  
+////////////////////////////////////////////////////////////////////////////////
+//
+//Cambios
+//
 ///////////////////////////////////////////////////////////////////////////////
 //
 // VALUE-OR-VARIABLE NAMES
@@ -910,22 +928,34 @@ public class Parser {
 ///////////////////////////////////////////////////////////////////////////////
 
   Vname parseVname () throws SyntaxError {
-      
+    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    Identifier packageID = null;
     if(currentToken.kind == Token.IDENTIFIER){
-        parsePackageIdentifier();
+        packageID = parsePackageIdentifier();
         accept(Token.DOLLAR);
     }
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
       
     Vname vnameAST = null; // in case there's a syntactic error
     Identifier iAST = parseIdentifier();
-    vnameAST = parseRestOfVname(iAST);
+    vnameAST = parseRestOfVname(packageID, iAST);
     return vnameAST;
   }
 
-  Vname parseRestOfVname(Identifier identifierAST) throws SyntaxError {
+  Vname parseRestOfVname(Identifier packageID, Identifier identifierAST) throws SyntaxError {
     SourcePosition vnamePos = new SourcePosition();
     vnamePos = identifierAST.position;
-    Vname vAST = new SimpleVname(identifierAST, vnamePos);
+    Vname vAST = null;
+    //////////////////////////////////////////////////////////////////////////////////////////
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    if(packageID == null)
+        vAST = new SimpleVname(identifierAST, vnamePos);
+    else
+        vAST = new PackageVname(packageID, identifierAST, vnamePos);
+    /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     while (currentToken.kind == Token.DOT ||
            currentToken.kind == Token.LBRACKET) {
@@ -944,14 +974,20 @@ public class Parser {
     }
     return vAST;
   }
+  
+////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//Cambios
+//
 ///////////////////////////////////////////////////////////////////////////////
 //
 // DECLARATIONS
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-  //Parse para ForCtlDeclaration
+  //Cambio: se agrego Parse para ForCtlDeclaration
   Declaration parseForCtlDeclaration() throws SyntaxError
   {
       Declaration declarationAST = null; //si hay un error de sintaxis
@@ -1041,6 +1077,9 @@ public class Parser {
       return declarationAST;
   }
   
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////// CAMBIOS EN PROC Y FUNC //////////////////////////////////////////////////////
+  
   Declaration parseProcFunc() throws SyntaxError{
       Declaration declarationAST = null; // inicia en nulo
       
@@ -1089,6 +1128,11 @@ public class Parser {
       return declarationAST;
   }
   
+  ///////////////// CAMBIOS EN PROC Y FUNC //////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////// NUEVA REGLA DE PROC-FUNCS /////////////////////////////////////////////////
   SequentialDeclaration parseProcFuncs() throws SyntaxError{
       SequentialDeclaration declarationAST = null; // inicia nulo
       
@@ -1126,7 +1170,8 @@ public class Parser {
       
       return declarationAST;
   }
-  
+   ///////////////// NUEVA REGLA DE PROC-FUNCS /////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////  
 
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
@@ -1151,6 +1196,8 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
+        //////////////////////////////////////////////////////////////////////////////
+        ////////////// NUEVA VARIABLE INICIALIZADA /////////////////////////
         switch (currentToken.kind) {
             case Token.COLON:
                 acceptIt();
@@ -1166,6 +1213,8 @@ public class Parser {
                 declarationAST = new VarDeclarationInitialized(iAST, eAST, declarationPos);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 break;
+        ////////////// NUEVA VARIABLE INICIALIZADA /////////////////////////
+        //////////////////////////////////////////////////////////////////////////////        
             default:
                 syntacticError("\"%\" unexpexted token in var", currentToken.spelling);
                 break;
@@ -1428,7 +1477,10 @@ public class Parser {
     }
     return actualAST;
   }
-
+////////////////////////////////////////////////////////////////////////////////
+//
+//Cambios
+//
 ///////////////////////////////////////////////////////////////////////////////
 //
 // TYPE-DENOTERS
@@ -1445,7 +1497,7 @@ public class Parser {
 
     case Token.IDENTIFIER:
       {
-        Identifier iAST = parseLongIdentifier();
+        Identifier iAST = parseLongIdentifier();//cambio
         finish(typePos);
         typeAST = new SimpleTypeDenoter(iAST, typePos);
       }
@@ -1480,6 +1532,8 @@ public class Parser {
     }
     return typeAST;
   }
+  
+  //////////////////////////////////////////////////////////////////////////////
 
   FieldTypeDenoter parseFieldTypeDenoter() throws SyntaxError {
     FieldTypeDenoter fieldAST = null; // in case there's a syntactic error

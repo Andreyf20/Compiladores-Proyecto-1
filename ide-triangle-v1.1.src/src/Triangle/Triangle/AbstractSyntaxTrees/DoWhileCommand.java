@@ -8,7 +8,6 @@ package Triangle.AbstractSyntaxTrees;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
 /**
- *
  * @author Eduardo Jirn
  */
 public class DoWhileCommand extends Command
