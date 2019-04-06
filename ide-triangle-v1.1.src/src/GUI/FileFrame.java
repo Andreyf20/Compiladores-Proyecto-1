@@ -22,7 +22,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * File Frame. Contains the source edition text box, console, ASTs and 
  * everything else in an edition window.
  * 
- * @author Luis Leopoldo Pérez <luiperpe@ns.isi.ulatina.ac.cr>
+ * @author Luis Leopoldo Prez <luiperpe@ns.isi.ulatina.ac.cr>
  */
 public class FileFrame extends javax.swing.JInternalFrame {
     

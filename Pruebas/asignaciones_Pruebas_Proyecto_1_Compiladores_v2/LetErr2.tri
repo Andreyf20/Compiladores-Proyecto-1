@@ -1,0 +1,6 @@
+let in
+	put(i);
+	put(i)
+end
+
+! Error: declaración vacía

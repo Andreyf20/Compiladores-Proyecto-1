@@ -1,0 +1,6 @@
+let 
+	recursive proc prueba1 (var x : Integer) ~ pass end | func prueba2 () : Integer ~ x . y > 1 | 
+func prueba3 () : Integer ~ q [ x > 1 ] > 1
+in
+	x $ y := 1
+end

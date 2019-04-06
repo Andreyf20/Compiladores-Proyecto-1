@@ -1,0 +1,11 @@
+let
+	recursive
+		proc doble ( var i : Integer ) ~
+			i := i*2
+		end
+	end
+in
+	pass
+end
+
+! Error: Solo hay una alternativa

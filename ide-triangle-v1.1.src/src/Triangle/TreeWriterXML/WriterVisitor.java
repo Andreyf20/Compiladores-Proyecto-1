@@ -82,8 +82,15 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
+import Triangle.AbstractSyntaxTrees.Comment;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -700,6 +707,9 @@ public class WriterVisitor implements Visitor {
     // Programs
     public Object visitProgram(Program ast, Object obj) {
         writeLineXML("<Program>");
+        if(ast.packageAST != null){
+            ast.packageAST.visit(this, null);
+        }
         ast.C.visit(this, null);
         writeLineXML("</Program>");
         return null;
@@ -767,6 +777,71 @@ public class WriterVisitor implements Visitor {
         ast.id.visit(this, null);
         ast.expression.visit(this, null);
         writeLineXML("</ForCtlDeclaration>");
+        return null;
+    }
+
+
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        writeLineXML("<RecursiveDeclaration>");
+        ast.ProcFuncAST.visit(this, null);
+        writeLineXML("</RecursiveDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        writeLineXML("<RecursiveDeclaration>");
+        ast.dcl1.visit(this, null);
+        ast.dcl2.visit(this, null);
+        writeLineXML("</RecursiveDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        writeLineXML("<ParDeclaration>");
+        ast.sdeclAST.visit(this, null);
+        writeLineXML("</ParDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object o) {
+        writeLineXML("<LongIdentifier>");
+        if(ast.optionalIdentifier1 == null){
+            ast.identifier2.visit(this, null);
+        }
+        else{
+            ast.optionalIdentifier1.visit(this, null);
+            ast.identifier2.visit(this, null);
+        }
+        writeLineXML("</LongIdentifier>");
+        return null;
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        writeLineXML("<PackageDeclaration>");
+        ast.identifier.visit(this, null);
+        ast.decl.visit(this, null);
+        writeLineXML("</PackageDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        writeLineXML("<SequentialPackageDeclaration>");
+        ast.decl1.visit(this, null);
+        ast.decl2.visit(this, null);
+        writeLineXML("</SequentialPackageDeclaration>");
+        return null;
+    }
+
+    @Override
+    public Object visitComment(Comment ast, Object o) {
+        writeLineXML("<Comment>");
         return null;
     }
 

@@ -33,6 +33,7 @@ import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.Command;
+import Triangle.AbstractSyntaxTrees.Comment;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -61,12 +62,16 @@ import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
 import Triangle.AbstractSyntaxTrees.LetCommand;
 import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
 import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -74,10 +79,12 @@ import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordAggregate;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
 import Triangle.AbstractSyntaxTrees.SimpleVname;
 import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
@@ -165,16 +172,25 @@ public class Parser {
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
-
+    String comment = lexicalAnalyser.getComment();
+    
     try {
-        
-      while(currentToken.kind == Token.PACKAGE){
-          parsePackageDeclaration();
+      Declaration packageDecl = null;
+      if(currentToken.kind == Token.PACKAGE){
+          packageDecl = parsePackageDeclaration();
           accept(Token.SEMICOLON);
       }
-        
+      while(currentToken.kind == Token.PACKAGE){
+          Declaration decl2 = parsePackageDeclaration();
+          accept(Token.SEMICOLON);
+          packageDecl = new SequentialPackageDeclaration(packageDecl, decl2, previousTokenPosition);
+      }
       Command cAST = parseCommand();
-      programAST = new Program(cAST, previousTokenPosition);
+      
+      Comment comAST = new Comment(previousTokenPosition);
+      comAST.spelling = comment;
+      
+      programAST = new Program(packageDecl, cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
         syntacticError("\"%\" not expected after end of program",
           currentToken.spelling);
@@ -201,7 +217,8 @@ public class Parser {
       String spelling = currentToken.spelling;
       IL = new IntegerLiteral(spelling, previousTokenPosition);
       currentToken = lexicalAnalyser.scan();
-    } else {
+    } 
+    else{
       IL = null;
       syntacticError("integer literal expected here", "");
     }
@@ -237,23 +254,34 @@ public class Parser {
       String spelling = currentToken.spelling;
       I = new Identifier(spelling, previousTokenPosition);
       currentToken = lexicalAnalyser.scan();
-    } else {
+    } 
+    else {
       I = null;
       syntacticError("identifier expected here", "");
     }
     return I;
   }
   
-  Identifier parsePackageDeclaration() throws SyntaxError{
+  Declaration parsePackageDeclaration() throws SyntaxError{
       Identifier I = null;
+      Declaration decl = null;
+      Declaration result = null;
       
-      accept(Token.PACKAGE);
-      I = parsePackageIdentifier();
-      accept(Token.IS);
-      parseDeclaration();
-      accept(Token.END);
-      
-      return I;
+      SourcePosition positionPackage = new SourcePosition();
+      start(positionPackage);
+      if(currentToken.kind == Token.PACKAGE){
+        accept(Token.PACKAGE);
+        I = parsePackageIdentifier();
+        accept(Token.IS);
+        decl = parseDeclaration();
+        accept(Token.END);
+        finish(positionPackage);
+        result = new PackageDeclaration(I, decl, positionPackage, currentToken.spelling);
+      }
+      else{
+        syntacticError("expected package, found \"%\"", currentToken.spelling);
+      }
+      return result;
   }
   
   Identifier parsePackageIdentifier() throws SyntaxError{
@@ -262,13 +290,24 @@ public class Parser {
   
   Identifier parseLongIdentifier() throws SyntaxError{
       Identifier I = null;
-      
+      SourcePosition positionLong = new SourcePosition();
+      start(positionLong);
       if(currentToken.kind == Token.IDENTIFIER){
-          I = parsePackageIdentifier();
+          Identifier optional = parsePackageIdentifier();
           if(currentToken.kind == Token.DOLLAR){
               acceptIt();
-              I = parseIdentifier();
+              Identifier second = parseIdentifier();
+              finish(positionLong);
+                      
+              I = new Long_Identifier(optional, second, positionLong, currentToken.spelling);
+          }
+          else{
+              finish(positionLong);
+              I = new Long_Identifier(null, optional, positionLong, currentToken.spelling);
           }          
+      }
+      else{
+          syntacticError("expected identifier, found \"%\"", currentToken.spelling);
       }
       return I;
   }
@@ -326,7 +365,7 @@ public class Parser {
 
     case Token.IDENTIFIER:
       {
-        Identifier iAST = parseIdentifier();
+        Identifier iAST = parseLongIdentifier();
         if (currentToken.kind == Token.LPAREN) {
           acceptIt();
           ActualParameterSequence apsAST = parseActualParameterSequence();
@@ -517,8 +556,6 @@ public class Parser {
       }
       return commandAST;
   }
-  
-  
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -953,20 +990,22 @@ public class Parser {
             case Token.RECURSIVE:
                 acceptIt();
                 declarationAST = parseProcFuncs();
-
-                
+                finish(declarationPos);
+                declarationAST = new RecursiveDeclaration(declarationAST, declarationPos);
                 break;
-                
             case Token.PRIVATE:
                 
                 acceptIt();
-                declarationAST = parseDeclaration();
+                Declaration dlAST1 = parseDeclaration();
                 
                 accept(Token.IN);
                 
-                declarationAST = parseDeclaration();
+                Declaration dlAST2 = parseDeclaration();
                 
                 accept(Token.END);
+                
+                finish(declarationPos);
+                declarationAST = new PrivateDeclaration(dlAST1, dlAST2, declarationPos);
                 
                 break;
                 
@@ -976,8 +1015,12 @@ public class Parser {
                 
                 while (currentToken.kind == Token.OR) {
                     acceptIt();
-                    declarationAST = parseSingleDeclaration();
+                    Declaration dAST2 = parseSingleDeclaration();
+                    finish(declarationPos);
+                    declarationAST = new SequentialDeclaration(declarationAST, dAST2, declarationPos);
                 }
+                
+                declarationAST = new ParDeclaration(declarationAST, declarationPos);
                 
                 accept(Token.END);
                 
@@ -987,6 +1030,7 @@ public class Parser {
             case Token.FUNC:
             case Token.TYPE:
                 declarationAST = parseSingleDeclaration();
+
                 break;
             default:
                 

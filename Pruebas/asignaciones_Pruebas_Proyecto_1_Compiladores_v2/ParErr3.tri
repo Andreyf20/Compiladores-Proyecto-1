@@ -1,0 +1,8 @@
+let
+	par var i: Integer | var k: Integer 
+in 
+	put(i);
+	putint(k)
+end
+
+! Error: falta end

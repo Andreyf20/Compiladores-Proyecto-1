@@ -88,10 +88,17 @@ import Triangle.AbstractSyntaxTrees.CaseLiteral;
 import Triangle.AbstractSyntaxTrees.CaseLiterals;
 import Triangle.AbstractSyntaxTrees.CaseRange;
 import Triangle.AbstractSyntaxTrees.Cases;
+import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.DoUntilCommand;
 import Triangle.AbstractSyntaxTrees.DoWhileCommand;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -737,6 +744,9 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Table Creation Methods ">
   // Programs
   public Object visitProgram(Program ast, Object o) { 
+      if(ast.packageAST != null){
+          ast.packageAST.visit(this, null);
+      }
       ast.C.visit(this, null);
       
       return(null);
@@ -779,6 +789,56 @@ public class TableVisitor implements Visitor {
     private DefaultTableModel model;
     // </editor-fold>
 
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        ast.ProcFuncAST.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        ast.dcl1.visit(this, null);
+        ast.dcl2.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        ast.sdeclAST.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object o) {
+        if(ast.optionalIdentifier1 == null){
+            ast.identifier2.visit(this, null);
+        }
+        else{
+            ast.optionalIdentifier1.visit(this, null);
+            ast.identifier2.visit(this, null);
+        }
+        return(null);
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        ast.identifier.visit(this, null);
+        ast.decl.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        ast.decl1.visit(this, null);
+        ast.decl2.visit(this, null);
+        return(null);
+    }
+
+    @Override
+    public Object visitComment(Comment ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
     

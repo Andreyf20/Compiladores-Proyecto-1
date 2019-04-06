@@ -1,0 +1,42 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<ForUntilCommand>
+<ForCtlDeclaration>
+<Identifier value="prueba"/>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</ForCtlDeclaration>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="&lt;"/>
+<IntegerExpression>
+<IntegerLiteral value="20"/>
+</IntegerExpression>
+</BinaryExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="y"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="&lt;"/>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</BinaryExpression>
+<EmptyCommand/>
+</ForUntilCommand>
+</Program>

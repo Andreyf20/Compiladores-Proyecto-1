@@ -23,6 +23,7 @@ import Triangle.AbstractSyntaxTrees.CharTypeDenoter;
 import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ChooseCommand;
+import Triangle.AbstractSyntaxTrees.Comment;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -82,8 +83,14 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.AbstractSyntaxTrees.ForWhileCommand;
+import Triangle.AbstractSyntaxTrees.Long_Identifier;
+import Triangle.AbstractSyntaxTrees.PackageDeclaration;
+import Triangle.AbstractSyntaxTrees.ParDeclaration;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
+import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -492,7 +499,12 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitProgram(Program ast, Object obj) {
-        return(createUnary("Program", ast.C));
+        if(ast.packageAST != null){
+            return(createBinary("Program", ast.packageAST, ast.C));
+        }
+        else{
+            return(createUnary("Program", ast.C));
+        }
     }
     // </editor-fold>
 
@@ -594,6 +606,46 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        return(createUnary("RecursiveDeclaration", ast.ProcFuncAST));
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        return(createBinary("PrivateDeclaration", ast.dcl1, ast.dcl2));
+    }
+
+    @Override
+    public Object visitParDeclaration(ParDeclaration ast, Object o) {
+        return(createUnary("ParDeckaratuib", ast.sdeclAST));
+    }
+
+    @Override
+    public Object visitLong_Identifier(Long_Identifier ast, Object object) {
+        if(ast.optionalIdentifier1 == null){
+            return(createUnary("LongIdentifier", ast.identifier2));
+        }
+        else{
+            return(createBinary("LongIdentifier", ast.optionalIdentifier1, ast.identifier2));
+        }
+    }
+
+    @Override
+    public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
+        return(createBinary("PackageDeclaration", ast.identifier, ast.decl));
+    }
+
+    @Override
+    public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
+        return(createBinary("SequentialPackageDeclaration", ast.decl1, ast.decl2));
+    }
+
+    @Override
+    public Object visitComment(Comment ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
 

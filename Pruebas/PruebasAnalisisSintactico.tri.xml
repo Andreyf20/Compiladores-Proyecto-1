@@ -1,32 +1,17 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<DoWhileCommand>
-<AssignCommand>
-<SimpleVname>
+<ForDoCommand>
+<ForCtlDeclaration>
 <Identifier value="a"/>
-</SimpleVname>
-<BinaryExpression>
 <VnameExpression>
 <SimpleVname>
-<Identifier value="a"/>
+<Identifier value="b"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value="+"/>
+</ForCtlDeclaration>
 <IntegerExpression>
-<IntegerLiteral value="2"/>
+<IntegerLiteral value="10"/>
 </IntegerExpression>
-</BinaryExpression>
-</AssignCommand>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="a"/>
-</SimpleVname>
-</VnameExpression>
-<Operator value="&lt;"/>
-<IntegerExpression>
-<IntegerLiteral value="2"/>
-</IntegerExpression>
-</BinaryExpression>
-</DoWhileCommand>
+<EmptyCommand/>
+</ForDoCommand>
 </Program>

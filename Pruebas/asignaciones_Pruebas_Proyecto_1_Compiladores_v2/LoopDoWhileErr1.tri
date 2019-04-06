@@ -1,0 +1,3 @@
+loop do do pass;pass while 3=3 end
+
+! Error: Hay 2 do

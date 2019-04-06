@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<IfCommand>
+<BinaryExpression>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+<Operator value=">"/>
+<IntegerExpression>
+<IntegerLiteral value="21"/>
+</IntegerExpression>
+</BinaryExpression>
+<CallCommand>
+<Identifier value="puteol"/>
+<EmptyActualParameterSequence/>
+</CallCommand>
+<CallCommand>
+<Identifier value="puteol"/>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</IfCommand>
+</Program>

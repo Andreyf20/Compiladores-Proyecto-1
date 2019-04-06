@@ -1,0 +1,3 @@
+var j::=5
+
+! Error: No se puede declarar fuera de un let o un local

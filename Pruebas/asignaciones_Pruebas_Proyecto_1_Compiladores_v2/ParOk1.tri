@@ -1,0 +1,8 @@
+let
+	par var i: Integer | var k: Integer | var t: Char end
+in 
+	putint(i);
+	put(t)
+end
+
+! OK

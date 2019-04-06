@@ -18,8 +18,9 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public class Program extends AST {
 
-  public Program (Command cAST, SourcePosition thePosition) {
+  public Program (Declaration packageAST, Command cAST, SourcePosition thePosition) {
     super (thePosition);
+    this.packageAST = packageAST;
     C = cAST;
   }
 
@@ -27,5 +28,6 @@ public class Program extends AST {
     return v.visitProgram(this, o);
   }
 
+  public Declaration packageAST;
   public Command C;
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<ChooseCommand>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+<Cases>
+<SequentialCase>
+<Case>
+<CaseLiterals>
+<SequentialCaseLiterals>
+<CaseRange>
+<CaseLiteral>
+<IntegerLiteral value="0"/>
+</CaseLiteral>
+</CaseRange>
+<CaseRange>
+<CaseLiteral>
+<IntegerLiteral value="1"/>
+</CaseLiteral>
+</CaseRange>
+</SequentialCaseLiterals>
+</CaseLiterals>
+<CallCommand>
+<LongIdentifier>
+<Identifier value="putint"/>
+</LongIdentifier>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</Case>
+<Case>
+<CaseLiterals>
+<CaseRange>
+<CaseLiteral>
+<IntegerLiteral value="2"/>
+</CaseLiteral>
+</CaseRange>
+</CaseLiterals>
+<CallCommand>
+<LongIdentifier>
+<Identifier value="putint"/>
+</LongIdentifier>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</Case>
+</SequentialCase>
+</Cases>
+</ChooseCommand>
+</Program>

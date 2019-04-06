@@ -1,0 +1,6 @@
+let
+	var x : array 2 of Integer;
+	var y : record p : Integer end
+in
+	pass
+end
