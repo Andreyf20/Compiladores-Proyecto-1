@@ -8,10 +8,10 @@
 hs_err_pid*
 
 #.jar
-/ide-triangle-v1.1.src/dist
+ide-triangle-v1.1.src/dist
 
 #.class
-/ide-triangle-v1.1.src/build
+ide-triangle-v1.1.src/build
 
 #.properties
-/ide-triangle-v1.1.src/nbproject
+ide-triangle-v1.1.src/nbproject
