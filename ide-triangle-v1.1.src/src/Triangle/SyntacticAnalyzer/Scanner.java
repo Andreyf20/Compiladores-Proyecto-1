@@ -77,7 +77,15 @@ public final class Scanner {
 
   private void scanSeparator() {
     switch (currentChar) {
-      
+        case '!':
+        
+          takeIt();
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
+            takeIt();
+        }
+        if (currentChar == SourceFile.EOL)
+          takeIt();
+        break;
     case ' ': case '\n': case '\r': case '\t':
       takeIt();
       break;
@@ -213,7 +221,8 @@ public final class Scanner {
     int kind;
 
     currentlyScanningToken = false;
-    while (currentChar == ' '
+    while (currentChar == '!'
+           || currentChar == ' '
            || currentChar == '\n'
            || currentChar == '\r'
            || currentChar == '\t')
@@ -225,7 +234,7 @@ public final class Scanner {
     pos = new SourcePosition();
     pos.start = sourceFile.getCurrentLine();
     
-    if(currentChar == '!')
+    /*if(currentChar == '!')
         {   
           String commentary = "";
           pos.finish = sourceFile.getCurrentLine();
@@ -247,8 +256,9 @@ public final class Scanner {
       }else{
         kind = scanToken();
         pos.finish = sourceFile.getCurrentLine();
-    }
-    
+    }*/
+    kind = scanToken();
+    pos.finish = sourceFile.getCurrentLine();
     tok = new Token(kind, currentSpelling.toString(), pos);
     if (debug)
       System.out.println(tok);
