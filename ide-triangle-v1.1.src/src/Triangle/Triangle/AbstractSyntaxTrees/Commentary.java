@@ -10,15 +10,14 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author kduran
  */
-public class Comment extends AST {
-    public String spelling;
+public class Commentary {
     
-    public Comment (SourcePosition thePosition) {
-        super (thePosition);
+    public String spelling;
+    public SourcePosition position;
+    
+    public Commentary (SourcePosition thePosition, String spelling) {
+        this.spelling = spelling;
+        position = thePosition;
     }
-
-    @Override
-    public Object visit(Visitor v, Object o) {
-        return v.visitComment(this, o);
-    }
+    
 }

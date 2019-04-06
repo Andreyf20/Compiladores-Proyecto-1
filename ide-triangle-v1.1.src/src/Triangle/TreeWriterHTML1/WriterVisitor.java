@@ -90,11 +90,12 @@ import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
-import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.Commentary;
 import Triangle.AbstractSyntaxTrees.PackageVname;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 /**
  *
  * @author kduran
@@ -102,16 +103,19 @@ import java.io.IOException;
 public class WriterVisitor implements Visitor {
     
     //this code was modified------------------------------------------------------------------------------------
-      
+    int cont = 1;
+    
     private FileWriter fileWriter;
 
+    ArrayList<Commentary> commentarys;
+            
     WriterVisitor(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
     }
     
     // Commands
     public Object visitAssignCommand(AssignCommand ast, Object obj) {
-        writeLineHTML("<div class=\"AssignCommand\"");
+        writeLineHTML("<div class=\"AssignCommand\">");
         ast.V.visit(this, null);
         writeLineHTML("<p style=\"color: #000000;\"> := </p>");
         ast.E.visit(this, null);
@@ -865,6 +869,7 @@ public class WriterVisitor implements Visitor {
 
     // Programs
     public Object visitProgram(Program ast, Object obj) {
+        commentarys = ast.commentarys;
         writeLineHTML("<div class=\"SubscriptVname\">");
         if(ast.packageAST != null){
             ast.packageAST.visit(this, null);
@@ -876,6 +881,8 @@ public class WriterVisitor implements Visitor {
     
     private void writeLineHTML(String line) {
         try {
+            getCommentary();
+            cont++;
             fileWriter.write(line);
             fileWriter.write('\n');
         } catch (IOException e) {
@@ -990,11 +997,16 @@ public class WriterVisitor implements Visitor {
         return null;
     }
     
-    @Override
-    public Object visitComment(Comment ast, Object o) {
-        writeLineHTML("<div class=\"Comment\">");
-        writeLineHTML("<p style=\"color: #04B431; \"></br>"+ ast.spelling +"</br></p>");
-        writeLineHTML("</div>");
-        return null;
+    private void getCommentary(){
+        
+        for(int i = 0; i < commentarys.size(); i++){
+            if(commentarys.get(i).position.start == cont){
+                String result = commentarys.get(i).spelling;
+                commentarys.remove(i);
+                writeLineHTML("<div class=\"Commentary\">");
+                writeLineHTML("<p style=\"color: #04B431; \"></br>"+ result +"</br></p>");
+                writeLineHTML("</div>");
+            }
+        }
     }
 }       

@@ -118,7 +118,8 @@ final class Token extends Object {
          
     // special tokens...
     EOT			= 48,
-    ERROR		= 49;
+    COMMENTARY          = 49,
+    ERROR		= 50;
 
 
   private static String[] tokenTable = new String[] {
@@ -171,6 +172,7 @@ final class Token extends Object {
     "{",
     "}",
     "",
+    "!",
     "<error>"
   };
 
