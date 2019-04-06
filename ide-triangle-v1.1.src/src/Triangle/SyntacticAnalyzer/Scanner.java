@@ -14,7 +14,9 @@
 
 package Triangle.SyntacticAnalyzer;
 
-import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.Commentary;
+import java.nio.file.WatchEvent;
+import java.util.ArrayList;
 
 
 public final class Scanner {
@@ -26,10 +28,10 @@ public final class Scanner {
   private StringBuffer currentSpelling;
   private boolean currentlyScanningToken;
 
-  private String comment;
+  private ArrayList<Commentary> commentarys = new ArrayList<>();
 
-  public String getComment() {
-      return comment;
+  public ArrayList<Commentary> getComment() {
+      return commentarys;
   }  
   
   private boolean isLetter(char c) {
@@ -67,7 +69,7 @@ public final class Scanner {
 
   private void takeIt() {
     if (currentlyScanningToken)
-      currentSpelling.append(currentChar);
+    currentSpelling.append(currentChar);
     currentChar = sourceFile.getSource();
   }
 
@@ -75,20 +77,7 @@ public final class Scanner {
 
   private void scanSeparator() {
     switch (currentChar) {
-    case '!':
-      {
-        takeIt();
-        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
-            takeIt();
-            comment += currentChar;
-        }
-          
-        if (currentChar == SourceFile.EOL)
-          takeIt();
-          
-      }
-      break;
-
+      
     case ' ': case '\n': case '\r': case '\t':
       takeIt();
       break;
@@ -208,7 +197,7 @@ public final class Scanner {
     case '}':
       takeIt();
       return Token.RCURLY;
-
+    
     case SourceFile.EOT:
       return Token.EOT;
 
@@ -224,21 +213,42 @@ public final class Scanner {
     int kind;
 
     currentlyScanningToken = false;
-    while (currentChar == '!'
-           || currentChar == ' '
+    while (currentChar == ' '
            || currentChar == '\n'
            || currentChar == '\r'
            || currentChar == '\t')
       scanSeparator();
-
+    
+        
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
     pos = new SourcePosition();
     pos.start = sourceFile.getCurrentLine();
-
-    kind = scanToken();
-
-    pos.finish = sourceFile.getCurrentLine();
+    
+    if(currentChar == '!')
+        {   
+          String commentary = "";
+          pos.finish = sourceFile.getCurrentLine();
+          takeIt();
+          commentary = "!";
+          currentlyScanningToken = false;
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT)){
+            takeIt();
+            commentary += currentChar;
+        }
+        if (currentChar == SourceFile.EOL)
+          takeIt();
+        Commentary co = new Commentary(pos, commentary);
+        
+        if(co != null)
+            commentarys.add(co);
+        kind = Token.COMMENTARY;
+        
+      }else{
+        kind = scanToken();
+        pos.finish = sourceFile.getCurrentLine();
+    }
+    
     tok = new Token(kind, currentSpelling.toString(), pos);
     if (debug)
       System.out.println(tok);

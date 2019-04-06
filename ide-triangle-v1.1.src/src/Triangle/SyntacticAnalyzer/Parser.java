@@ -33,7 +33,7 @@ import Triangle.AbstractSyntaxTrees.CharacterExpression;
 import Triangle.AbstractSyntaxTrees.CharacterLiteral;
 import Triangle.AbstractSyntaxTrees.ChooseCommand;
 import Triangle.AbstractSyntaxTrees.Command;
-import Triangle.AbstractSyntaxTrees.Comment;
+import Triangle.AbstractSyntaxTrees.Commentary;
 import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
@@ -175,7 +175,6 @@ public class Parser {
     previousTokenPosition.start = 0;
     previousTokenPosition.finish = 0;
     currentToken = lexicalAnalyser.scan();
-    String comment = lexicalAnalyser.getComment();
     
     try {
       Declaration packageDecl = null;
@@ -190,10 +189,12 @@ public class Parser {
       }
       Command cAST = parseCommand();
       
-      Comment comAST = new Comment(previousTokenPosition);
-      comAST.spelling = comment;
+      if(currentToken.kind == Token.COMMENTARY){
+          acceptIt();
+          System.out.println(lexicalAnalyser.getComment());
+      }
       
-      programAST = new Program(packageDecl, cAST, previousTokenPosition);
+      programAST = new Program(packageDecl, cAST, previousTokenPosition, lexicalAnalyser.getComment());
       if (currentToken.kind != Token.EOT) {
         syntacticError("\"%\" not expected after end of program",
           currentToken.spelling);
