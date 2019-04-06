@@ -1026,6 +1026,7 @@ public class Parser {
             case Token.RECURSIVE:
                 acceptIt();
                 declarationAST = parseProcFuncs();
+                accept(Token.END);
                 finish(declarationPos);
                 declarationAST = new RecursiveDeclaration(declarationAST, declarationPos);
                 break;
@@ -1048,16 +1049,19 @@ public class Parser {
             case Token.PAR:
                 acceptIt();
                 declarationAST = parseSingleDeclaration();
-                
-                while (currentToken.kind == Token.OR) {
-                    acceptIt();
-                    Declaration dAST2 = parseSingleDeclaration();
-                    finish(declarationPos);
-                    declarationAST = new SequentialDeclaration(declarationAST, dAST2, declarationPos);
+                if(currentToken.kind == Token.OR) {
+                    while (currentToken.kind == Token.OR) {
+                        acceptIt();
+                        Declaration dAST2 = parseSingleDeclaration();
+                        finish(declarationPos);
+                        declarationAST = new SequentialDeclaration(declarationAST, dAST2, declarationPos);
+                    }
+                } else { 
+                    syntacticError("expected | but found \"%\"",
+                currentToken.spelling);
                 }
-                
+                    
                 declarationAST = new ParDeclaration(declarationAST, declarationPos);
-                
                 accept(Token.END);
                 
                 break;
@@ -1185,10 +1189,27 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.IS);
-        Expression eAST = parseExpression();
-        finish(declarationPos);
-        declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+        switch(currentToken.kind){
+            case Token.IS:
+            {
+                acceptIt();
+                Expression eAST = parseExpression();
+                finish(declarationPos);
+                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+            }
+            break;
+            case Token.DOUBLEBECOMES:
+            {
+                acceptIt();
+                Expression eAST = parseExpression();
+                finish(declarationPos);
+                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
+            }
+            break;
+            default:
+                syntacticError("\"%\" unexpexted token in const ", currentToken.spelling);
+                break;
+        }
       }
       break;
 
