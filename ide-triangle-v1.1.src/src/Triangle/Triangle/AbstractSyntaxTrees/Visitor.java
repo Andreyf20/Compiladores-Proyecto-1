@@ -133,6 +133,4 @@ public interface Visitor {
   public abstract Object visitPackageDeclaration(PackageDeclaration ast, Object o);
   public abstract Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o);
 
-  public abstract Object visitComment(Comment ast, Object o);
-
 }
