@@ -1190,27 +1190,10 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        switch(currentToken.kind){
-            case Token.IS:
-            {
-                acceptIt();
-                Expression eAST = parseExpression();
-                finish(declarationPos);
-                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
-            }
-            break;
-            case Token.DOUBLEBECOMES:
-            {
-                acceptIt();
-                Expression eAST = parseExpression();
-                finish(declarationPos);
-                declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
-            }
-            break;
-            default:
-                syntacticError("\"%\" unexpexted token in const ", currentToken.spelling);
-                break;
-        }
+        accept(Token.IS);
+        Expression eAST = parseExpression();
+        finish(declarationPos);
+        declarationAST = new ConstDeclaration(iAST, eAST, declarationPos);
       }
       break;
 
