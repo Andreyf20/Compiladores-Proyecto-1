@@ -538,7 +538,7 @@ public final class Checker implements Visitor {
                             "", ast.position);
           return StdEnvironment.errorType;
       }
-      else if(!(ast.cL1 == null && ast.cL2 == null)){
+      else if(ast.cL1 != null && ast.cL2 != null){
           if(ast.cL1.visit(this, null) != ast.cL2.visit(this, null)){
             reporter.reportError (" the range case must be charLiteral..charLiteral or intLiteral..intLiteral",
                             "", ast.cL1.position);
@@ -555,7 +555,7 @@ public final class Checker implements Visitor {
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      if(ast.CL1 == null){
+      if(ast.CL1 != null){
           return StdEnvironment.charType;
       }
       else{
@@ -1170,7 +1170,12 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //revisar
+        Declaration binding = idTable.retrieve(ast.identifier2.spelling);
+        if (binding != null)
+            ast.identifier2.decl = binding;
+        return binding;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
