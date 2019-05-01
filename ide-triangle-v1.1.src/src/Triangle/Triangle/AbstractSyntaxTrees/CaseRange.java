@@ -32,5 +32,8 @@ public class CaseRange extends SwitchCase {
 
   public CaseLiteral cL1;
   public CaseLiteral cL2 = null;
+  
+  
+  
 
 }
