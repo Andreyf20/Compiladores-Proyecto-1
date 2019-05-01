@@ -34,5 +34,14 @@ public class CaseLiteral extends SwitchCase {
 
   public IntegerLiteral IL1 = null;
   public CharacterLiteral CL1 = null;
+  
+  public String getLiteralString(){
+      if(IL1 == null){
+          return CL1.spelling;
+      }
+      else{
+          return IL1.spelling;
+      }
+  }
 
 }

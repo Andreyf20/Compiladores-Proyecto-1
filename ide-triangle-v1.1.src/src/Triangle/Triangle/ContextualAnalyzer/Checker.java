@@ -110,6 +110,7 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.PackageVname;
+import java.util.ArrayList;
 
 public final class Checker implements Visitor {
 
@@ -474,8 +475,82 @@ public final class Checker implements Visitor {
           reporter.reportError("the expression type and the literals must be of the same type", "", ast.E.position);
           return StdEnvironment.errorType;
         }
+        if(validateRanges(ast.C1.SC1) == false){
+            return StdEnvironment.errorType;
+        }
         return null;
     }
+  
+  public boolean validateRanges(SequentialCase ast){
+
+      ArrayList<String> conjunto = new ArrayList();
+      SequentialCaseLiterals currentSCL;
+      while(ast != null){
+      
+          currentSCL = ast.C2.cL1.SCL1;
+          while(currentSCL != null){
+          
+              if(currentSCL.cR2.cL2 != null){
+                if(conjunto.contains(currentSCL.cR2.cL1.getLiteralString()) || conjunto.contains(currentSCL.cR2.cL2.getLiteralString())){
+                    reporter.reportError("the ranges cannot overlap", "", currentSCL.position);
+                    return false;
+                }
+                else if(intersects(conjunto, generateValues(currentSCL.cR2.cL1.getLiteralString().charAt(0), currentSCL.cR2.cL2.getLiteralString().charAt(0), currentSCL.position))){
+                    reporter.reportError("the ranges cannot overlap", "", currentSCL.position);
+                    return false;
+                }
+                else{
+                    conjunto.addAll(generateValues(currentSCL.cR2.cL1.getLiteralString().charAt(0), currentSCL.cR2.cL2.getLiteralString().charAt(0), currentSCL.position));
+                    currentSCL = currentSCL.SC1;
+                    continue;
+                }
+              }
+              else if(conjunto.contains(currentSCL.cR2.cL1.getLiteralString())){
+                reporter.reportError("the ranges cannot overlap", "", currentSCL.position);
+                return false;  
+              }
+              else{
+                conjunto.add(currentSCL.cR2.cL1.getLiteralString());
+              }
+          
+              currentSCL = currentSCL.SC1;
+          }
+          
+          ast = ast.C1;   
+      }
+      return true;
+  }
+  
+  public ArrayList<String> generateValues(char start, char finish, SourcePosition pos){
+      
+      if(start == finish){
+        reporter.reportError("the range expressions cannot be the same", "", pos);
+      }
+      else if(start > finish){
+          char temp = start;
+          start = finish;
+          finish = temp;
+      }
+      ArrayList<String> result = new ArrayList();
+      int dif = finish - start;
+      
+      for(int i = 0; i <= dif; i++){
+          result.add(String.valueOf(start));
+          start++;
+      }      
+      
+      return result;
+  }
+  
+  public boolean intersects(ArrayList<String> a, ArrayList<String> b){
+  
+      for(int i = 0; i < a.size(); i++){
+          if(b.contains(a.get(i))){
+              return true;
+          }
+      }
+      return false;
+  }
   
   @Override
   public Object visitCases(Cases ast, Object o) {
