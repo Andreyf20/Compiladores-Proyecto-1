@@ -1037,7 +1037,12 @@ public final class Checker implements Visitor {
       } else if (binding instanceof VarFormalParameter) {
         ast.type = ((VarFormalParameter) binding).T;
         ast.variable = true;
-      } else
+        // ********************** Cambios ***********************
+      } else if(binding instanceof VarDeclarationInitialized){
+          ast.type = ((VarDeclarationInitialized) binding).E.type; // Se revisa el tipo de la expresion de lo que se le esta asignando para encontrar el tipo de la variable
+          ast.variable = true; // Se pueden realizar asignaciones por lo que se asigna como true
+        // *****************************************************
+      }else
         reporter.reportError ("\"%\" is not a const or var identifier",
                               ast.I.spelling, ast.I.position);
     return ast.type;
