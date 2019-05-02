@@ -495,12 +495,12 @@ public final class Checker implements Visitor {
                     reporter.reportError("the ranges cannot overlap", "", currentSCL.position);
                     return false;
                 }
-                else if(intersects(conjunto, generateValues(currentSCL.cR2.cL1.getLiteralString().charAt(0), currentSCL.cR2.cL2.getLiteralString().charAt(0), currentSCL.position))){
+                else if(intersects(conjunto, generateValues(currentSCL.cR2.cL1.getLiteralString(), currentSCL.cR2.cL2.getLiteralString(), currentSCL.position))){
                     reporter.reportError("the ranges cannot overlap", "", currentSCL.position);
                     return false;
                 }
                 else{
-                    conjunto.addAll(generateValues(currentSCL.cR2.cL1.getLiteralString().charAt(0), currentSCL.cR2.cL2.getLiteralString().charAt(0), currentSCL.position));
+                    conjunto.addAll(generateValues(currentSCL.cR2.cL1.getLiteralString(), currentSCL.cR2.cL2.getLiteralString(), currentSCL.position));
                     currentSCL = currentSCL.SC1;
                     continue;
                 }
@@ -518,28 +518,64 @@ public final class Checker implements Visitor {
           
           ast = ast.C1;   
       }
+      System.out.println("termina de crear los conjuntos del choose, resultado: " + conjunto.toString());
       return true;
   }
   
-  public ArrayList<String> generateValues(char start, char finish, SourcePosition pos){
+  public ArrayList<String> generateValues(String start, String finish, SourcePosition pos){
+      
+      if(start.length() > 1 || finish.length() > 1){
+          return generateIntRange(start, finish, pos);
+      }
       
       if(start == finish){
         reporter.reportError("the range expressions cannot be the same", "", pos);
       }
-      else if(start > finish){
-          char temp = start;
-          start = finish;
-          finish = temp;
+      
+      char startC = start.charAt(0);
+      char finishC = finish.charAt(0);
+      
+      if(startC > finishC){
+          char temp = startC;
+          startC = finishC;
+          finishC = temp;
       }
       ArrayList<String> result = new ArrayList();
-      int dif = finish - start;
+      int dif = finishC - startC;
       
       for(int i = 0; i <= dif; i++){
-          result.add(String.valueOf(start));
-          start++;
+          result.add(String.valueOf(startC));
+          startC++;
       }      
       
       return result;
+  }
+  
+  public ArrayList<String> generateIntRange(String start, String finish, SourcePosition pos){
+      int startInt = Integer.parseInt(start);
+      int finishInt = Integer.parseInt(finish);
+      System.out.println("comienza a generar rangos con los enteros");
+      
+      if(startInt == finishInt){
+        reporter.reportError("the range expressions cannot be the same", "", pos);
+      }
+      else if(startInt > finishInt){
+          int temp = startInt;
+          startInt = finishInt;
+          finishInt = temp;
+      }
+      
+      ArrayList<String> result = new ArrayList();
+      int dif = finishInt - startInt;
+      
+      for(int i = 0; i <= dif; i++){
+          result.add(String.valueOf(startInt));
+          startInt++;
+      }      
+      
+      return result;
+     
+      
   }
   
   public boolean intersects(ArrayList<String> a, ArrayList<String> b){
@@ -1247,10 +1283,18 @@ public final class Checker implements Visitor {
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
         //revisar
         Declaration binding = idTable.retrieve(ast.identifier2.spelling);
-        if (binding != null)
+        if (binding != null){
             ast.identifier2.decl = binding;
+        }
+        
+        if(ast.optionalIdentifier1 != null){
+            Declaration optionalBinding = idTable.retrieve(ast.optionalIdentifier1.spelling);
+            if(optionalBinding != null){
+                ast.optionalIdentifier1.decl = optionalBinding;
+            }
+        }
+        
         return binding;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
