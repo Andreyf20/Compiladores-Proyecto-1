@@ -1,0 +1,8 @@
+loop for i from 1 to 3 do
+  let var pas:Integer 
+    in
+      pas := 2;
+      i := 0
+  end;
+  pass
+end

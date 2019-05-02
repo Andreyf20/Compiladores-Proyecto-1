@@ -1,0 +1,7 @@
+loop do
+  let var pas:Integer 
+    in pas := 2
+  end;
+  pass
+until false
+end
