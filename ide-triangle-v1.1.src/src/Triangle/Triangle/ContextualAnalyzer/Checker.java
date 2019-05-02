@@ -518,7 +518,6 @@ public final class Checker implements Visitor {
           
           ast = ast.C1;   
       }
-      System.out.println("termina de crear los conjuntos del choose, resultado: " + conjunto.toString());
       return true;
   }
   
@@ -554,7 +553,6 @@ public final class Checker implements Visitor {
   public ArrayList<String> generateIntRange(String start, String finish, SourcePosition pos){
       int startInt = Integer.parseInt(start);
       int finishInt = Integer.parseInt(finish);
-      System.out.println("comienza a generar rangos con los enteros");
       
       if(startInt == finishInt){
         reporter.reportError("the range expressions cannot be the same", "", pos);
