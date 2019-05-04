@@ -1269,7 +1269,8 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.ProcFuncAST.visit(this, o);
+        return null;
     }
 
     @Override
@@ -1279,7 +1280,25 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        visitSequentialPar((ParDeclaration)ast, null); // Revisar si se usan variables que no deberian usarse
+        visitSequentialNormalDeclaration((ParDeclaration)ast, null); // agregar todas las variables a la tabla de ids para poder usarlas despues
+        return null;
+    }
+    
+    public Object visitSequentialPar(ParDeclaration ast, Object o) {
+            idTable.openScope();
+            ast.D1.visit(this, null);
+            idTable.closeScope();
+            idTable.openScope();
+            ast.D2.visit(this, null);
+            idTable.closeScope();
+        return null;
+    }
+    
+     public Object visitSequentialNormalDeclaration(ParDeclaration ast, Object o) {
+            ast.D1.visit(this, null);
+            ast.D2.visit(this, null);
+        return null;
     }
 
     @Override

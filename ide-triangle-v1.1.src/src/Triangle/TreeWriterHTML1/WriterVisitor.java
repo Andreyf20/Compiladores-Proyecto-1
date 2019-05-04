@@ -956,7 +956,8 @@ public class WriterVisitor implements Visitor {
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
         writeLineHTML("<div class=\"ParDeclaration\">");
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>par</strong></br></p>");
-        ast.sdeclAST.visit(this, null);
+        ast.D1.visit(this, null);
+        ast.D2.visit(this, null);
         writeLineHTML("<p style=\"color: #000000; \"></br><strong>end</strong></br></p>");
         writeLineHTML("</div>");
         return null;

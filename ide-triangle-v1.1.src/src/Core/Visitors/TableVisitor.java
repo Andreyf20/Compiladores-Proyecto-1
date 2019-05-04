@@ -815,7 +815,8 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
-        ast.sdeclAST.visit(this, null);
+        ast.D1.visit(this, null);
+        ast.D2.visit(this, null);
         return(null);
     }
 
