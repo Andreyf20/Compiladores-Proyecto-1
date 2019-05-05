@@ -707,7 +707,7 @@ public class LayoutVisitor implements Visitor {
 
     @Override
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
-        return layoutUnary("Par.Decl", ast.sdeclAST);
+        return layoutBinary("Par.Decl", ast.D1, ast.D2);
     }
 
     @Override

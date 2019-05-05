@@ -813,7 +813,8 @@ public class WriterVisitor implements Visitor {
     @Override
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
         writeLineXML("<ParDeclaration>");
-        ast.sdeclAST.visit(this, null);
+        ast.D1.visit(this, null);
+        ast.D2.visit(this, null);
         writeLineXML("</ParDeclaration>");
         return null;
     }

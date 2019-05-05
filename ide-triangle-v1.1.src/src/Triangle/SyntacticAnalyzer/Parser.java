@@ -1055,14 +1055,14 @@ public class Parser {
                         acceptIt();
                         Declaration dAST2 = parseSingleDeclaration();
                         finish(declarationPos);
-                        declarationAST = new SequentialDeclaration(declarationAST, dAST2, declarationPos);
+                        declarationAST = new ParDeclaration(declarationAST, dAST2, declarationPos);
                     }
                 } else { 
                     syntacticError("expected | but found \"%\"",
                 currentToken.spelling);
                 }
                     
-                declarationAST = new ParDeclaration(declarationAST, declarationPos);
+                //declarationAST = new ParDeclaration(declarationAST, declarationPos);
                 accept(Token.END);
                 
                 break;
