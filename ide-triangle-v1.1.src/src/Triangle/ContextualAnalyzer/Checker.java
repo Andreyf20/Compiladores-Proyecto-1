@@ -184,38 +184,44 @@ public final class Checker implements Visitor {
       return null;
   }
 
+  //Cambio: se agregaron las validaciones y alcance
   public Object visitForUntilCommand(ForUntilCommand ast, Object o) {
     ast.D.visit(this, null);
-    ast.E2.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    if(!(e2Type instanceof IntTypeDenoter))
+        reporter.reportError("wrong expression type, must be an integer type", "", ast.E2.position);
+    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
+    if (! (e3Type instanceof BoolTypeDenoter))
+      reporter.reportError("wrong expression type, must be an boolean type", "", ast.E3.position);
+    idTable.openScope();
     ast.E3.visit(this, null);
     ast.C.visit(this, null);
+    idTable.closeScope();
     return null;
   }
-  
-  //Cambio: Se agregan las validaciones y alcance. 
+
+  //Cambio: Se agregan las validaciones y alcance.
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
 
     TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
     if (! e2Type.equals(StdEnvironment.integerType))
       reporter.reportError("Integer expression expected here", "", ast.E2.position);
-   
     TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
     if (! e3Type.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E3.position);
     ast.D.visit(this, null);
     idTable.openScope();
     ast.E3.visit(this, null);
-    ast.C.visit(this, null); 
+    ast.C.visit(this, null);
     idTable.closeScope();
-    
-//variable de control deberia ser manejada como constante aqui en el command, 
+//variable de control deberia ser manejada como constante aqui en el command,
     //loopCtlVar muy parecido a constante, constDe, ConstFormalParameter
     //v.const 707 checker
-    //hay que tocar el vName (copiar), añadir un caso adisional, 
+    //hay que tocar el vName (copiar), añadir un caso adisional,
     //en este contexto ya conoce el i entonces deberia ser booleana
     return null;
   }
-  
+
   public Object visitIfCommand(IfCommand ast, Object o) {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     if (! eType.equals(StdEnvironment.booleanType))
@@ -403,7 +409,6 @@ public final class Checker implements Visitor {
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
     ast.id.visit(this, null);
-    ast.expression.visit(this, null);
     TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
     
     idTable.enter(ast.id.spelling, ast);
@@ -415,7 +420,7 @@ public final class Checker implements Visitor {
     
 //=======
     if(!(eType instanceof IntTypeDenoter))
-        reporter.reportError ("wrong expression type, must be an integer",
+        reporter.reportError ("wrong expression type, must be an integer type",
                               "", ast.expression.position);
 //>>>>>>> 4f29dd91fa3fa9904951bdc3af8f8f6df62a9c70:ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/Checker.java
     return null;
