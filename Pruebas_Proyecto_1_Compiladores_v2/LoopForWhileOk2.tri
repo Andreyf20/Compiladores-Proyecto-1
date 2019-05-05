@@ -1,3 +1,3 @@
-loop for i from 5 to 6 while i < 5 do pass;pass end
+loop for id from 5 to 6 while 9<3 do x::=id;pass end
 
 !OK

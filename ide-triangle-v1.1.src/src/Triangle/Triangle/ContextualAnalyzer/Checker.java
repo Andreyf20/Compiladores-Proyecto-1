@@ -146,15 +146,26 @@ public final class Checker implements Visitor {
   
   //Cambio: se agrego Visit de DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
-  {
+  {   
+      TypeDenoter eType = (TypeDenoter) ast.eAST.visit(this, null);
+      if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError ("Boolean expression expected here", "",
+                            ast.eAST.position);
+      
       ast.cAST.visit(this, null);
       ast.eAST.visit(this, null);
+      
       return null;
   }
 
   //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
-  {
+  {   
+      TypeDenoter eType = (TypeDenoter) ast.eAST.visit(this, null);
+      if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError ("Boolean expression expected here", "",
+                            ast.eAST.position);
+      
       ast.cAST.visit(this, null);
       ast.eAST.visit(this, null);
       return null;
@@ -181,22 +192,23 @@ public final class Checker implements Visitor {
     return null;
   }
   
+  //Cambio: Se agregan las validaciones y alcance. 
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-/*<<<<<<< HEAD
-      
-      //seria un quaternario compuesto por forDecl (i and E1) --->este seria nuevo, un e2, e3, comand 
-      //pero esto esta bien no tengo que boorrlo, solo me falta algo 
-      //
-      
-    ast.I.visit(this, null); //trabajar i e1 como un solo ast de declaracion, uno nuevo FORDECL 
-    ast.E1.visit(this, null); //validar como tipo entero
-    ast.E2.visit(this, null); //validar como tipo entero
-=======*/
+
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    if (! e2Type.equals(StdEnvironment.integerType))
+      reporter.reportError("Integer expression expected here", "", ast.E2.position);
+   
+    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
+    if (! e3Type.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E3.position);
     ast.D.visit(this, null);
-    ast.E2.visit(this, null);
-//>>>>>>> 268286af70c9d4e810b1d228c6ebc2c2b710d944
+    idTable.openScope();
     ast.E3.visit(this, null);
-    ast.C.visit(this, null); //variable de control deberia ser manejada como constante aqui en el command, 
+    ast.C.visit(this, null); 
+    idTable.closeScope();
+    
+//variable de control deberia ser manejada como constante aqui en el command, 
     //loopCtlVar muy parecido a constante, constDe, ConstFormalParameter
     //v.const 707 checker
     //hay que tocar el vName (copiar), añadir un caso adisional, 
@@ -231,6 +243,7 @@ public final class Checker implements Visitor {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     if (! eType.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.E.visit(this, null);
     ast.C.visit(this, null);
     return null;
   }
@@ -239,6 +252,7 @@ public final class Checker implements Visitor {
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     if (! eType.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E.position);
+    ast.E.visit(this, null);
     ast.C.visit(this, null);
     return null;
   }
@@ -388,11 +402,14 @@ public final class Checker implements Visitor {
   //Cambio: se agrego Implementacion de visit del checker para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
-    TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
+    ast.id.visit(this, null);
+    ast.expression.visit(this, null);
+    
     idTable.enter(ast.id.spelling, ast);
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
                             ast.id.spelling, ast.position);
+    
     return null;
   }
   

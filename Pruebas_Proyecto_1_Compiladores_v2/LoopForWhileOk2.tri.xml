@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<ForWhileCommand>
+<ForCtlDeclaration>
+<Identifier value="id"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</ForCtlDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="6"/>
+</IntegerExpression>
+<BinaryExpression>
+<IntegerExpression>
+<IntegerLiteral value="9"/>
+</IntegerExpression>
+<Operator value="&lt;"/>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+</BinaryExpression>
+<SequentialCommand>
+<EmptyCommand/>
+<EmptyCommand/>
+</SequentialCommand>
+</ForWhileCommand>
+</Program>

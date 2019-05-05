@@ -1,7 +1,8 @@
+  
 let
 	var i : Char;
 	var j : Integer; 
-	const k ~ 8;
+	const id ~ 4;
 	type dia ~ Integer
 in 
 	put(i);
