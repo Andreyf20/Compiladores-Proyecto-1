@@ -393,6 +393,9 @@ public final class Checker implements Visitor {
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
                             ast.id.spelling, ast.position);
+    if(!(eType instanceof IntTypeDenoter))
+        reporter.reportError ("wrong expression type, must be an integer",
+                              "", ast.expression.position);
     return null;
   }
   
