@@ -179,8 +179,12 @@ public final class Checker implements Visitor {
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
       ast.FCD.visit(this, null);
-      ast.E1.visit(this, null);
+      TypeDenoter e2Type = (TypeDenoter) ast.E1.visit(this, null);
+      if(!(e2Type instanceof IntTypeDenoter))
+          reporter.reportError("wrong expression type, must be an integer type", "", ast.E1.position);
+      idTable.openScope();
       ast.C.visit(this, null);
+      idTable.closeScope();
       return null;
   }
 
