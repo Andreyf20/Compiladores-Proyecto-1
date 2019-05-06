@@ -151,8 +151,9 @@ public final class Checker implements Visitor {
       if (! eType.equals(StdEnvironment.booleanType))
         reporter.reportError ("Boolean expression expected here", "",
                             ast.eAST.position);
-      
+      idTable.openScope();
       ast.cAST.visit(this, null);
+      idTable.closeScope();
       ast.eAST.visit(this, null);
       
       return null;
@@ -165,8 +166,9 @@ public final class Checker implements Visitor {
       if (! eType.equals(StdEnvironment.booleanType))
         reporter.reportError ("Boolean expression expected here", "",
                             ast.eAST.position);
-      
+      idTable.openScope();
       ast.cAST.visit(this, null);
+      idTable.closeScope();
       ast.eAST.visit(this, null);
       return null;
   }
@@ -254,7 +256,9 @@ public final class Checker implements Visitor {
     if (! eType.equals(StdEnvironment.booleanType))
       reporter.reportError("Boolean expression expected here", "", ast.E.position);
     ast.E.visit(this, null);
+    idTable.openScope();
     ast.C.visit(this, null);
+    idTable.closeScope();
     return null;
   }
   
