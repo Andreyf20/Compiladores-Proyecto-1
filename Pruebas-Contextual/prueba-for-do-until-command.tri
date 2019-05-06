@@ -1,0 +1,9 @@
+loop for i from 1 to 10
+until true
+do
+	pass;
+	let const a ~ i
+	in
+		pass
+	end
+end
