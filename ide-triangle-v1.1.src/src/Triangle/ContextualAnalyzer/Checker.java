@@ -180,11 +180,11 @@ public final class Checker implements Visitor {
   //Cambio: se agrego Visit del checker para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
-      ast.FCD.visit(this, null);
       TypeDenoter e2Type = (TypeDenoter) ast.E1.visit(this, null);
       if(!(e2Type instanceof IntTypeDenoter))
           reporter.reportError("wrong expression type, must be an integer type", "", ast.E1.position);
       idTable.openScope();
+      ast.FCD.visit(this, null);
       ast.C.visit(this, null);
       idTable.closeScope();
       return null;
@@ -423,14 +423,9 @@ public final class Checker implements Visitor {
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
                             ast.id.spelling, ast.position);
-    
-//<<<<<<< HEAD:ide-triangle-v1.1.src/src/Triangle/Triangle/ContextualAnalyzer/Checker.java
-    
-//=======
     if(!(eType instanceof IntTypeDenoter))
         reporter.reportError ("wrong expression type, must be an integer type",
                               "", ast.expression.position);
-//>>>>>>> 4f29dd91fa3fa9904951bdc3af8f8f6df62a9c70:ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/Checker.java
     return null;
   }
   
