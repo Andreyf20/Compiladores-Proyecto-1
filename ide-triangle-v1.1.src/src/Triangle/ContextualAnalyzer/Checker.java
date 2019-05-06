@@ -416,9 +416,7 @@ public final class Checker implements Visitor {
   //Cambio: se agrego Implementacion de visit del checker para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
-    ast.id.visit(this, null);
     TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
-    
     idTable.enter(ast.id.spelling, ast);
     if (ast.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
