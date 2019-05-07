@@ -997,6 +997,7 @@ public class Parser {
       Identifier iAST = parseIdentifier();
       accept(Token.FROM);
       Expression eAST = parseExpression();
+      finish(declarationPos);
       declarationAST = new ForCtlDeclaration(iAST, eAST, declarationPos);
       return declarationAST;
   }
