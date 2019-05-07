@@ -4,4 +4,5 @@ loop do
   end;
   pass
 until false
-end
+end;
+pas:= 2

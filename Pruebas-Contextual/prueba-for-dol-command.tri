@@ -1,8 +1,14 @@
+let var f:Integer in
 loop for i from 
 1 to 3 do
-  let var pas:Integer 
+  let const g ~ 2
     in
-      pas := 1
+      let var g:Integer in g := 2 end
+  end;
+  let var g:Integer 
+    in
+      let var h:Integer in pass end
   end;
   pass
+end
 end
