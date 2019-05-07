@@ -292,6 +292,26 @@ public class TableVisitor implements Visitor {
   //Cambio: se agrego Visit de ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
+      String name = ast.id.spelling;
+      String type = "N/A";
+      try {
+        int size = (ast.entity!=null?ast.entity.size:0);
+        int level = -1;
+        int displacement = -1;
+        int value = -1;
+      
+        if (ast.entity instanceof KnownValue) {
+              type = "KnownValue";
+              value = ((KnownValue)ast.entity).value;
+          }
+          else if (ast.entity instanceof UnknownValue) {
+              type = "UnknownValue";
+              level = ((UnknownValue)ast.entity).address.level;
+              displacement = ((UnknownValue)ast.entity).address.displacement;
+          }
+          addIdentifier(name, type, size, level, displacement, value);
+      } catch (NullPointerException e) { }
+      
       ast.id.visit(this, null);
       ast.expression.visit(this,null);
       return null;

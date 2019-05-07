@@ -63,7 +63,7 @@ public final class IdentificationTable {
 
     // Check for duplicate entry ...
     while (searching) {
-      if (entry == null || entry.level > this.level)
+      if (entry == null || entry.level < this.level)
         searching = false;
       else if (entry.id.equals(id)) {
         present = true;
