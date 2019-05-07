@@ -417,10 +417,11 @@ public final class Checker implements Visitor {
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
     TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
-    idTable.enter(ast.id.spelling, ast);
-    if (ast.duplicated)
+    ConstDeclaration cAst = new ConstDeclaration(ast.id, ast.expression, ast.position);
+    idTable.enter(cAst.I.spelling, cAst);
+    if (cAst.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
-                            ast.id.spelling, ast.position);
+                            cAst.I.spelling, cAst.position);
     if(!(eType instanceof IntTypeDenoter))
         reporter.reportError ("wrong expression type, must be an integer type",
                               "", ast.expression.position);
