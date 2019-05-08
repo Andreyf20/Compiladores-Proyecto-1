@@ -32,7 +32,7 @@ public class Program extends AST {
     return v.visitProgram(this, o);
   }
 
-  public Declaration packageAST;
+  public Declaration packageAST = null;
   public Command C;
   public ArrayList<Commentary> commentarys;
 }
