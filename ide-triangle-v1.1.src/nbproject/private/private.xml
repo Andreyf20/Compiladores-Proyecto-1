@@ -7,24 +7,24 @@
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/ErrorReporter.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/StdEnvironment.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Encoder.java</file>
-            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/ContextualAnalyzer/Checker.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/AST.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Core/Visitors/TableVisitor.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/Program.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/IdentificationTable.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/Identifier.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/SyntacticAnalyzer/SourcePosition.java</file>
-            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/ContextualAnalyzer/IdEntry.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/IdEntry.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/IDECompiler.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/SyntacticAnalyzer/SyntaxError.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/TreeWriterXML/WriterVisitor.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/Compiler.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/TreeWriterHTML1/WriterHTML.java</file>
-            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/ContextualAnalyzer/IdentificationTable.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/Commentary.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/ConstActualParameter.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/LetCommand.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/TreeDrawer/LayoutVisitor.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/Visitor.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/Checker.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/SyntacticAnalyzer/Parser.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/TreeWriterHTML1/WriterVisitor.java</file>
             <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Core/Visitors/TreeVisitor.java</file>

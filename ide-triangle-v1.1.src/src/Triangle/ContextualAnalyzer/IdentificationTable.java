@@ -30,7 +30,6 @@ public final class IdentificationTable {
   // current topmost level.
 
   public void openScope () {
-
     level ++;
   }
 
@@ -104,5 +103,5 @@ public final class IdentificationTable {
 
     return attr;
   }
-
+  
 }

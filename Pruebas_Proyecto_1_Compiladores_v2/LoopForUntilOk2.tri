@@ -1,3 +1,3 @@
-loop for i from 5 to 6 until i < 5 do pass;pass end
+loop for i from 5 to 6 until 5 do pass;pass end
 
 !ok

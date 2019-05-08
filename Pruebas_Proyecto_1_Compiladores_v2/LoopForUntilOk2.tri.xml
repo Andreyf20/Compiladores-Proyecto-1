@@ -1,28 +1,31 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
-<ForWhileCommand>
+<ForUntilCommand>
 <ForCtlDeclaration>
-<Identifier value="id"/>
+<Identifier value="i"/>
 <IntegerExpression>
-<IntegerLiteral value="9"/>
+<IntegerLiteral value="5"/>
 </IntegerExpression>
 </ForCtlDeclaration>
 <IntegerExpression>
-<IntegerLiteral value="9"/>
+<IntegerLiteral value="6"/>
 </IntegerExpression>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <LongIdentifier>
-<Identifier value="id"/>
+<Identifier value="i"/>
 </LongIdentifier>
 </SimpleVname>
 </VnameExpression>
 <Operator value="&lt;"/>
 <IntegerExpression>
-<IntegerLiteral value="2"/>
+<IntegerLiteral value="5"/>
 </IntegerExpression>
 </BinaryExpression>
+<SequentialCommand>
 <EmptyCommand/>
-</ForWhileCommand>
+<EmptyCommand/>
+</SequentialCommand>
+</ForUntilCommand>
 </Program>

@@ -208,23 +208,17 @@ public final class Checker implements Visitor {
 
   //Cambio: Se agregan las validaciones y alcance.
   public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-
-    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
-    if (! e2Type.equals(StdEnvironment.integerType))
-      reporter.reportError("Integer expression expected here", "", ast.E2.position);
-    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
-    if (! e3Type.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", ast.E3.position);
     ast.D.visit(this, null);
+    TypeDenoter e2Type = (TypeDenoter) ast.E2.visit(this, null);
+    if(!(e2Type instanceof IntTypeDenoter))
+        reporter.reportError("wrong expression type, must be an integer type", "", ast.E2.position);
+    TypeDenoter e3Type = (TypeDenoter) ast.E3.visit(this, null);
+    if (! (e3Type instanceof BoolTypeDenoter))
+      reporter.reportError("wrong expression type, must be an boolean type", "", ast.E3.position);
     idTable.openScope();
     ast.E3.visit(this, null);
     ast.C.visit(this, null);
     idTable.closeScope();
-//variable de control deberia ser manejada como constante aqui en el command,
-    //loopCtlVar muy parecido a constante, constDe, ConstFormalParameter
-    //v.const 707 checker
-    //hay que tocar el vName (copiar), añadir un caso adisional,
-    //en este contexto ya conoce el i entonces deberia ser booleana
     return null;
   }
 
