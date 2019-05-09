@@ -1070,6 +1070,7 @@ public class Parser {
             case Token.CONST:
             case Token.VAR:
             case Token.FUNC:
+            case Token.PROC:
             case Token.TYPE:
                 declarationAST = parseSingleDeclaration();
 

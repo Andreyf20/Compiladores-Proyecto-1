@@ -1302,10 +1302,21 @@ public final class Checker implements Visitor {
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         idTable.openPrivateScope();
-        ast.dcl1.visit(this, o);
+        if(ast.dcl1 instanceof PrivateDeclaration)
+            visitPrivateDeclNested((PrivateDeclaration)ast.dcl1, o);
+        else
+            ast.dcl1.visit(this, o);
         idTable.closePrivateScope();
         ast.dcl2.visit(this, o);
         idTable.clearPrivateScope();
+        if(ast.dcl1 instanceof PrivateDeclaration)
+            idTable.clearPrivateScope();
+        return null;
+    }
+    
+    public Object visitPrivateDeclNested(PrivateDeclaration dec, Object o) {
+        dec.dcl1.visit(this, o);
+        dec.dcl2.visit(this, o);
         return null;
     }
 
