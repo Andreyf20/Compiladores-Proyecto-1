@@ -1301,7 +1301,12 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        idTable.openPrivateScope();
+        ast.dcl1.visit(this, o);
+        idTable.closePrivateScope();
+        ast.dcl2.visit(this, o);
+        idTable.clearPrivateScope();
+        return null;
     }
 
     @Override
