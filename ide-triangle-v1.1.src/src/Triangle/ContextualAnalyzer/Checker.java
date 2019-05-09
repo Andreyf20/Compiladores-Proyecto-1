@@ -429,36 +429,82 @@ public final class Checker implements Visitor {
   }
   
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
-    ast.T = (TypeDenoter) ast.T.visit(this, null);
-    idTable.enter (ast.I.spelling, ast); // permits recursion
-    if (ast.duplicated)
-      reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
-    idTable.openScope();
-    ast.FPS.visit(this, null);
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    idTable.closeScope();
-    if (! ast.T.equals(eType))
-      reporter.reportError ("body of function \"%\" has wrong type",
-                            ast.I.spelling, ast.E.position);
+    if(o != null){
+        String flag = (String) o;
+        if(flag.equals("enter")){
+            ast.T = (TypeDenoter) ast.T.visit(this, null);
+            idTable.enter (ast.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+              reporter.reportError ("identifier \"%\" already declared",
+                                    ast.I.spelling, ast.position);
+        }
+        else{
+            idTable.openScope();
+            ast.FPS.visit(this, null);
+            TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+            idTable.closeScope();
+            if (! ast.T.equals(eType))
+              reporter.reportError ("body of function \"%\" has wrong type",
+                                    ast.I.spelling, ast.E.position);
+        }
+    }
+    else if(o == null){
+        ast.T = (TypeDenoter) ast.T.visit(this, null);
+        idTable.enter (ast.I.spelling, ast); // permits recursion
+        if (ast.duplicated)
+          reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        idTable.openScope();
+        ast.FPS.visit(this, null);
+        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+        idTable.closeScope();
+        if (! ast.T.equals(eType))
+          reporter.reportError ("body of function \"%\" has wrong type",
+                                ast.I.spelling, ast.E.position);
+    }  
     return null;
   }
 
   public Object visitProcDeclaration(ProcDeclaration ast, Object o) {
-    idTable.enter (ast.I.spelling, ast); // permits recursion
-    if (ast.duplicated)
-      reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
-    idTable.openScope();
-    ast.FPS.visit(this, null);
-    ast.C.visit(this, null);
-    idTable.closeScope();
+    if(o != null){
+        String flag = (String) o;
+        if(flag.equals("enter")){
+            idTable.enter (ast.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+                reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        }
+        else{
+            idTable.openScope();
+            ast.FPS.visit(this, null);
+            ast.C.visit(this, null);
+            idTable.closeScope();
+        }
+    }
+    else if(o ==null){
+        idTable.enter (ast.I.spelling, ast); // permits recursion
+        if (ast.duplicated)
+          reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        idTable.openScope();
+        ast.FPS.visit(this, null);
+        ast.C.visit(this, null);
+        idTable.closeScope();
+    }
     return null;
   }
 
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
-    ast.D1.visit(this, null);
-    ast.D2.visit(this, null);
+    if(o == null){
+        ast.D1.visit(this, null);
+        ast.D2.visit(this, null);
+    }
+    else{
+        ast.D1.visit(this, "enter");
+        ast.D2.visit(this, "enter");
+        ast.D1.visit(this, "command");
+        ast.D2.visit(this, "command");
+    }
     return null;
   }
 
@@ -1304,7 +1350,7 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        ast.ProcFuncAST.visit(this, o);
+        ast.ProcFuncAST.visit(this, "flag");
         return null;
     }
 
@@ -1339,17 +1385,30 @@ public final class Checker implements Visitor {
     @Override
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
 
-        Declaration binding = idTable.retrieve(ast.identifier2.spelling);
-        if (binding != null){
-            ast.identifier2.decl = binding;
-        }
-        
         if(ast.optionalIdentifier1 != null){
             Declaration optionalBinding = idTable.retrieve(ast.optionalIdentifier1.spelling);
             if(optionalBinding != null){
                 ast.optionalIdentifier1.decl = optionalBinding;
+                Declaration packageVariableBinding = idTable.retrieve(ast.optionalIdentifier1.spelling + "," + ast.identifier2.spelling);
+                if(packageVariableBinding == null){
+                    reporter.reportError ("variable " + ast.identifier2.spelling + " doesnt belong to packageIdentifier \"%\" ",
+                            ast.optionalIdentifier1.spelling, ast.position);
+                }
+            }
+            else{
+                reporter.reportError ("packageIdentifier \"%\" not declared",
+                            ast.optionalIdentifier1.spelling, ast.position);
             }
         }
+        
+        Declaration binding = idTable.retrieve(ast.identifier2.spelling);
+        if (binding != null){
+            ast.identifier2.decl = binding;
+        }
+        else{
+                reporter.reportError ("variable name \"%\" not declared",
+                            ast.optionalIdentifier1.spelling, ast.position);
+            }
         
         return binding;
     }
@@ -1360,6 +1419,9 @@ public final class Checker implements Visitor {
         Declaration binding = idTable.retrieve(ast.identifier.spelling);
         if (binding == null){
             idTable.enter(ast.identifier.spelling, ast);
+            idTable.setPackageID(ast.identifier.spelling + ",");
+            ast.decl.visit(this, null);
+            idTable.setPackageID("");
             ast.decl.visit(this, null);
         }
         else{
@@ -1378,7 +1440,24 @@ public final class Checker implements Visitor {
     
     @Override
     public Object visitPackageVname(PackageVname ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Declaration binding = idTable.retrieve(ast.I.spelling);
+        if (binding != null){
+            ast.I.decl = binding;
+        }
+        
+        if(ast.pI != null){
+            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+            if(optionalBinding != null){
+                ast.pI.decl = optionalBinding;
+            }
+            else{
+                reporter.reportError ("packageVname \"%\" not declared",
+                            ast.pI.spelling, ast.position);
+            }
+        }
+        
+        return binding;
     }
 
     
