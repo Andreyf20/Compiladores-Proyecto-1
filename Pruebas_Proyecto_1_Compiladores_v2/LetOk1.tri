@@ -1,12 +1,7 @@
-  
 let
-	var i : Char;
-	var j : Integer; 
-	const id ~ 4;
-	type dia ~ Integer
+	const i ~ 8
 in 
-	put(i);
-	put(i)
+	pass
 end
 
 ! OK

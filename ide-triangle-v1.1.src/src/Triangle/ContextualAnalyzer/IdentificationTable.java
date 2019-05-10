@@ -21,6 +21,7 @@ public final class IdentificationTable {
   private int level;
   private IdEntry latest;
   private String packageID = "";
+  protected boolean privateScope = false;
 
   public IdentificationTable () {
     level = 0;
@@ -31,8 +32,11 @@ public final class IdentificationTable {
   // current topmost level.
 
   public void openScope () {
-
     level ++;
+  }
+  
+  public void openPrivateScope () {
+    privateScope = true;
   }
 
   // Closes the topmost level in the identification table, discarding
@@ -51,6 +55,36 @@ public final class IdentificationTable {
     this.level--;
     this.latest = entry;
   }
+  
+  public void closePrivateScope () {
+
+    privateScope = false;
+  }
+  
+  
+    public void clearPrivateScope () {
+
+    IdEntry entry, local, privateDecl;
+
+    // Presumably, idTable.level > 0.
+    entry = this.latest;
+    privateDecl = this.latest.previous;
+    
+    while (privateDecl.privateLvl != true) {
+      local = entry;
+      entry = local.previous;
+      privateDecl = local.previous;
+    }
+    
+    entry.previous = privateDecl.previous;
+    
+    //this.level--;
+    
+    //entry.level = this.level;
+    
+    this.latest = entry;
+    
+  }
 
   // Makes a new entry in the identification table for the given identifier
   // and attribute. The new entry belongs to the current level.
@@ -58,6 +92,7 @@ public final class IdentificationTable {
   // same identifier at the current level.
 
   public void enter (String id, Declaration attr) {
+      
       
     id = packageID + id;
     IdEntry entry = this.latest;
@@ -76,7 +111,10 @@ public final class IdentificationTable {
 
     attr.duplicated = present;
     // Add new entry ...
-    entry = new IdEntry(id, attr, this.level, this.latest);
+    if(privateScope)
+        entry = new IdEntry(id, attr, this.level, this.latest, true);
+    else
+        entry = new IdEntry(id, attr, this.level, this.latest, false);
     this.latest = entry;
   }
 
@@ -106,10 +144,9 @@ public final class IdentificationTable {
 
     return attr;
   }
-
+  
   public void setPackageID(String id){
       packageID = id;
   }
-  
   
 }

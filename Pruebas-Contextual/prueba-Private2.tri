@@ -1,0 +1,1 @@
+let private func x() : Boolean ~ 1>3 in var p : Integer end in pass end

@@ -2,13 +2,13 @@
 <Program>
 <ForDoCommand>
 <ForCtlDeclaration>
-<Identifier value="i"/>
+<Identifier value="id"/>
 <IntegerExpression>
-<IntegerLiteral value="5"/>
+<IntegerLiteral value="2"/>
 </IntegerExpression>
 </ForCtlDeclaration>
 <IntegerExpression>
-<IntegerLiteral value="6"/>
+<IntegerLiteral value="9"/>
 </IntegerExpression>
 <SequentialCommand>
 <EmptyCommand/>
