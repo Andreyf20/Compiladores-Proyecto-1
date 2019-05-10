@@ -1,3 +1,16 @@
-let private private var x ::= 1 in var y ::= x - 1 end in var z ::= y - 1 end; var p : Integer
-in p := z - 1
+let private 
+	private
+		private
+			var x ::= 1
+		in
+			var y ::= x - 1
+		end
+	in
+		var z ::= y - 1
+	end
+in
+	var b ::= z + 1
+end
+; var p : Integer
+in p := b - 1
 end
