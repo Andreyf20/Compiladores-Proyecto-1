@@ -20,6 +20,7 @@ public final class IdentificationTable {
 
   private int level;
   private IdEntry latest;
+  private String packageID = "";
   protected boolean privateScope = false;
 
   public IdentificationTable () {
@@ -91,7 +92,9 @@ public final class IdentificationTable {
   // same identifier at the current level.
 
   public void enter (String id, Declaration attr) {
-
+      
+      
+    id = packageID + id;
     IdEntry entry = this.latest;
     boolean present = false, searching = true;
 
@@ -140,6 +143,10 @@ public final class IdentificationTable {
     }
 
     return attr;
+  }
+  
+  public void setPackageID(String id){
+      packageID = id;
   }
   
 }

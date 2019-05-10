@@ -1092,7 +1092,9 @@ public final class Checker implements Visitor {
   // Programs
 
   public Object visitProgram(Program ast, Object o) {
-    //ast.packageAST.visit(this, null);//puede ser nulo
+    if(ast.packageAST != null){
+        ast.packageAST.visit(this, null);
+    }
     ast.C.visit(this, null);
     return null;
   }
@@ -1343,43 +1345,84 @@ public final class Checker implements Visitor {
         return null;
     }
 
+    
     @Override
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
-        //revisar
-        Declaration binding = idTable.retrieve(ast.identifier2.spelling);
-        if (binding != null){
-            ast.identifier2.decl = binding;
-        }
-        
+
         if(ast.optionalIdentifier1 != null){
             Declaration optionalBinding = idTable.retrieve(ast.optionalIdentifier1.spelling);
             if(optionalBinding != null){
                 ast.optionalIdentifier1.decl = optionalBinding;
+                Declaration packageVariableBinding = idTable.retrieve(ast.optionalIdentifier1.spelling + "," + ast.identifier2.spelling);
+                if(packageVariableBinding == null){
+                    reporter.reportError ("variable " + ast.identifier2.spelling + " doesnt belong to packageIdentifier \"%\" ",
+                            ast.optionalIdentifier1.spelling, ast.position);
+                }
+            }
+            else{
+                reporter.reportError ("packageIdentifier \"%\" not declared",
+                            ast.optionalIdentifier1.spelling, ast.position);
             }
         }
+        
+        Declaration binding = idTable.retrieve(ast.identifier2.spelling);
+        if (binding != null){
+            ast.identifier2.decl = binding;
+        }
+        else{
+                reporter.reportError ("variable name \"%\" not declared",
+                            ast.identifier2.spelling, ast.position);
+            }
         
         return binding;
     }
 
     @Override
     public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        Declaration binding = idTable.retrieve(ast.identifier.spelling);
+        if (binding == null){
+            idTable.enter(ast.identifier.spelling, ast);
+            idTable.setPackageID(ast.identifier.spelling + ",");
+            ast.decl.visit(this, null);
+            idTable.setPackageID("");
+            ast.decl.visit(this, null);
+        }
+        else{
+            reporter.reportError ("packageIdentifier \"%\" already declared",
+                            ast.identifier.spelling, ast.position);
+        }
+        return null;
     }
 
     @Override
     public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.decl1.visit(this, null);
+        ast.decl2.visit(this, null);
+        return null;
     }
     
     @Override
     public Object visitPackageVname(PackageVname ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Declaration binding = idTable.retrieve(ast.I.spelling);
+        if (binding != null){
+            ast.I.decl = binding;
+        }
+        
+        if(ast.pI != null){
+            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+            if(optionalBinding != null){
+                ast.pI.decl = optionalBinding;
+            }
+            else{
+                reporter.reportError ("packageVname \"%\" not declared",
+                            ast.pI.spelling, ast.position);
+            }
+        }
+        
+        return binding;
     }
-
-    
-
-    
-
 
 }
 
