@@ -1,5 +1,5 @@
 loop do
-  let var pas:Integer 
+  let var pas:Integer
     in pas := 2
   end;
   pass

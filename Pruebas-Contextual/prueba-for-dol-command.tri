@@ -1,9 +1,9 @@
 let var f:Integer in
 loop for i from 
 1 to 3 do
-  let const g ~ 2
+  let const a ~ 2
     in
-      let var g:Integer in g := 2 end
+      let var g:Char in g := 'h' end
   end;
   let var g:Integer 
     in
