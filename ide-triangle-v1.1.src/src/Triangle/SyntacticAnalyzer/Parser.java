@@ -310,7 +310,7 @@ public class Parser {
           }
           else{
               finish(positionLong);
-              I = new Long_Identifier(null, optional, positionLong, currentToken.spelling);
+              I = new Identifier(optional.spelling, positionLong);
           }          
       }
       else{
