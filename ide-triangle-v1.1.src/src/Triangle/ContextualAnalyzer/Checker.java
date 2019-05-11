@@ -1457,23 +1457,49 @@ public final class Checker implements Visitor {
     @Override
     public Object visitPackageVname(PackageVname ast, Object o) {
         
+        Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+        if(optionalBinding != null){
+            ast.pI.decl = optionalBinding;
+            Declaration packageVariableBinding = idTable.retrieve(ast.pI.spelling + "," + ast.I.spelling);
+            if(packageVariableBinding == null){
+                reporter.reportError ("variable " + ast.I.spelling + " doesnt belong to packageIdentifier \"%\" ",
+                        ast.pI.spelling, ast.position);
+            }
+        }
+        else{
+            reporter.reportError ("packageIdentifier \"%\" not declared",
+                        ast.pI.spelling, ast.position);
+        }
+        
+        
         Declaration binding = idTable.retrieve(ast.I.spelling);
         if (binding != null){
             ast.I.decl = binding;
         }
-        
-        if(ast.pI != null){
-            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
-            if(optionalBinding != null){
-                ast.pI.decl = optionalBinding;
+        else{
+                reporter.reportError ("variable name \"%\" not declared",
+                            ast.I.spelling, ast.position);
             }
-            else{
-                reporter.reportError ("packageVname \"%\" not declared",
-                            ast.pI.spelling, ast.position);
-            }
-        }
         
         return binding;
+        
+//        Declaration binding = idTable.retrieve(ast.I.spelling);
+//        if (binding != null){
+//            ast.I.decl = binding;
+//        }
+//        
+//        if(ast.pI != null){
+//            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+//            if(optionalBinding != null){
+//                ast.pI.decl = optionalBinding;
+//            }
+//            else{
+//                reporter.reportError ("packageVname \"%\" not declared",
+//                            ast.pI.spelling, ast.position);
+//            }
+//        }
+//        
+//        return binding;
     }
 
 }
