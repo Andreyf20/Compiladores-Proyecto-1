@@ -1,0 +1,6 @@
+let
+	par var x ::= 1 | const y ~ x | var z ::= 9 | var p : Integer end
+in
+	x := 2;
+	p := 2
+end

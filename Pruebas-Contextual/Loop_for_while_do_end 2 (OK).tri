@@ -1,0 +1,2 @@
+loop for id from 5 to 6 while id<2 do pass end
+!OK

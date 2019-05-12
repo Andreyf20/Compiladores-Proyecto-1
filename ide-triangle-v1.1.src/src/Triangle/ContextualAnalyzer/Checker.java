@@ -498,7 +498,7 @@ public final class Checker implements Visitor {
         //realiza enter de los identificadores
         ast.D1.visit(this, "enter");
         ast.D2.visit(this, "enter");
-        //parsea los parámetros
+        //parsea los parametros
         //ast.D1.visit(this, "enter");
         //ast.D2.visit(this, "enter");
         //parsea los comandos

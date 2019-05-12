@@ -1,0 +1,7 @@
+let
+		proc doble(var i : Integer) : Integer ~
+			3*2
+	
+in
+	doble(7)
+end

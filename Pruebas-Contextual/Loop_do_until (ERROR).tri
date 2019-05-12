@@ -1,0 +1,2 @@
+loop do pass until 3 end
+!ERROR

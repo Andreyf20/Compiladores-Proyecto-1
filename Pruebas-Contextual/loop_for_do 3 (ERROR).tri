@@ -1,0 +1,2 @@
+loop for id from 8 to 9=10 do pass;pass end
+!ERROR

@@ -1,0 +1,6 @@
+loop for id from 9 to 9 until id<2 do let
+	const i ~ id
+in 
+	pass
+end end
+!OK

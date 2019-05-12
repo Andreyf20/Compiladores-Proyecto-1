@@ -1,0 +1,14 @@
+package myP ~ 
+	var a: Integer;
+	var b: Integer
+end;
+package mypackage ~ 
+	var c: Integer
+end;
+let
+	var d: Integer
+in
+	putint(c);
+	putint (mypackage $ a)
+end
+!ERROR

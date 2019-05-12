@@ -1,0 +1,8 @@
+loop for id from 5 to 6 while 9<2 do 
+let
+	const i ~ id
+in 
+	pass
+end 
+end
+!OK

@@ -1,0 +1,2 @@
+loop for 9 from 7 to 9 do pass end
+!ERROR

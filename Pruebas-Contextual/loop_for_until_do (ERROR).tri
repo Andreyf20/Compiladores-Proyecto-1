@@ -1,0 +1,2 @@
+loop for i from 5=8 to 6 until i < 5 do pass;pass end
+!ERROR
