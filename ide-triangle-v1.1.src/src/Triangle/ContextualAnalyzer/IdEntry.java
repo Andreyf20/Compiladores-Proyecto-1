@@ -22,7 +22,7 @@ public class IdEntry {
   protected Declaration attr;
   protected int level;
   protected IdEntry previous;
-  protected boolean privateLvl;
+  protected boolean privateLvl; // Marca si el nodo deberia ser privado
 
   IdEntry (String id, Declaration attr, int level, IdEntry previous, boolean privateLvl) {
     this.id = id;

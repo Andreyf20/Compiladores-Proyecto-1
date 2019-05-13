@@ -1355,16 +1355,16 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        idTable.openPrivateScope();
+        idTable.openPrivateScope(); // Marcar las siguientes declaraciones como privadas
         if(ast.dcl1 instanceof PrivateDeclaration)
-            visitPrivateDeclNested((PrivateDeclaration)ast.dcl1, o);
+            visitPrivateDeclNested((PrivateDeclaration)ast.dcl1, o); // Si es anidado se siguen marcado como privado todo lo que este adentro
         else
-            ast.dcl1.visit(this, o);
-        idTable.closePrivateScope();
-        ast.dcl2.visit(this, o);
-        idTable.clearPrivateScope();
+            ast.dcl1.visit(this, o); // Se visitan las declaraciones como se haria normalmente
+        idTable.closePrivateScope(); // Se cierra el scope privado para eliminar despues los nodos marcados
+        ast.dcl2.visit(this, o); // Se visitan las declaraciones como se haria normalmente
+        idTable.clearPrivateScope(); // Se quitan los nodos marcados como privados de la tabla
         if(ast.dcl1 instanceof PrivateDeclaration)
-            idTable.clearPrivateScope();
+            idTable.clearPrivateScope(); // Se fuera anidado se quitan dos niveles de nodos marcados
         return null;
     }
     
@@ -1382,6 +1382,7 @@ public final class Checker implements Visitor {
     }
     
     public Object visitSequentialPar(ParDeclaration ast, Object o) {
+            // Se le da su propio scope a cada declaracion
             idTable.openScope();
             ast.D1.visit(this, null);
             idTable.closeScope();
