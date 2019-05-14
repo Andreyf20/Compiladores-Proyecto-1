@@ -1,0 +1,42 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<TypeDeclaration>
+<Identifier value="fecha"/>
+<RecordTypeDenoter>
+<MultipleFieldTypeDenoter>
+<Identifier value="d"/>
+<IntTypeDenoter/>
+<MultipleFieldTypeDenoter>
+<Identifier value="m"/>
+<IntTypeDenoter/>
+<SingleFieldTypeDenoter>
+<Identifier value="y"/>
+<IntTypeDenoter/>
+</SingleFieldTypeDenoter>
+</MultipleFieldTypeDenoter>
+</MultipleFieldTypeDenoter>
+</RecordTypeDenoter>
+</TypeDeclaration>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="a"/>
+<RecordTypeDenoter>
+<MultipleFieldTypeDenoter>
+<Identifier value="d"/>
+<IntTypeDenoter/>
+<MultipleFieldTypeDenoter>
+<Identifier value="m"/>
+<IntTypeDenoter/>
+<SingleFieldTypeDenoter>
+<Identifier value="y"/>
+<IntTypeDenoter/>
+</SingleFieldTypeDenoter>
+</MultipleFieldTypeDenoter>
+</MultipleFieldTypeDenoter>
+</RecordTypeDenoter>
+</VarDeclaration>
+<EmptyCommand/>
+</LetCommand>
+</LetCommand>
+</Program>

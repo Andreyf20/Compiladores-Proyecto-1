@@ -1,0 +1,60 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="f"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<ForDoCommand>
+<ForCtlDeclaration>
+<Identifier value="i"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ForCtlDeclaration>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+<SequentialCommand>
+<SequentialCommand>
+<LetCommand>
+<ConstDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</ConstDeclaration>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="g"/>
+<CharTypeDenoter/>
+</VarDeclaration>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="g"/>
+</SimpleVname>
+<CharacterExpression>
+<CharacterLiteral value="'h'"/>
+</CharacterExpression>
+</AssignCommand>
+</LetCommand>
+</LetCommand>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="g"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="h"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<EmptyCommand/>
+</LetCommand>
+</LetCommand>
+</SequentialCommand>
+<EmptyCommand/>
+</SequentialCommand>
+</ForDoCommand>
+</LetCommand>
+</Program>

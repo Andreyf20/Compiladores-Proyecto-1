@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="x"/>
+<ArrayTypeDenoter>
+<IntegerLiteral value="10"/>
+<IntTypeDenoter/>
+</ArrayTypeDenoter>
+</VarDeclaration>
+<EmptyCommand/>
+</LetCommand>
+</Program>

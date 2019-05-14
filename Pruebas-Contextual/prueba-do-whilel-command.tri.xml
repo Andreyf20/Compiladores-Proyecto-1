@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<DoWhileCommand>
+<SequentialCommand>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="pas"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="pas"/>
+</LongIdentifier>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</AssignCommand>
+</LetCommand>
+<EmptyCommand/>
+</SequentialCommand>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="false"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+</DoWhileCommand>
+</Program>

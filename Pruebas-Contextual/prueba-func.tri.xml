@@ -1,0 +1,70 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<FuncDeclaration>
+<Identifier value="suma"/>
+<MultipleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="a"/>
+<IntTypeDenoter/>
+</ConstFormalParameter>
+<SingleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="b"/>
+<IntTypeDenoter/>
+</ConstFormalParameter>
+</SingleFormalParameterSequence>
+</MultipleFormalParameterSequence>
+<IntTypeDenoter/>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="a"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<VnameExpression>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="b"/>
+</LongIdentifier>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+</FuncDeclaration>
+<VarDeclaration>
+<Identifier value="a"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+</SequentialDeclaration>
+<AssignCommand>
+<SimpleVname>
+<LongIdentifier>
+<Identifier value="a"/>
+</LongIdentifier>
+</SimpleVname>
+<CallExpression>
+<LongIdentifier>
+<Identifier value="suma"/>
+</LongIdentifier>
+<MultipleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="12"/>
+</IntegerExpression>
+</ConstActualParameter>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="12"/>
+</IntegerExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</MultipleActualParameterSequence>
+</CallExpression>
+</AssignCommand>
+</LetCommand>
+</Program>
