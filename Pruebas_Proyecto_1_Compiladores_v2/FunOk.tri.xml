@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<FuncDeclaration>
+<Identifier value="doble"/>
+<SingleFormalParameterSequence>
+<VarFormalParameter>
+<Identifier value="i"/>
+<IntTypeDenoter/>
+</VarFormalParameter>
+</SingleFormalParameterSequence>
+<IntTypeDenoter/>
+<BinaryExpression>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+<Operator value="*"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</BinaryExpression>
+</FuncDeclaration>
+<EmptyCommand/>
+</LetCommand>
+</Program>

@@ -423,36 +423,88 @@ public final class Checker implements Visitor {
   }
   
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
-    ast.T = (TypeDenoter) ast.T.visit(this, null);
-    idTable.enter (ast.I.spelling, ast); // permits recursion
-    if (ast.duplicated)
-      reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
-    idTable.openScope();
-    ast.FPS.visit(this, null);
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    idTable.closeScope();
-    if (! ast.T.equals(eType))
-      reporter.reportError ("body of function \"%\" has wrong type",
-                            ast.I.spelling, ast.E.position);
+    if(o != null){
+        String flag = (String) o;
+        if(flag.equals("enter")){
+            ast.T = (TypeDenoter) ast.T.visit(this, null);
+            idTable.enter (ast.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+              reporter.reportError ("identifier \"%\" already declared",
+                                    ast.I.spelling, ast.position);
+        }
+        else{
+            idTable.openScope();
+            ast.FPS.visit(this, null);
+            TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+            idTable.closeScope();
+            if (! ast.T.equals(eType))
+              reporter.reportError ("body of function \"%\" has wrong type",
+                                    ast.I.spelling, ast.E.position);
+        }
+    }
+    else if(o == null){
+        ast.T = (TypeDenoter) ast.T.visit(this, null);
+        idTable.enter (ast.I.spelling, ast); // permits recursion
+        if (ast.duplicated)
+          reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        idTable.openScope();
+        ast.FPS.visit(this, null);
+        TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+        idTable.closeScope();
+        if (! ast.T.equals(eType))
+          reporter.reportError ("body of function \"%\" has wrong type",
+                                ast.I.spelling, ast.E.position);
+    }  
     return null;
   }
 
   public Object visitProcDeclaration(ProcDeclaration ast, Object o) {
-    idTable.enter (ast.I.spelling, ast); // permits recursion
-    if (ast.duplicated)
-      reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
-    idTable.openScope();
-    ast.FPS.visit(this, null);
-    ast.C.visit(this, null);
-    idTable.closeScope();
+    if(o != null){
+        String flag = (String) o;
+        if(flag.equals("enter")){
+            idTable.enter (ast.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+                reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        }
+        else{
+            idTable.openScope();
+            ast.FPS.visit(this, null);
+            ast.C.visit(this, null);
+            idTable.closeScope();
+        }
+    }
+    else if(o ==null){
+        idTable.enter (ast.I.spelling, ast); // permits recursion
+        if (ast.duplicated)
+          reporter.reportError ("identifier \"%\" already declared",
+                                ast.I.spelling, ast.position);
+        idTable.openScope();
+        ast.FPS.visit(this, null);
+        ast.C.visit(this, null);
+        idTable.closeScope();
+    }
     return null;
   }
 
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
-    ast.D1.visit(this, null);
-    ast.D2.visit(this, null);
+      
+    if(o == null){
+        ast.D1.visit(this, null);
+        ast.D2.visit(this, null);
+    }
+    else{
+        //realiza enter de los identificadores
+        ast.D1.visit(this, "enter");
+        ast.D2.visit(this, "enter");
+        //parsea los parametros
+        //ast.D1.visit(this, "enter");
+        //ast.D2.visit(this, "enter");
+        //parsea los comandos
+        ast.D1.visit(this, "command");
+        ast.D2.visit(this, "command");
+    }
     return null;
   }
 
@@ -1297,22 +1349,22 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        ast.ProcFuncAST.visit(this, o);
+        ast.ProcFuncAST.visit(this, "flag");
         return null;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        idTable.openPrivateScope();
+        idTable.openPrivateScope(); // Marcar las siguientes declaraciones como privadas
         if(ast.dcl1 instanceof PrivateDeclaration)
-            visitPrivateDeclNested((PrivateDeclaration)ast.dcl1, o);
+            visitPrivateDeclNested((PrivateDeclaration)ast.dcl1, o); // Si es anidado se siguen marcado como privado todo lo que este adentro
         else
-            ast.dcl1.visit(this, o);
-        idTable.closePrivateScope();
-        ast.dcl2.visit(this, o);
-        idTable.clearPrivateScope();
+            ast.dcl1.visit(this, o); // Se visitan las declaraciones como se haria normalmente
+        idTable.closePrivateScope(); // Se cierra el scope privado para eliminar despues los nodos marcados
+        ast.dcl2.visit(this, o); // Se visitan las declaraciones como se haria normalmente
+        idTable.clearPrivateScope(); // Se quitan los nodos marcados como privados de la tabla
         if(ast.dcl1 instanceof PrivateDeclaration)
-            idTable.clearPrivateScope();
+            idTable.clearPrivateScope(); // Se fuera anidado se quitan dos niveles de nodos marcados
         return null;
     }
     
@@ -1330,6 +1382,7 @@ public final class Checker implements Visitor {
     }
     
     public Object visitSequentialPar(ParDeclaration ast, Object o) {
+            // Se le da su propio scope a cada declaracion
             idTable.openScope();
             ast.D1.visit(this, null);
             idTable.closeScope();
@@ -1405,23 +1458,49 @@ public final class Checker implements Visitor {
     @Override
     public Object visitPackageVname(PackageVname ast, Object o) {
         
+        Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+        if(optionalBinding != null){
+            ast.pI.decl = optionalBinding;
+            Declaration packageVariableBinding = idTable.retrieve(ast.pI.spelling + "," + ast.I.spelling);
+            if(packageVariableBinding == null){
+                reporter.reportError ("variable " + ast.I.spelling + " doesnt belong to packageIdentifier \"%\" ",
+                        ast.pI.spelling, ast.position);
+            }
+        }
+        else{
+            reporter.reportError ("packageIdentifier \"%\" not declared",
+                        ast.pI.spelling, ast.position);
+        }
+        
+        
         Declaration binding = idTable.retrieve(ast.I.spelling);
         if (binding != null){
             ast.I.decl = binding;
         }
-        
-        if(ast.pI != null){
-            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
-            if(optionalBinding != null){
-                ast.pI.decl = optionalBinding;
+        else{
+                reporter.reportError ("variable name \"%\" not declared",
+                            ast.I.spelling, ast.position);
             }
-            else{
-                reporter.reportError ("packageVname \"%\" not declared",
-                            ast.pI.spelling, ast.position);
-            }
-        }
         
         return binding;
+        
+//        Declaration binding = idTable.retrieve(ast.I.spelling);
+//        if (binding != null){
+//            ast.I.decl = binding;
+//        }
+//        
+//        if(ast.pI != null){
+//            Declaration optionalBinding = idTable.retrieve(ast.pI.spelling);
+//            if(optionalBinding != null){
+//                ast.pI.decl = optionalBinding;
+//            }
+//            else{
+//                reporter.reportError ("packageVname \"%\" not declared",
+//                            ast.pI.spelling, ast.position);
+//            }
+//        }
+//        
+//        return binding;
     }
 
 }

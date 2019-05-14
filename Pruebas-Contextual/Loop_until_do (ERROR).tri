@@ -1,0 +1,2 @@
+loop until 1 do pass end
+!ERROR

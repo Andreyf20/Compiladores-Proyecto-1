@@ -1,0 +1,24 @@
+let
+	var a:Integer
+in
+	choose a
+	from 
+	when 1..2|4..5|6
+	then
+		choose 2 
+		from 
+		when 1..8
+		then
+			pass
+		when 10
+		then
+			pass
+		end
+	when 7..12
+	then
+		pass
+	else!<--defaultcase 		
+	pass
+	end
+end
+

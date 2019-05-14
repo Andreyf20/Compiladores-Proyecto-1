@@ -1,0 +1,2 @@
+loop for 9 from 5 to 6 until i < 5 do pass;pass end
+!ERROR

@@ -1,0 +1,2 @@
+loop for id from 5 to 6<0 while 9<3 do pass end
+!ERROR

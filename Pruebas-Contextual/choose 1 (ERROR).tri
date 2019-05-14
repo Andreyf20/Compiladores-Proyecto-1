@@ -1,0 +1,13 @@
+let
+	var a:Char
+in
+choose a
+from 
+when 1..2|4..5|6
+then
+	pass
+else!<--defaultcase 
+	pass
+end
+end
+!ERROR

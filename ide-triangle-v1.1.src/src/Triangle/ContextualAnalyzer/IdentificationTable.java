@@ -36,7 +36,7 @@ public final class IdentificationTable {
   }
   
   public void openPrivateScope () {
-    privateScope = true;
+    privateScope = true; // Para marcar nodos como privados y luego quitarlos
   }
 
   // Closes the topmost level in the identification table, discarding
@@ -57,16 +57,15 @@ public final class IdentificationTable {
   }
   
   public void closePrivateScope () {
-
-    privateScope = false;
+    privateScope = false; // Para parar de marcar nodos como privados
   }
   
   
     public void clearPrivateScope () {
+    // Eliminar ultimo nivel de nodos marcados como privados
 
     IdEntry entry, local, privateDecl;
 
-    // Presumably, idTable.level > 0.
     entry = this.latest;
     privateDecl = this.latest.previous;
     
@@ -77,10 +76,6 @@ public final class IdentificationTable {
     }
     
     entry.previous = privateDecl.previous;
-    
-    //this.level--;
-    
-    //entry.level = this.level;
     
     this.latest = entry;
     

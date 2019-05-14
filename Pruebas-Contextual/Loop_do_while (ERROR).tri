@@ -1,0 +1,2 @@
+loop do pass while 3 end
+!ERROR
