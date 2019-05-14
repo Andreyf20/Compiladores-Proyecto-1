@@ -1,0 +1,11 @@
+let type fecha~record 
+	d:Integer,
+	m:Integer,
+	y:Integer
+	end
+in
+	let var a:fecha
+	in
+		a.q := '2'
+	end
+end

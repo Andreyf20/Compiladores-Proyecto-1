@@ -1,0 +1,8 @@
+let proc hola(mensaje:Char)~
+	put(mensaje)
+	end;
+var msj:Char
+in
+	msj := 'h';
+	hola(msj)
+end

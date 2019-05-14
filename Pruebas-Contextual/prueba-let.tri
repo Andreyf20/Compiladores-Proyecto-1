@@ -1,0 +1,4 @@
+let var a:Integer
+in
+	b :=  2
+end

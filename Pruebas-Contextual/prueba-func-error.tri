@@ -1,0 +1,6 @@
+let func suma(a:Integer, b:Integer):Integer~
+	'a';
+var a:Integer
+in
+	a := suma(12,12)
+end

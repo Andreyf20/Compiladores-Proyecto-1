@@ -1,15 +1,11 @@
 let private 
 	private
-		private
-			var x ::= 1
-		in
-			var y ::= x - 1
-		end
+		var x ::= 1
 	in
-		var z ::= y - 1
+		var y ::= x - 1
 	end
 in
-	var b ::= z + 1
+	var b ::= y + 1
 end
 ; var p : Integer
 in p := b - 1
