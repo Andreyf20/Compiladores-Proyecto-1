@@ -139,13 +139,25 @@ public final class Encoder implements Visitor {
   //Cambio: se agrego Visit para DoUntilCommand
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o)
   {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int loopAddr;
+        loopAddr = nextInstrAddr;
+        ast.cAST.visit(this, frame);
+        ast.eAST.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+        return null;
   }
   
   //Cambio: se agrego Visit de DoWhileCommand
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o)
   {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int loopAddr;
+        loopAddr = nextInstrAddr;
+        ast.cAST.visit(this, frame);
+        ast.eAST.visit(this, frame);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        return null;
   }
     
   public Object visitEmptyCommand(EmptyCommand ast, Object o) {
@@ -221,7 +233,7 @@ public final class Encoder implements Visitor {
     ast.C.visit(this, frame);
     patch(jumpAddr, nextInstrAddr);
     ast.E.visit(this, frame);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+    emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
     return null;
   }
 
