@@ -1,0 +1,6 @@
+let
+	private var x ::= 1 in var y ::= x + 1 end; par var p ::= 'a' | var o ::= 'a' end
+in
+	putint(y);
+	o := 'c'
+end
