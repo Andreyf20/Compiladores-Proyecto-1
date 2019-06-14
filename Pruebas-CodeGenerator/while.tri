@@ -1,0 +1,9 @@
+let
+  var n ::= 2;
+  var j ::= 'c'
+
+in
+
+  put(j)
+
+end
