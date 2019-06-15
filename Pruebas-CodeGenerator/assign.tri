@@ -1,0 +1,8 @@
+let var n:Integer in
+n := 0;
+loop while n < 3 do
+putint(n);
+put(' ');
+n := n + 1
+end
+end

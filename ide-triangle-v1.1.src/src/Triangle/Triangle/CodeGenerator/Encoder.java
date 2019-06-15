@@ -172,7 +172,20 @@ public final class Encoder implements Visitor {
   //Cambio: se agrego Visit para ForDoCommand
   public Object visitForDoCommand(ForDoCommand ast, Object o)
   {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      Frame frame = (Frame) o;
+      int jumpAddr, loopAddr;
+      ast.E1.visit(this, frame);
+      ((ForCtlDeclaration)ast.FCD).expression.visit(this, frame);
+      jumpAddr = nextInstrAddr;
+      emit(Machine.JUMPop, 0, Machine.CBr, 0);
+      loopAddr = nextInstrAddr;
+      ast.C.visit(this, frame);
+      emit(Machine.CALLop, 0, Machine.PBr, 5);
+      patch(jumpAddr, nextInstrAddr);
+      emit(Machine.LOADop, 2, Machine.STr, -2);
+      emit(Machine.CALLop, 0, Machine.PBr, 16);
+      emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+      return null;
   }
 
   public Object visitForUntilCommand(Triangle.AbstractSyntaxTrees.ForUntilCommand ast, Object o) {
@@ -341,7 +354,9 @@ public final class Encoder implements Visitor {
   //Cambio: se agrego Visit para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      Frame frame = (Frame) o;
+      Integer valSize = (Integer) ast.expression.visit(this, frame);
+      return valSize;
   }
   
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast,
