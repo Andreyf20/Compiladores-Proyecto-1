@@ -493,22 +493,24 @@ public final class Encoder implements Visitor {
         int outOfCode = nextInstrAddr;
                 
         cjpIterator = root.getMyRoot();
-        patch(cjpIterator.getJumpOut(), root.getEndDdr());
+        patch(cjpIterator.getJumpOut(), outOfCode);
+        
         System.out.println("direccion afuera: " + Integer.toString(nextInstrAddr));
-        System.out.println("case--------------------------------");
-        System.out.println(root.toString());
+        //System.out.println("case--------------------------------");
+        //System.out.println(root.toString());
         while(cjpIterator != null){
             System.out.println(cjpIterator.toString());
             patch(cjpIterator.getJmpIfddrLess(), cjpIterator.getJmpIfCommandEx());
             if(cjpIterator.getNextCase() != null && cjpIterator.getJmpIfddrGreater() >= 0){
                 patch(cjpIterator.getJmpIfddrGreater(), cjpIterator.getNextCase().getJmp());
+                //System.out.println("patch de: " + Integer.toString(cjpIterator.getJmpIfddrGreater()) + " con: " + Integer.toString(cjpIterator.getNextCase().getJmp()));
             }
-            else{
-                patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el código generado
-            }
+            patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el código generado
+            //System.out.println("patch de: " + Integer.toString(cjpIterator.getJumpOut()) + " con: " + Integer.toString(outOfCode));
+            
             cjpIterator = cjpIterator.getNextCase();
         }
-        System.out.println("end case----------------------------");
+        //System.out.println("end case----------------------------");
 
         return null;
     }
