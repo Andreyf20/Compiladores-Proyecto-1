@@ -5,7 +5,16 @@
 <Identifier value="a"/>
 <IntTypeDenoter/>
 </VarDeclaration>
-<ForDoCommand>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</AssignCommand>
+<ForUntilCommand>
 <ForCtlDeclaration>
 <Identifier value="i"/>
 <IntegerExpression>
@@ -15,6 +24,17 @@
 <IntegerExpression>
 <IntegerLiteral value="3"/>
 </IntegerExpression>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="="/>
+<IntegerExpression>
+<IntegerLiteral value="6"/>
+</IntegerExpression>
+</BinaryExpression>
 <SequentialCommand>
 <SequentialCommand>
 <AssignCommand>
@@ -57,6 +77,7 @@
 </SingleActualParameterSequence>
 </CallCommand>
 </SequentialCommand>
-</ForDoCommand>
+</ForUntilCommand>
+</SequentialCommand>
 </LetCommand>
 </Program>

@@ -58,6 +58,7 @@ import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
 import Triangle.AbstractSyntaxTrees.ForDoCommand;
+import Triangle.AbstractSyntaxTrees.ForUntilCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -186,18 +187,58 @@ public final class Encoder implements Visitor {
       emit(Machine.CALLop, 0, Machine.PBr, 5);
       patch(jumpAddr, nextInstrAddr);
       emit(Machine.LOADop, 2, Machine.STr, -2);
-      emit(Machine.CALLop, 0, Machine.PBr, 16);
+      emit(Machine.CALLop, 0, Machine.PBr, 15);
       emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
       emit(Machine.POPop, 2, 0, 0);
       return null;
   }
 
-  public Object visitForUntilCommand(Triangle.AbstractSyntaxTrees.ForUntilCommand ast, Object o) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  //Cambio: se agrego Visit para ForUntilCommand
+  public Object visitForUntilCommand(ForUntilCommand ast, Object o) 
+  {
+      Frame frame = (Frame) o;
+      int jumpAddr, loopAddr;
+      ast.E2.visit(this, frame);
+      ast.D.visit(this, frame);
+      jumpAddr = nextInstrAddr;
+      emit(Machine.JUMPop, 0, Machine.CBr, 0);
+      loopAddr = nextInstrAddr;
+      emit(Machine.LOADop, 1, Machine.STr, -1);
+      ast.C.visit(this, frame);
+      emit(Machine.POPop, 1, 0, 0);
+      emit(Machine.CALLop, 0, Machine.PBr, 5);
+      patch(jumpAddr, nextInstrAddr);
+      emit(Machine.LOADop, 2, Machine.STr, -2);
+      emit(Machine.CALLop, 0, Machine.PBr, 15);
+      ast.E3.visit(this, frame);
+      emit(Machine.CALLop, 0, Machine.PBr, 2);
+      emit(Machine.CALLop, 0, Machine.PBr, 3);
+      emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+      emit(Machine.POPop, 2, 0, 0);
+      return null;
   }
   
-  public Object visitForWhileCommand(ForWhileCommand ast, Object o) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Object visitForWhileCommand(ForWhileCommand ast, Object o)
+  {
+      Frame frame = (Frame) o;
+      int jumpAddr, loopAddr;
+      ast.E2.visit(this, frame);
+      ast.D.visit(this, frame);
+      jumpAddr = nextInstrAddr;
+      emit(Machine.JUMPop, 0, Machine.CBr, 0);
+      loopAddr = nextInstrAddr;
+      emit(Machine.LOADop, 1, Machine.STr, -1);
+      ast.C.visit(this, frame);
+      emit(Machine.POPop, 1, 0, 0);
+      emit(Machine.CALLop, 0, Machine.PBr, 5);
+      patch(jumpAddr, nextInstrAddr);
+      emit(Machine.LOADop, 2, Machine.STr, -2);
+      emit(Machine.CALLop, 0, Machine.PBr, 15);
+      ast.E3.visit(this, frame);
+      emit(Machine.CALLop, 0, Machine.PBr, 3);
+      emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+      emit(Machine.POPop, 2, 0, 0);
+      return null;
   }
   
   public Object visitIfCommand(IfCommand ast, Object o) {
