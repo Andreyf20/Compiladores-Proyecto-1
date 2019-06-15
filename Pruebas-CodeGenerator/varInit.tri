@@ -1,0 +1,6 @@
+let
+	var x ::= 12
+in
+	x := x + 124;
+	putint(x)
+end

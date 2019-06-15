@@ -115,6 +115,7 @@ import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.PackageVname;
 import Triangle.CodeGenerator.CaseTree;
 import java.util.ArrayList;
+import Triangle.Triangle.CodeGenerator.KnownValueInit;
 
 public final class Encoder implements Visitor {
 
@@ -463,22 +464,24 @@ public final class Encoder implements Visitor {
   
   public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object o) {
     Frame frame = (Frame) o;
-    int extraSize = 0;
+    int extraSize = 1;
+    
+    emit(Machine.PUSHop, 0, 0, extraSize);
 
     if (ast.E instanceof CharacterExpression) {
         CharacterLiteral CL = ((CharacterExpression) ast.E).CL;
-        ast.entity = new KnownValue(Machine.characterSize,
-                                 characterValuation(CL.spelling));
+        ast.entity = new KnownValueInit(Machine.characterSize, characterValuation(CL.spelling), Machine.addressSize, frame.level, frame.size);
     } else if (ast.E instanceof IntegerExpression) {
         IntegerLiteral IL = ((IntegerExpression) ast.E).IL;
-        ast.entity = new KnownValue(Machine.integerSize,
-				 Integer.parseInt(IL.spelling));
+        ast.entity = new KnownValueInit(Machine.integerSize,
+				 Integer.parseInt(IL.spelling), Machine.addressSize, frame.level, frame.size);
     } else {
-      int valSize = ((Integer) ast.E.visit(this, frame)).intValue();
-      ast.entity = new UnknownValue(valSize, frame.level, frame.size);
-      extraSize = valSize;
+      extraSize = ((Integer) ast.E.visit(this, null)).intValue();
+      ast.entity = new UnknownValue(extraSize, frame.level, frame.size);
     }
+    
     writeTableDetails(ast);
+    
     return new Integer(extraSize);
   }
   
@@ -1165,18 +1168,32 @@ public final class Encoder implements Visitor {
       reporter.reportRestriction("can't store values larger than 255 words");
       valSize = 255; // to allow code generation to continue
     }
-    if (baseObject instanceof KnownAddress) {
-      ObjectAddress address = ((KnownAddress) baseObject).address;
-      if (V.indexed) {
-        emit(Machine.LOADAop, 0, displayRegister(frame.level, address.level),
-             address.displacement + V.offset);
-        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
-        emit(Machine.STOREIop, valSize, 0, 0);
-      } else {
-        emit(Machine.STOREop, valSize, displayRegister(frame.level,
-	     address.level), address.displacement + V.offset);
-      }
-    } else if (baseObject instanceof UnknownAddress) {
+    if ((baseObject instanceof KnownAddress) || (baseObject instanceof KnownValueInit)) {
+        if (baseObject instanceof KnownAddress) {
+            ObjectAddress address = ((KnownAddress) baseObject).address;
+            if (V.indexed) {
+              emit(Machine.LOADAop, 0, displayRegister(frame.level, address.level),
+                   address.displacement + V.offset);
+              emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
+              emit(Machine.STOREIop, valSize, 0, 0);
+            } else {
+              emit(Machine.STOREop, valSize, displayRegister(frame.level,
+                   address.level), address.displacement + V.offset);
+            }
+        } else {
+            ObjectAddress address = ((KnownValueInit) baseObject).address;
+            if (V.indexed) {
+              emit(Machine.LOADAop, 0, displayRegister(frame.level, address.level),
+                   address.displacement + V.offset);
+              emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
+              emit(Machine.STOREIop, valSize, 0, 0);
+            } else {
+              emit(Machine.STOREop, valSize, displayRegister(frame.level,
+                   address.level), address.displacement + V.offset);
+            }
+            
+        }
+    }  else if (baseObject instanceof UnknownAddress) {
       ObjectAddress address = ((UnknownAddress) baseObject).address;
       emit(Machine.LOADop, Machine.addressSize, displayRegister(frame.level,
            address.level), address.displacement);
@@ -1233,6 +1250,16 @@ public final class Encoder implements Visitor {
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
       }
       emit(Machine.LOADIop, valSize, 0, 0);
+    } else if (baseObject instanceof KnownValueInit) {
+        ObjectAddress address = ((KnownValueInit) baseObject).address;
+        if (V.indexed) {
+        emit(Machine.LOADAop, 0, displayRegister(frame.level, address.level),
+             address.displacement + V.offset);
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
+        emit(Machine.LOADIop, valSize, 0, 0);
+        } else
+        emit(Machine.LOADop, valSize, displayRegister(frame.level,
+	     address.level), address.displacement + V.offset);
     }
   }
 
