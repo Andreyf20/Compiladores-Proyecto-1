@@ -1,6 +1,7 @@
 let
-	var x ::= 12
+	var x ::= 12;
+	var y ::= 26
 in
-	x := x + 124;
+	x := y - x;
 	putint(x)
 end

@@ -466,17 +466,31 @@ public final class Encoder implements Visitor {
     Frame frame = (Frame) o;
     int extraSize = 1;
     
+    
     emit(Machine.PUSHop, 0, 0, extraSize);
+    extraSize = ((Integer) ast.E.visit(this, null)).intValue();
 
     if (ast.E instanceof CharacterExpression) {
         CharacterLiteral CL = ((CharacterExpression) ast.E).CL;
         ast.entity = new KnownValueInit(Machine.characterSize, characterValuation(CL.spelling), Machine.addressSize, frame.level, frame.size);
+        /////////////////
+        ObjectAddress address = new ObjectAddress(frame.level, frame.size);;
+        emit(Machine.STOREop, 1, displayRegister(frame.level,
+               address.level), address.displacement);
+        
+        ////////////////
     } else if (ast.E instanceof IntegerExpression) {
         IntegerLiteral IL = ((IntegerExpression) ast.E).IL;
         ast.entity = new KnownValueInit(Machine.integerSize,
 				 Integer.parseInt(IL.spelling), Machine.addressSize, frame.level, frame.size);
+        /////////////////
+        ObjectAddress address = new ObjectAddress(frame.level, frame.size);;
+        emit(Machine.STOREop, 1, displayRegister(frame.level,
+               address.level), address.displacement);
+        
+        ////////////////
     } else {
-      extraSize = ((Integer) ast.E.visit(this, null)).intValue();
+      //extraSize = ((Integer) ast.E.visit(this, null)).intValue();
       ast.entity = new UnknownValue(extraSize, frame.level, frame.size);
     }
     
