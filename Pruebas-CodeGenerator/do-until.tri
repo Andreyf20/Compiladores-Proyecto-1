@@ -4,6 +4,6 @@ loop do
 putint(i);
 put(' ');
 i := i + 1
-until i = 3
+until i > 3
 end
 end
