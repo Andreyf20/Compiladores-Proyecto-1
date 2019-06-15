@@ -1303,6 +1303,10 @@ public final class Encoder implements Visitor {
         emit(Machine.LOADLop, 0, 0, V.offset);
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, Machine.addDisplacement);
       }
+    } else if (baseObject instanceof KnownValueInit) {
+      ObjectAddress address = ((KnownAddress) baseObject).address;
+      emit(Machine.LOADAop, 0, displayRegister(frame.level, address.level),
+           address.displacement + V.offset);
     }
   } 
 
