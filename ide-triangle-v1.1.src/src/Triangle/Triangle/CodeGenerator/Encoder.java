@@ -177,7 +177,7 @@ public final class Encoder implements Visitor {
       Frame frame = (Frame) o;
       int jumpAddr, loopAddr;
       ast.E1.visit(this, frame);
-     ast.FCD.visit(this, frame);
+      ast.FCD.visit(this, frame);
       jumpAddr = nextInstrAddr;
       emit(Machine.JUMPop, 0, Machine.CBr, 0);
       loopAddr = nextInstrAddr;
@@ -681,6 +681,7 @@ public final class Encoder implements Visitor {
             emit(Machine.LOADLop, 0, 0, ast.CL1.spelling.charAt(0));// reminder
         }
         return null;
+        
     }
     
     
