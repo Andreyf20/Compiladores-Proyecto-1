@@ -2,6 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Encoder.java</file>
+            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/CaseJumpsPatcher.java</file>
+            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/CaseTree.java</file>
+        </group>
     </open-files>
 </project-private>
