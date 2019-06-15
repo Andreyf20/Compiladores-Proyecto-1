@@ -128,7 +128,6 @@ public class TableVisitor implements Visitor {
   public Object visitChooseCommand(ChooseCommand ast, Object o) {
       ast.E.visit(this, null);
       ast.C1.visit(this, null);
-      
       return(null);
   }
   
@@ -441,7 +440,9 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Cases ">
   @Override
   public Object visitCases(Cases ast, Object o) {
-      ast.SC1.visit(this, null);
+      if(ast.SC1 != null){
+        ast.SC1.visit(this, null);
+      }
       if(ast.command1 != null){
           ast.command1.visit(this, null);
       }
@@ -482,14 +483,20 @@ public class TableVisitor implements Visitor {
   @Override
   public Object visitCaseRange(CaseRange ast, Object o) {
       ast.cL1.visit(this, null);
-      ast.cL2.visit(this, null);
+      if(ast.cL2 != null){
+        ast.cL2.visit(this, null);
+      }
       return(null);
   }
 
   @Override
   public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-      ast.CL1.visit(this, null);
-      ast.IL1.visit(this, null);
+      if(ast.CL1 != null){
+          ast.CL1.visit(this, null);   
+      }
+      else{
+          ast.IL1.visit(this, null);
+      }
       return(null);
   }
   

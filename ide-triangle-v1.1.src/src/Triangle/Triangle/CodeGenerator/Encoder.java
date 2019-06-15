@@ -55,6 +55,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.ForCtlDeclaration;
 import Triangle.AbstractSyntaxTrees.ForDoCommand;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -112,6 +113,8 @@ import Triangle.AbstractSyntaxTrees.SequentialCase;
 import Triangle.AbstractSyntaxTrees.SequentialCaseLiterals;
 import Triangle.AbstractSyntaxTrees.SequentialPackageDeclaration;
 import Triangle.AbstractSyntaxTrees.PackageVname;
+import Triangle.CodeGenerator.CaseTree;
+import java.util.ArrayList;
 
 public final class Encoder implements Visitor {
 
@@ -131,9 +134,11 @@ public final class Encoder implements Visitor {
     ast.I.visit(this, new Frame(frame.level, argsSize));
     return null;
   }
-  
+
   public Object visitChooseCommand(ChooseCommand ast, Object o) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      CaseTree root = new CaseTree(ast.E, (Frame) o);
+      ast.C1.visit(this, root);
+      return null;
   }
   
   //Cambio: se agrego Visit para DoUntilCommand
@@ -477,40 +482,144 @@ public final class Encoder implements Visitor {
     return new Integer(extraSize);
   }
   
-  //Cases
+    //Cases
     @Override
     public Object visitCases(Cases ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CaseTree root = (CaseTree) o;
+        
+        SequentialCase iterator = ast.SC1;
+        root.setMyRoot((CaseJumpsPatcher) iterator.visit(this, root));
+        iterator = iterator.C1;
+        CaseJumpsPatcher cjpIterator = root.getMyRoot();
+        while(iterator != null){
+            
+            cjpIterator.setNextCase((CaseJumpsPatcher) iterator.C2.visit(this, root));
+            cjpIterator = cjpIterator.getNextCase();
+            iterator = iterator.C1;
+            
+        }
+
+        root.setEndDdr(nextInstrAddr);
+        
+        if(ast.command1 != null){//caso por default
+            ast.command1.visit(this, root.getFrame());
+        }
+        
+        int outOfCode = nextInstrAddr;
+                
+        cjpIterator = root.getMyRoot();
+        patch(cjpIterator.getJumpOut(), outOfCode);
+        
+        System.out.println("direccion afuera: " + Integer.toString(nextInstrAddr));
+        //System.out.println("case--------------------------------");
+        //System.out.println(root.toString());
+        while(cjpIterator != null){
+            System.out.println(cjpIterator.toString());
+            patch(cjpIterator.getJmpIfddrLess(), cjpIterator.getJmpIfCommandEx());
+            if(cjpIterator.getNextCase() != null && cjpIterator.getJmpIfddrGreater() >= 0){
+                patch(cjpIterator.getJmpIfddrGreater(), cjpIterator.getNextCase().getJmp());
+                //System.out.println("patch de: " + Integer.toString(cjpIterator.getJmpIfddrGreater()) + " con: " + Integer.toString(cjpIterator.getNextCase().getJmp()));
+            }
+            patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el código generado
+            //System.out.println("patch de: " + Integer.toString(cjpIterator.getJumpOut()) + " con: " + Integer.toString(outOfCode));
+            
+            cjpIterator = cjpIterator.getNextCase();
+        }
+        //System.out.println("end case----------------------------");
+
+        return null;
     }
     
     @Override
     public Object visitSequentialCase(SequentialCase ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ast.C2.visit(this, o);
     }
     
     @Override
     public Object visitCase(Case ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CaseTree root = (CaseTree) o;
+        CaseJumpsPatcher forThisCase = new CaseJumpsPatcher(root.getExp(), root.getFrame(), root.getIfddr());
+        
+        int patchInitialJump = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        
+        root.setIfddr(nextInstrAddr);
+        forThisCase.setJmpIfCommandEx(root.getIfddr());
+        ast.c1.visit(this, forThisCase.getChooseFrame());
+        forThisCase.setJumpOut(nextInstrAddr);
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+        
+        forThisCase.setCompareDdr(nextInstrAddr);
+        forThisCase.setJmp(nextInstrAddr);
+        patch(patchInitialJump, forThisCase.getCompareDdr());
+        ast.cL1.visit(this, forThisCase);
+        
+        return forThisCase;
+    }
+    
+    @Override
+    public Object visitCaseLiterals(CaseLiterals ast, Object o) {
+        //o tiene el casepatcher para este case
+        CaseJumpsPatcher root = (CaseJumpsPatcher) o;
+        SequentialCaseLiterals iterator = ast.SCL1;
+        CaseJumpsPatcher cjpIterator = root;
+        while(iterator != null){
+            iterator.visit(this, root);
+            iterator = iterator.SC1;
+        }
+        return null;
     }
     
     @Override
     public Object visitSequentialCaseLiterals(SequentialCaseLiterals ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitCaseLiterals(CaseLiterals ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ast.cR2.visit(this, o);
     }
 
     @Override
     public Object visitCaseRange(CaseRange ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CaseJumpsPatcher root = (CaseJumpsPatcher) o;
+        
+        
+        root.setCompareDdr(nextInstrAddr);//etiqueta para jump de comparacion
+        if(ast.cL2 == null){
+        
+            root.getChooseExpression().visit(this, root.getChooseFrame());
+            ast.cL1.visit(this, root.getChooseFrame());
+            emit(Machine.CALLop, 0, Machine.PBr, Machine.eqDisplacement);
+            
+            root.setJmpIfddrLess(nextInstrAddr);
+            emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, root.getJmpIfCommandEx());
+        }
+        else{
+            
+            root.chooseExpression.visit(this, root.getChooseFrame());
+            ast.cL1.visit(this, root.getChooseFrame());
+            emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
+            
+            root.setJmpIfddrGreater(nextInstrAddr);
+            emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, 0);
+            
+            root.getChooseExpression().visit(this, root.getChooseFrame());
+            ast.cL2.visit(this, root.getChooseFrame());
+            emit(Machine.CALLop, 0, Machine.PBr, Machine.leDisplacement);
+            
+            root.setJmpIfddrLess(nextInstrAddr);
+            emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, root.getJmpIfCommandEx());
+        
+        }
+        return null;
     }
-
+    
     @Override
     public Object visitCaseLiteral(CaseLiteral ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if(ast.CL1 == null){
+            emit(Machine.LOADLop, 0, 0, Integer.parseInt(ast.IL1.spelling));
+        }
+        else{
+            emit(Machine.LOADLop, 0, 0, ast.CL1.spelling.charAt(0));// reminder
+        }
+        return null;
     }
     
     
@@ -874,7 +983,7 @@ public final class Encoder implements Visitor {
 
   // Programs
   public Object visitProgram(Program ast, Object o) {
-    //ast.packageAST.visit(this, null);//puede ser nulo
+    //ast.packageAST.visit(this, null);//puede ser nulo//reminder
     return ast.C.visit(this, o);
   }
 
