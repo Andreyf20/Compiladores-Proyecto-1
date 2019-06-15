@@ -78,6 +78,7 @@ import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
 import Triangle.CodeGenerator.KnownValue;
+import Triangle.Triangle.CodeGenerator.KnownValueInit;
 import Triangle.CodeGenerator.TypeRepresentation;
 import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
@@ -411,23 +412,18 @@ public class TableVisitor implements Visitor {
   
   public Object visitVarDeclarationInitialized(VarDeclarationInitialized ast, Object o) {      
       String name = ast.I.spelling;
-      String type = "N/A";
+      String type = "Initialized Variable";
       try {
         int size = (ast.entity!=null?ast.entity.size:0);
         int level = -1;
         int displacement = -1;
         int value = -1;
       
-        if (ast.entity instanceof KnownValue) {
-              type = "KnownValue";
-              value = ((KnownValue)ast.entity).value;
-          }
-          else if (ast.entity instanceof UnknownValue) {
-              type = "UnknownValue";
-              level = ((UnknownValue)ast.entity).address.level;
-              displacement = ((UnknownValue)ast.entity).address.displacement;
-          }
-          addIdentifier(name, type, size, level, displacement, value);
+        type = "KnownValueInit";
+        value = ((KnownValueInit)ast.entity).value;
+        level = ((KnownValueInit)ast.entity).address.level;
+        displacement = ((KnownValueInit)ast.entity).address.displacement;
+        addIdentifier(name, type, size, level, displacement, value);
       } catch (NullPointerException e) { }
       
       ast.E.visit(this, null);

@@ -1,0 +1,7 @@
+let
+	var x ::= 12;
+	var y ::= 26
+in
+	x := y - x;
+	putint(x)
+end
