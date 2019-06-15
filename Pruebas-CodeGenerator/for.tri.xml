@@ -1,5 +1,10 @@
 <?xml version="1.0" standalone="yes"?>
 <Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="a"/>
+<IntTypeDenoter/>
+</VarDeclaration>
 <ForDoCommand>
 <ForCtlDeclaration>
 <Identifier value="i"/>
@@ -10,19 +15,6 @@
 <IntegerExpression>
 <IntegerLiteral value="3"/>
 </IntegerExpression>
-<SequentialCommand>
-<CallCommand>
-<Identifier value="putint"/>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="i"/>
-</SimpleVname>
-</VnameExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
 <CallCommand>
 <Identifier value="put"/>
 <SingleActualParameterSequence>
@@ -33,6 +25,6 @@
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</SequentialCommand>
 </ForDoCommand>
+</LetCommand>
 </Program>

@@ -176,16 +176,19 @@ public final class Encoder implements Visitor {
       Frame frame = (Frame) o;
       int jumpAddr, loopAddr;
       ast.E1.visit(this, frame);
-      ((ForCtlDeclaration)ast.FCD).expression.visit(this, frame);
+     ast.FCD.visit(this, frame);
       jumpAddr = nextInstrAddr;
       emit(Machine.JUMPop, 0, Machine.CBr, 0);
       loopAddr = nextInstrAddr;
+      emit(Machine.LOADop, 1, Machine.STr, -1);
       ast.C.visit(this, frame);
+      emit(Machine.POPop, 1, 0, 0);
       emit(Machine.CALLop, 0, Machine.PBr, 5);
       patch(jumpAddr, nextInstrAddr);
       emit(Machine.LOADop, 2, Machine.STr, -2);
       emit(Machine.CALLop, 0, Machine.PBr, 16);
       emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+      emit(Machine.POPop, 2, 0, 0);
       return null;
   }
 
@@ -537,7 +540,7 @@ public final class Encoder implements Visitor {
                 patch(cjpIterator.getJmpIfddrGreater(), cjpIterator.getNextCase().getJmp());
                 //System.out.println("patch de: " + Integer.toString(cjpIterator.getJmpIfddrGreater()) + " con: " + Integer.toString(cjpIterator.getNextCase().getJmp()));
             }
-            patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el código generado
+            patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el codigo generado
             //System.out.println("patch de: " + Integer.toString(cjpIterator.getJumpOut()) + " con: " + Integer.toString(outOfCode));
             
             cjpIterator = cjpIterator.getNextCase();
