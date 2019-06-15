@@ -1,0 +1,2 @@
+var u ::= 4
+putint(u)

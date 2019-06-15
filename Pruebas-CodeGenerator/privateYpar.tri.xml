@@ -1,0 +1,65 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<RecursiveDeclaration>
+<VarDeclarationInitialized>
+<Identifier value="x"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</VarDeclarationInitialized>
+<VarDeclarationInitialized>
+<Identifier value="y"/>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</VarDeclarationInitialized>
+</RecursiveDeclaration>
+<ParDeclaration>
+<VarDeclarationInitialized>
+<Identifier value="p"/>
+<CharacterExpression>
+<CharacterLiteral value="'a'"/>
+</CharacterExpression>
+</VarDeclarationInitialized>
+<VarDeclarationInitialized>
+<Identifier value="o"/>
+<CharacterExpression>
+<CharacterLiteral value="'a'"/>
+</CharacterExpression>
+</VarDeclarationInitialized>
+</ParDeclaration>
+</SequentialDeclaration>
+<SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="y"/>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="o"/>
+</SimpleVname>
+<CharacterExpression>
+<CharacterLiteral value="'c'"/>
+</CharacterExpression>
+</AssignCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

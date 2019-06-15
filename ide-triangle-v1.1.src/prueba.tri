@@ -1,0 +1,10 @@
+let const $Final ~ Exp2 ; 
+ var Id ::= Exp1 
+in loop while Id <= $Final do
+ let
+ const Id ~ Id 
+ in Com
+ end ; 
+ Id := Id + 1
+ end
+end
