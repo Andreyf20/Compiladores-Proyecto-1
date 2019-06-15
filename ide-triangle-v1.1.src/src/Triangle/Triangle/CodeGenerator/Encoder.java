@@ -1256,13 +1256,25 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Frame frame = (Frame) o;
+        int extraSize1, extraSize2;
+
+        extraSize1 = ((Integer) ast.dcl1.visit(this, frame)).intValue();
+        Frame frame1 = new Frame (frame, extraSize1);
+        extraSize2 = ((Integer) ast.dcl2.visit(this, frame1)).intValue();
+        return new Integer(extraSize1 + extraSize2);
     }
 
     @Override
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        Frame frame = (Frame) o;
+        int extraSize1, extraSize2;
+
+        extraSize1 = ((Integer) ast.D1.visit(this, frame)).intValue();
+        Frame frame1 = new Frame (frame, extraSize1);
+        extraSize2 = ((Integer) ast.D2.visit(this, frame1)).intValue();
+        return new Integer(extraSize1 + extraSize2);
+      }
 
     @Override
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
