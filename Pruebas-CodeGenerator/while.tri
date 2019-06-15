@@ -1,9 +1,6 @@
-let
-  var n ::= 2;
-  var j ::= 'c'
-
-in
-
-  put(j)
-
+let var i ::= 0 in
+loop while i < 3 do
+putint(i);
+i := i + 1
+end
 end

@@ -183,8 +183,11 @@ public final class Checker implements Visitor {
       TypeDenoter e2Type = (TypeDenoter) ast.E1.visit(this, null);
       if(!(e2Type instanceof IntTypeDenoter))
           reporter.reportError("wrong expression type, must be an integer type", "", ast.E1.position);
-      idTable.openScope();
+      ForCtlDeclaration fcd = (ForCtlDeclaration)ast.FCD;
+      ConstDeclaration cAST = new ConstDeclaration(fcd.id, fcd.expression, fcd.position);
       ast.FCD.visit(this, null);
+      idTable.openScope();
+      cAST.visit(this, o);
       ast.C.visit(this, null);
       idTable.closeScope();
       return null;
@@ -407,15 +410,15 @@ public final class Checker implements Visitor {
     return null;
   }
 
-  //Cambio: se agrego Implementacion de visit del checker para ForCtlDeclaration
+  //Cambio: se modifico Implementacion de visit del checker para ForCtlDeclaration
   public Object visitForCtlDeclaration(ForCtlDeclaration ast, Object o)
   {
     TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
-    ConstDeclaration cAst = new ConstDeclaration(ast.id, ast.expression, ast.position);
-    idTable.enter(cAst.I.spelling, cAst);
-    if (cAst.duplicated)
+    VarDeclaration vAst = new VarDeclaration(ast.id, StdEnvironment.integerType, ast.position);
+    idTable.enter(vAst.I.spelling, vAst);
+    if (vAst.duplicated)
       reporter.reportError ("identifier \"%\" already declared",
-                            cAst.I.spelling, cAst.position);
+                            vAst.I.spelling, vAst.position);
     if(!(eType instanceof IntTypeDenoter))
         reporter.reportError ("wrong expression type, must be an integer type",
                               "", ast.expression.position);
