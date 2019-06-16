@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<ProcDeclaration>
+<Identifier value="hola"/>
+<SingleFormalParameterSequence>
+<ConstFormalParameter>
+<Identifier value="mensaje"/>
+<CharTypeDenoter/>
+</ConstFormalParameter>
+</SingleFormalParameterSequence>
+<CallCommand>
+<Identifier value="put"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="mensaje"/>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</ProcDeclaration>
+<VarDeclaration>
+<Identifier value="msj"/>
+<CharTypeDenoter/>
+</VarDeclaration>
+</SequentialDeclaration>
+<EmptyCommand/>
+</LetCommand>
+</Program>

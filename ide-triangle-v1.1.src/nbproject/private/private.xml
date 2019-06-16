@@ -1,24 +1,36 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/run/media/eduardo/Datos/Documents/Compiladores_e_intépretes/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Encoder.java</file>
-            <file>file:/run/media/eduardo/Datos/Documents/Compiladores_e_intépretes/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/ForDoCommand.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/PrimitiveRoutine.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Encoder.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/TypeRepresentation.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/RuntimeEntity.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/Identifier.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/GUI/Main.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Field.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/EqualityRoutine.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/IfCommand.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/UnknownRoutine.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/IDECompiler.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/TAM/Instruction.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/TAM/Machine.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/Compiler.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/KnownRoutine.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/KnownValue.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/TAM/Interpreter.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/Checker.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/SyntacticAnalyzer/Parser.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Frame.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/IfExpression.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/KnownAddress.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/ObjectAddress.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/ForDoCommand.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/UnknownValue.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/UnknownAddress.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/TAM/Disassembler.java</file>
+            <file>file:/Users/kduran/Desktop/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/AbstractSyntaxTrees/ForUntilCommand.java</file>
         </group>
     </open-files>
 </project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/Encoder.java</file>
-            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/CaseJumpsPatcher.java</file>
-            <file>file:/C:/Users/Jil/Documents/GitHub/Compiladores-Proyecto-1/ide-triangle-v1.1.src/src/Triangle/Triangle/CodeGenerator/CaseTree.java</file>
-        </group>
-    </open-files>
-</project-private>
->>>>>>> master

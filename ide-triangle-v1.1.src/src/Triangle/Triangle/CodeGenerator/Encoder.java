@@ -1358,7 +1358,15 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Integer valSize ;
+        Frame frame = (Frame) o;
+        Integer position = nextInstrAddr;
+        //emit(Machine.CALLop, 0, Machine.CBr, 0);
+        valSize = (Integer) ast.ProcFuncAST.visit(this, frame);
+        //patch(position, nextInstrAddr);
+        //valSize = (Integer) ast.ProcFuncAST.visit(this, frame);
+        //patch(position, nextInstrAddr);
+        return valSize;
     }
 
     @Override
