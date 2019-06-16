@@ -1355,7 +1355,7 @@ public final class Encoder implements Visitor {
     }
   } 
 
-
+  //Cambios: Para generación de código
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
         Integer valSize ;
