@@ -1,0 +1,8 @@
+let var i:Integer in
+i := 0;
+loop until false do
+putint(i);
+put(' ');
+i := i + 1
+end
+end

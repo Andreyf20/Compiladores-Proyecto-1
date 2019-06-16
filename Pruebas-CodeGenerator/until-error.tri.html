@@ -11,7 +11,7 @@ div {display: inline;      font-family: courier;      font-size:1em;    }p {disp
 <div class="VarDeclaration"
 <p style="color: #000000;"></br><strong>&ensp;var</strong> </p>
 <div class="Identifier">
-	<p style="color: #000000;">&ensp;a</p>
+	<p style="color: #000000;">&ensp;i</p>
 </div>
 <p style="color: #000000;"> : </p>
 <div class="IntTypeDenoter">
@@ -22,7 +22,7 @@ div {display: inline;      font-family: courier;      font-size:1em;    }p {disp
 <div class="AssignCommand">
 <div class="SimpleVname">
 <div class="Identifier">
-	<p style="color: #000000;">&ensp;a</p>
+	<p style="color: #000000;">&ensp;i</p>
 </div>
 </div>
 <p style="color: #000000;"> := </p>
@@ -33,51 +33,60 @@ div {display: inline;      font-family: courier;      font-size:1em;    }p {disp
 </div>
 </div
 <p class="SequentialDeclaration"style="color: #000000;">;</br></p>
-<div class="ForUntilCommand">
+<div class="UntilCommand"
 <p style="color: #000000; "></br><strong>loop</strong></p>
-	<p style="color: #000000; "></br><strong>for</strong></br></p>
-<div class="ForCtlDeclaration">
-<div class="Identifier">
-	<p style="color: #000000;">&ensp;i</p>
-</div>
-	<p style="color: #000000; "></br><strong>from</strong></br></p>
-<div class="IntegerExpression"
-<p style="color: #2E64FE;">0</p>
-<div class="IntegerLiteral">
-</div>
-</div>
-</div>
-<p style="color: #000000; "></br><strong>to</strong></br></p>
-<div class="IntegerExpression"
-<p style="color: #2E64FE;">3</p>
-<div class="IntegerLiteral">
-</div>
-</div>
 <p style="color: #000000; "></br><strong>until</strong></br></p>
-<div class="BinaryExpression"
 <div class="VnameExpression"
 <div class="SimpleVname">
 <div class="Identifier">
-	<p style="color: #000000;">&ensp;a</p>
-</div>
-</div>
-</div>
-<div class="Operator">
-	<p style="color: #000000;">&ensp;=</p>
-</div>
-<div class="IntegerExpression"
-<p style="color: #2E64FE;">2</p>
-<div class="IntegerLiteral">
+	<p style="color: #000000;">&ensp;false</p>
 </div>
 </div>
 </div>
 <p style="color: #000000; "></br><strong>do</strong></br></p>
 <div class="SequentialCommand"
 <div class="SequentialCommand"
+<div class="callCommand">
+<div class="Identifier">
+	<p style="color: #000000;">&ensp;putint</p>
+</div>
+<div class="SingleActualParameterSequence">
+<p class="SingleActualParameterSequence" style="color: #000000; ">(</p>
+<div class="ConstActualParameter">
+<div class="VnameExpression"
+<div class="SimpleVname">
+<div class="Identifier">
+	<p style="color: #000000;">&ensp;i</p>
+</div>
+</div>
+</div>
+</div>
+<p class="SingleActualParameterSequence" style="color: #000000; ">)  </p>
+</div>
+</div>
+<p class="SequentialDeclaration"style="color: #000000;">;</br></p>
+<div class="callCommand">
+<div class="Identifier">
+	<p style="color: #000000;">&ensp;put</p>
+</div>
+<div class="SingleActualParameterSequence">
+<p class="SingleActualParameterSequence" style="color: #000000; ">(</p>
+<div class="ConstActualParameter">
+<div class="CharacterExpression"
+<p style="color: #2E64FE; ">' '</p>
+<div class="CharacterLiteral">
+</div>
+</div>
+</div>
+<p class="SingleActualParameterSequence" style="color: #000000; ">)  </p>
+</div>
+</div>
+</div>
+<p class="SequentialDeclaration"style="color: #000000;">;</br></p>
 <div class="AssignCommand">
 <div class="SimpleVname">
 <div class="Identifier">
-	<p style="color: #000000;">&ensp;a</p>
+	<p style="color: #000000;">&ensp;i</p>
 </div>
 </div>
 <p style="color: #000000;"> := </p>
@@ -99,43 +108,6 @@ div {display: inline;      font-family: courier;      font-size:1em;    }p {disp
 </div>
 </div>
 </div
-<p class="SequentialDeclaration"style="color: #000000;">;</br></p>
-<div class="callCommand">
-<div class="Identifier">
-	<p style="color: #000000;">&ensp;putint</p>
-</div>
-<div class="SingleActualParameterSequence">
-<p class="SingleActualParameterSequence" style="color: #000000; ">(</p>
-<div class="ConstActualParameter">
-<div class="VnameExpression"
-<div class="SimpleVname">
-<div class="Identifier">
-	<p style="color: #000000;">&ensp;a</p>
-</div>
-</div>
-</div>
-</div>
-<p class="SingleActualParameterSequence" style="color: #000000; ">)  </p>
-</div>
-</div>
-</div>
-<p class="SequentialDeclaration"style="color: #000000;">;</br></p>
-<div class="callCommand">
-<div class="Identifier">
-	<p style="color: #000000;">&ensp;put</p>
-</div>
-<div class="SingleActualParameterSequence">
-<p class="SingleActualParameterSequence" style="color: #000000; ">(</p>
-<div class="ConstActualParameter">
-<div class="CharacterExpression"
-<p style="color: #2E64FE; ">' '</p>
-<div class="CharacterLiteral">
-</div>
-</div>
-</div>
-<p class="SingleActualParameterSequence" style="color: #000000; ">)  </p>
-</div>
-</div>
 </div>
 <p style="color: #000000; "></br><strong>end</strong></br></p>
 </div>
