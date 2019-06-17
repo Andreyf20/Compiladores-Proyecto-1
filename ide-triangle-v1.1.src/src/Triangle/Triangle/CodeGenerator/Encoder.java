@@ -633,13 +633,13 @@ public final class Encoder implements Visitor {
     public Object visitCaseRange(CaseRange ast, Object o) {
         CaseJumpsPatcher root = (CaseJumpsPatcher) o;
         
-        
         root.setCompareDdr(nextInstrAddr);//etiqueta para jump de comparacion
         if(ast.cL2 == null){
-        
+            
             root.getChooseExpression().visit(this, root.getChooseFrame());
             ast.cL1.visit(this, root.getChooseFrame());
-            emit(Machine.CALLop, 0, Machine.PBr, Machine.eqDisplacement);
+            emit(Machine.LOADLop, 0, 0, 1);
+            emit(Machine.CALLop, 0, Machine.PBr, 17);
             
             root.setJmpIfddrLess(nextInstrAddr);
             emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, root.getJmpIfCommandEx());
@@ -648,14 +648,14 @@ public final class Encoder implements Visitor {
             
             root.chooseExpression.visit(this, root.getChooseFrame());
             ast.cL1.visit(this, root.getChooseFrame());
-            emit(Machine.CALLop, 0, Machine.PBr, Machine.geDisplacement);
+            emit(Machine.CALLop, 0, Machine.PBr, 15);
             
             root.setJmpIfddrGreater(nextInstrAddr);
             emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, 0);
-            
+                        
             root.getChooseExpression().visit(this, root.getChooseFrame());
             ast.cL2.visit(this, root.getChooseFrame());
-            emit(Machine.CALLop, 0, Machine.PBr, Machine.leDisplacement);
+            emit(Machine.CALLop, 0, Machine.PBr, 14);
             
             root.setJmpIfddrLess(nextInstrAddr);
             emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, root.getJmpIfCommandEx());
@@ -671,7 +671,7 @@ public final class Encoder implements Visitor {
             emit(Machine.LOADLop, 0, 0, Integer.parseInt(ast.IL1.spelling));
         }
         else{
-            emit(Machine.LOADLop, 0, 0, ast.CL1.spelling.charAt(0));// reminder
+            emit(Machine.LOADLop, 0, 0, ast.CL1.spelling.charAt(1));// reminder
         }
         return null;
         

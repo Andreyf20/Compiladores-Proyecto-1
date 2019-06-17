@@ -932,15 +932,22 @@ public class Parser {
     //////////////////////////////////////////////////////////////////////////////////////////
     /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
     Identifier packageID = null;
+    Identifier iAST = null;
     if(currentToken.kind == Token.IDENTIFIER){
         packageID = parsePackageIdentifier();
-        accept(Token.DOLLAR);
+        if(currentToken.kind == Token.DOLLAR) {
+            accept(Token.DOLLAR);
+            iAST = parseIdentifier();
+        } else {
+            iAST = packageID;
+            packageID = null;
+        }
     }
     /////////// NUEVA REGLA DE PACKAGEIDENTIFIER OPCIONAL  ///////////////////
     /////////////////////////////////////////////////////////////////////////////////////////
       
     Vname vnameAST = null; // in case there's a syntactic error
-    Identifier iAST = parseIdentifier();
+    //iAST = parseIdentifier();
     vnameAST = parseRestOfVname(packageID, iAST);
     return vnameAST;
   }

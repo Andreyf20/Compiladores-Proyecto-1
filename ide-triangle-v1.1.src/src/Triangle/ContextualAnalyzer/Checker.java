@@ -616,7 +616,7 @@ public final class Checker implements Visitor {
   
   public ArrayList<String> generateValues(String start, String finish, SourcePosition pos){
       
-      if(start.length() > 1 || finish.length() > 1){
+      if(start.replace("'", "").length() > 1 || finish.replace("'", "").length() > 1){
           return generateIntRange(start, finish, pos);
       }
       
@@ -670,12 +670,16 @@ public final class Checker implements Visitor {
   }
   
   public boolean intersects(ArrayList<String> a, ArrayList<String> b){
-  
+
       for(int i = 0; i < a.size(); i++){
-          if(b.contains(a.get(i))){
-              return true;
+          for(int j = 0; j < b.size(); j++){
+            if(a.get(i).replace("'", "").equals(b.get(j).replace("'", "")) ||
+                    b.get(j).replace("'", "").equals(a.get(i).replace("'", ""))){
+                return true;
+            }
           }
       }
+      
       return false;
   }
   
