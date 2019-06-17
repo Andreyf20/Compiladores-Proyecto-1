@@ -2,44 +2,52 @@
 <Program>
 <LetCommand>
 <VarDeclaration>
-<Identifier value="a"/>
+<Identifier value="i"/>
 <IntTypeDenoter/>
 </VarDeclaration>
 <SequentialCommand>
 <AssignCommand>
 <SimpleVname>
-<Identifier value="a"/>
+<Identifier value="i"/>
 </SimpleVname>
 <IntegerExpression>
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </AssignCommand>
-<ForUntilCommand>
-<ForCtlDeclaration>
-<Identifier value="i"/>
-<IntegerExpression>
-<IntegerLiteral value="0"/>
-</IntegerExpression>
-</ForCtlDeclaration>
-<IntegerExpression>
-<IntegerLiteral value="3"/>
-</IntegerExpression>
-<BinaryExpression>
+<UntilCommand>
 <VnameExpression>
 <SimpleVname>
-<Identifier value="a"/>
+<Identifier value="false"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value="="/>
-<IntegerExpression>
-<IntegerLiteral value="2"/>
-</IntegerExpression>
-</BinaryExpression>
 <SequentialCommand>
 <SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="i"/>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<Identifier value="put"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="' '"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
 <AssignCommand>
 <SimpleVname>
-<Identifier value="a"/>
+<Identifier value="i"/>
 </SimpleVname>
 <BinaryExpression>
 <VnameExpression>
@@ -53,31 +61,8 @@
 </IntegerExpression>
 </BinaryExpression>
 </AssignCommand>
-<CallCommand>
-<Identifier value="putint"/>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="a"/>
-</SimpleVname>
-</VnameExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
 </SequentialCommand>
-<CallCommand>
-<Identifier value="put"/>
-<SingleActualParameterSequence>
-<ConstActualParameter>
-<CharacterExpression>
-<CharacterLiteral value="' '"/>
-</CharacterExpression>
-</ConstActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-</ForUntilCommand>
+</UntilCommand>
 </SequentialCommand>
 </LetCommand>
 </Program>

@@ -1,0 +1,68 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="i"/>
+<IntTypeDenoter/>
+</VarDeclaration>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="i"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</AssignCommand>
+<DoWhileCommand>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="i"/>
+</SimpleVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<Identifier value="put"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<CharacterExpression>
+<CharacterLiteral value="' '"/>
+</CharacterExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="i"/>
+</SimpleVname>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="i"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</BinaryExpression>
+</AssignCommand>
+</SequentialCommand>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="true"/>
+</SimpleVname>
+</VnameExpression>
+</DoWhileCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

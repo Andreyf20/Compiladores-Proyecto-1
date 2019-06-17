@@ -3,6 +3,5 @@ let proc hola(mensaje:Char)~
 	end;
 var msj:Char
 in
-	msj := 'h';
-	hola(msj)
+	pass
 end

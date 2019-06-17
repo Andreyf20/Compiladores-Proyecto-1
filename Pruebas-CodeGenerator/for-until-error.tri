@@ -1,6 +1,6 @@
 let var a:Integer in
 a := 0;
-loop for i from 0 to 3 until a = 2 do
+loop for i from 0 to 1000000000000000 until false do
 a := i + 1;
 putint(a);
 put(' ')

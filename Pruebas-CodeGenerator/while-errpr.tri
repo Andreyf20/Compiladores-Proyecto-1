@@ -1,0 +1,6 @@
+let var i ::= 0 in
+loop while true do
+putint(i);
+i := i + 1
+end
+end

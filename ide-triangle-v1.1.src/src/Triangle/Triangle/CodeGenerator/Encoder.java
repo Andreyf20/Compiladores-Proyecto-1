@@ -510,33 +510,31 @@ public final class Encoder implements Visitor {
     Frame frame = (Frame) o;
     int extraSize = 1;
     
-    
+    /* Se agrega a la pila la variable */ 
     emit(Machine.PUSHop, 0, 0, extraSize);
-    extraSize = ((Integer) ast.E.visit(this, null)).intValue();
+    /* Se construye la expresion para asignarla a la variable */
+    extraSize = ((Integer) ast.E.visit(this, frame)).intValue();
 
+    /* Se le asigna un tipo de variable */ 
     if (ast.E instanceof CharacterExpression) {
         CharacterLiteral CL = ((CharacterExpression) ast.E).CL;
         ast.entity = new KnownValueInit(Machine.characterSize, characterValuation(CL.spelling), Machine.addressSize, frame.level, frame.size);
-        /////////////////
-        ObjectAddress address = new ObjectAddress(frame.level, frame.size);;
-        emit(Machine.STOREop, 1, displayRegister(frame.level,
-               address.level), address.displacement);
-        
-        ////////////////
     } else if (ast.E instanceof IntegerExpression) {
         IntegerLiteral IL = ((IntegerExpression) ast.E).IL;
         ast.entity = new KnownValueInit(Machine.integerSize,
 				 Integer.parseInt(IL.spelling), Machine.addressSize, frame.level, frame.size);
-        /////////////////
-        ObjectAddress address = new ObjectAddress(frame.level, frame.size);;
-        emit(Machine.STOREop, 1, displayRegister(frame.level,
-               address.level), address.displacement);
-        
-        ////////////////
     } else {
-      //extraSize = ((Integer) ast.E.visit(this, null)).intValue();
       ast.entity = new UnknownValue(extraSize, frame.level, frame.size);
     }
+    
+    
+    /////////////////
+    /* Se asigna a la variable el resultado de la expresion */
+    ObjectAddress address = new ObjectAddress(frame.level, frame.size);;
+    emit(Machine.STOREop, 1, displayRegister(frame.level,
+           address.level), address.displacement);
+
+    ////////////////
     
     writeTableDetails(ast);
     
@@ -1350,17 +1348,27 @@ public final class Encoder implements Visitor {
     }
   } 
 
-
+  //Cambios: Para generación de código
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Integer valSize ;
+        Frame frame = (Frame) o;
+        Integer position = nextInstrAddr;
+        //emit(Machine.CALLop, 0, Machine.CBr, 0);
+        valSize = (Integer) ast.ProcFuncAST.visit(this, frame);
+        //patch(position, nextInstrAddr);
+        //valSize = (Integer) ast.ProcFuncAST.visit(this, frame);
+        //patch(position, nextInstrAddr);
+        return valSize;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         Frame frame = (Frame) o;
         int extraSize1, extraSize2;
-
+        
+        /* Se realiza el mismo procedimiento que cuando se realiza una declaracion secuencial */ 
+        
         extraSize1 = ((Integer) ast.dcl1.visit(this, frame)).intValue();
         Frame frame1 = new Frame (frame, extraSize1);
         extraSize2 = ((Integer) ast.dcl2.visit(this, frame1)).intValue();
@@ -1371,7 +1379,9 @@ public final class Encoder implements Visitor {
     public Object visitParDeclaration(ParDeclaration ast, Object o) {
         Frame frame = (Frame) o;
         int extraSize1, extraSize2;
-
+        
+        /* Se realiza el mismo procedimiento que cuando se realiza una declaracion secuencial */ 
+        
         extraSize1 = ((Integer) ast.D1.visit(this, frame)).intValue();
         Frame frame1 = new Frame (frame, extraSize1);
         extraSize2 = ((Integer) ast.D2.visit(this, frame1)).intValue();
@@ -1380,22 +1390,22 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitLong_Identifier(Long_Identifier ast, Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public Object visitPackageDeclaration(PackageDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public Object visitSequentialPackageDeclaration(SequentialPackageDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
     
     @Override
     public Object visitPackageVname(PackageVname ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     
