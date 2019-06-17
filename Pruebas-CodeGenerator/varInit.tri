@@ -1,7 +1,9 @@
 let
 	var x ::= 12;
-	var y ::= 26
+	var y ::= 26;
+	var z : array 10 of Integer
 in
+	z[45] := 10;
 	x := y - x;
 	putint(x)
 end

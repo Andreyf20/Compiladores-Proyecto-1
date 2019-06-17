@@ -1015,7 +1015,11 @@ public final class Encoder implements Visitor {
     ast.indexed = ast.V.indexed;
     elemSize = ((Integer) ast.type.visit(this, null)).intValue();
     if (ast.E instanceof IntegerExpression) {
+        /* Aqui se revisa si el indice al que se intenta acceder se pasa del indice maximo del array */
+      indexSize = Integer.parseInt(((ArrayTypeDenoter)((VarDeclaration)((((SimpleVname) ast.V).I).decl)).T).IL.spelling);
       IntegerLiteral IL = ((IntegerExpression) ast.E).IL;
+      if(Integer.parseInt(IL.spelling) > (indexSize - 1))
+          reporter.reportError("Index out of bounds exception", ((SimpleVname)ast.V).I.spelling, ast.V.position);
       ast.offset = ast.offset + Integer.parseInt(IL.spelling) * elemSize;
     } else {
       // v-name is indexed by a proper expression, not a literal

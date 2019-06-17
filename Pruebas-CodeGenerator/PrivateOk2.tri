@@ -1,0 +1,14 @@
+
+let
+
+  private
+    const a ~ 1
+  in
+    const b ~ a + 1
+  end
+
+in
+
+  putint(b) ! debe imprimir 2
+
+end

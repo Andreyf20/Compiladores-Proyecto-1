@@ -1,0 +1,10 @@
+let
+
+  var a ::= 10
+
+in
+
+  putint (a) ! imprime 10
+
+end
+

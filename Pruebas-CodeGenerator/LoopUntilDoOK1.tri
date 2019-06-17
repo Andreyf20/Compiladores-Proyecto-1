@@ -1,0 +1,13 @@
+let
+  var x : Integer
+in
+  x := 1 ;
+  loop
+  until x > 0 ! NO debe imprimir
+  do
+    putint (x);
+    x := x +1
+
+  end
+
+end

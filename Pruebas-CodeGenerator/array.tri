@@ -1,0 +1,5 @@
+let var x:array 10 of Integer in
+x[0] := 123;
+x[100] := 2;
+putint(x[10])
+end

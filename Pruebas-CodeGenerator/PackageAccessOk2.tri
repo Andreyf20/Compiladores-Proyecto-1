@@ -1,0 +1,12 @@
+package myP ~ 
+	var a: Integer
+end;
+let
+	var b: Integer
+in
+      getint (var b);
+      myP $ a := b;
+	putint (b + myP $ a) ! debe imprimir el doble del valor ingresado
+end
+
+!OK
