@@ -4,7 +4,7 @@ in
   x := 1 ;
   loop do
 
-    putint (x)
+    putint (x);
     x := x +1
 
   until x > 5 ! Debe imprimir 1, 2, 3, 4, 5
