@@ -672,10 +672,13 @@ public final class Checker implements Visitor {
   public boolean intersects(ArrayList<String> a, ArrayList<String> b){
   
       for(int i = 0; i < a.size(); i++){
-          if(b.contains(a.get(i))){
-              return true;
+          for(int j = 0; j < b.size(); j++){
+            if(a.get(i).contains(b.get(j)) || b.get(j).contains(a.get(i))){
+                return true;
+            }
           }
       }
+      
       return false;
   }
   
