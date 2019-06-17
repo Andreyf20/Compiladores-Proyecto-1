@@ -872,17 +872,18 @@ public final class Checker implements Visitor {
   // Actual Parameters
 
   // Always returns null. Uses the given FormalParameter.
-
+  //Cambios: Se realizan cambios en las validaciones, con ayuda del proyecto de los companeros (ver documentacion externa)
   public Object visitConstActualParameter(ConstActualParameter ast, Object o) {
-    FormalParameter fp = (FormalParameter) o;
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-
-    if (! (fp instanceof ConstFormalParameter))
-      reporter.reportError ("const actual parameter not expected here", "",
-                            ast.position);
-    else if (! eType.equals(((ConstFormalParameter) fp).T))
-      reporter.reportError ("wrong type for const actual parameter", "",
-                            ast.E.position);
+    if(ast != null && o !=null){
+          FormalParameter fp = (FormalParameter) o;
+          TypeDenoter eType = (TypeDenoter)ast.E.visit (this, null);
+          if(!(fp instanceof ConstFormalParameter)){
+              reporter.reportError("const actual parameter not expected her", "", ast.position);
+          } else
+              if (!eType.equals(((ConstFormalParameter)fp).T.visit(this, null))){
+                  reporter.reportError("wrong type for const actual parameter", "", ast.E.position);
+              }
+      }
     return null;
   }
 
@@ -1362,7 +1363,8 @@ public final class Checker implements Visitor {
   }
   
 
-    @Override
+  //Cambios: Se realizan cambios en las validaciones, con ayuda del proyecto de los companeros (ver documentacion externa)  
+  @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
         cabezas = true;
         ast.ProcFuncAST.visit(this, "flag");
