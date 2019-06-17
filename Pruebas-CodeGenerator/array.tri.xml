@@ -1,0 +1,59 @@
+<?xml version="1.0" standalone="yes"?>
+<Program>
+<LetCommand>
+<VarDeclaration>
+<Identifier value="x"/>
+<ArrayTypeDenoter>
+<IntegerLiteral value="10"/>
+<IntTypeDenoter/>
+</ArrayTypeDenoter>
+</VarDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<AssignCommand>
+<SubscriptVname>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</SubscriptVname>
+<IntegerExpression>
+<IntegerLiteral value="123"/>
+</IntegerExpression>
+</AssignCommand>
+<AssignCommand>
+<SubscriptVname>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="100"/>
+</IntegerExpression>
+</SubscriptVname>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</AssignCommand>
+</SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="10"/>
+</IntegerExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

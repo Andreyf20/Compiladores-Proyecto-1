@@ -1,0 +1,14 @@
+let
+
+  var a : Integer
+
+in
+  ! introducir un valor numérico
+  getint(var a);
+
+  a := a + 1 ;
+  ! debe imprimir el sucesor
+  putint (a)
+
+end
+

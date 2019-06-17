@@ -1,0 +1,8 @@
+
+let
+  var n ::= 1
+in
+  ! debe imprimir 1
+  putint(n)
+
+end

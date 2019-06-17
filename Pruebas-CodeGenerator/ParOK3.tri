@@ -1,0 +1,17 @@
+! En par, segunda declaración no ve a la primera
+
+let
+
+  var b ::= 1 ;
+
+  par
+
+    const b ~ 'a'
+    |
+    var c ::= b
+
+  end
+
+in
+  putint (c) ! c debe ser el entero 1, debe imprimir un 1
+end

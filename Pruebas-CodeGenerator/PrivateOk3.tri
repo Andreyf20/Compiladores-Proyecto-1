@@ -1,0 +1,24 @@
+! probar acceso a variable (imperativa) privada
+
+let
+
+  private
+    var a : Integer ! esta variable queda escondida, pero debe tener memoria asignada
+  in
+    proc initA () ~ a := 0 end ;
+    proc incrA () ~ a := succ(a) end ;
+    proc printA () ~ putint(a) end ;
+    func getA () : Integer ~ a ;
+    proc setA (x:Integer) ~ a := x end
+  end
+
+in
+  initA (); ! pone a a en 0
+  printA (); ! imprime 0
+  incrA (); ! a = 1
+  incrA (); ! a = 2
+  printA (); ! imprime 2
+  putint(getA()); ! imprime 2
+  setA (1 + getA());
+  printA () ! imprime 3
+end

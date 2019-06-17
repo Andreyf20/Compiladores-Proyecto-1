@@ -1,0 +1,20 @@
+! Sintaxis y tipos OK, visibilidad posterior OK
+
+let 
+
+  par
+
+    var a ::= 1
+    |
+    const b ~ 1
+    |
+    var c ::= 'a'
+
+  end
+
+in
+  if c = 'a'
+  then putint (a + b) ! debe imprimir 2
+  else pass
+  end
+end

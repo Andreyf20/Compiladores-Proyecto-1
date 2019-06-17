@@ -1,0 +1,26 @@
+! private se elabora de manera que las declaraciones paralelas se trabajan apropiadamente
+let
+
+  private
+    par
+
+      var a   ::= 10
+      |
+      const b ~ 1 
+
+    end! a y b deben ser exportadas (ambas) hacia la parte 'in' del 'private'
+
+  in
+      proc P() ~ putint(a) end
+      ;
+      func m(): Integer ~ b + 2
+
+  end
+
+in
+
+  P() ; ! debe imprimir un 10
+  puteol () ;
+  putint (m()) ! debe imprimir un 3
+
+end

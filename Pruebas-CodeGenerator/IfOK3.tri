@@ -1,0 +1,23 @@
+! sin elsifs
+
+let
+
+  var a : Integer
+
+in
+! correr varias veces, para probar ramas y else
+! Probar con 4, 1, 0, 2
+! Resultados >, 1, 0, n
+
+  getint(var a); 
+  if a > 2 then 
+    put ('>')
+  else if a = 1 then
+    put ('1')
+  else if a = 0 then
+    put ('0')
+  else
+    put ('n')
+  end end end ! de los if
+
+end ! del let

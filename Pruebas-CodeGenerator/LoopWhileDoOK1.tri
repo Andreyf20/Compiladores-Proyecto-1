@@ -1,0 +1,13 @@
+let
+  var a := 15
+in
+  loop  
+  while a > 15 do
+
+    putint(a) ; ! NO debe imprimir
+    a := a - 1
+
+  end
+
+end
+

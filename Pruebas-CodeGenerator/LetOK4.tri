@@ -1,0 +1,20 @@
+! lets anidados, prueba de bloques
+! y de declaraciones secuenciales
+
+let
+
+  var a ::= 0
+
+in
+
+  let
+    const b ~ a ;
+    var   a ::= b + 1
+  in
+    putint (a) ! debe imprimir 1
+  end
+
+end
+ 
+
+
