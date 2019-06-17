@@ -616,7 +616,7 @@ public final class Checker implements Visitor {
   
   public ArrayList<String> generateValues(String start, String finish, SourcePosition pos){
       
-      if(start.length() > 1 || finish.length() > 1){
+      if(start.replace("'", "").length() > 1 || finish.replace("'", "").length() > 1){
           return generateIntRange(start, finish, pos);
       }
       
@@ -624,8 +624,8 @@ public final class Checker implements Visitor {
         reporter.reportError("the range expressions cannot be the same", "", pos);
       }
       
-      char startC = start.charAt(0);
-      char finishC = finish.charAt(0);
+      char startC = start.charAt(1);
+      char finishC = finish.charAt(1);
       
       if(startC > finishC){
           char temp = startC;
