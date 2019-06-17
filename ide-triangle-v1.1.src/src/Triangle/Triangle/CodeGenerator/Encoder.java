@@ -569,24 +569,19 @@ public final class Encoder implements Visitor {
         int outOfCode = nextInstrAddr;
                 
         cjpIterator = root.getMyRoot();
-        patch(cjpIterator.getJumpOut(), outOfCode);
+        patch(cjpIterator.getJumpOut(), outOfCode);//parchea la direccion afuera del codigo una vez todo generado
         
-        System.out.println("direccion afuera: " + Integer.toString(nextInstrAddr));
-        //System.out.println("case--------------------------------");
-        //System.out.println(root.toString());
         while(cjpIterator != null){
-            System.out.println(cjpIterator.toString());
             patch(cjpIterator.getJmpIfddrLess(), cjpIterator.getJmpIfCommandEx());
             if(cjpIterator.getNextCase() != null && cjpIterator.getJmpIfddrGreater() >= 0){
+                /*la lista enlazada permite cambiar los jumps hacia la siguiente dirección
+                con el next case que contiene la direccion donde hace la comparacion*/
                 patch(cjpIterator.getJmpIfddrGreater(), cjpIterator.getNextCase().getJmp());
-                //System.out.println("patch de: " + Integer.toString(cjpIterator.getJmpIfddrGreater()) + " con: " + Integer.toString(cjpIterator.getNextCase().getJmp()));
             }
             patch(cjpIterator.getJumpOut(), outOfCode);//afuera de todo el codigo generado
-            //System.out.println("patch de: " + Integer.toString(cjpIterator.getJumpOut()) + " con: " + Integer.toString(outOfCode));
             
             cjpIterator = cjpIterator.getNextCase();
-        }
-        //System.out.println("end case----------------------------");
+        } 
 
         return null;
     }

@@ -74,28 +74,6 @@ public class CaseTree {
         this.myRoot = myRoot;
     }
 
-    /*public CaseTree getNextCase() {
-        return nextCase;
-    }
-
-    public void setNextCase(CaseTree nextCase) {
-        this.nextCase = nextCase;
-    }*/
-    
-    public void addCaseAtEnd(CaseJumpsPatcher toAdd){
-        if(this.getMyRoot() == null){
-            this.setMyRoot(toAdd);
-            return;
-        }
-        CaseJumpsPatcher iterator = this.getMyRoot();
-        while(iterator != null){
-            if(iterator.getNextCase() == null){
-                iterator.setNextCase(toAdd);
-            }
-            iterator = iterator.getNextCase();
-        }
-    }
-
     @Override
     public String toString() {
         return "CaseTree{" + "caseDdr=" + caseDdr + ", endDdr=" + endDdr + ", ifddr=" + ifddr + '}';
