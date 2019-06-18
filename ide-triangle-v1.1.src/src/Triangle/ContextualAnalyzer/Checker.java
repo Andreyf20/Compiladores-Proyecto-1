@@ -624,8 +624,8 @@ public final class Checker implements Visitor {
         reporter.reportError("the range expressions cannot be the same", "", pos);
       }
       
-      char startC = start.charAt(0);
-      char finishC = finish.charAt(0);
+      char startC = start.charAt(1);
+      char finishC = finish.charAt(1);
       
       if(startC > finishC){
           char temp = startC;
