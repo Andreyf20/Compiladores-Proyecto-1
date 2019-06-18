@@ -16,36 +16,18 @@
 <IntegerLiteral value="3"/>
 </IntegerExpression>
 <SequentialCommand>
-<SequentialCommand>
-<AssignCommand>
-<SimpleVname>
-<Identifier value="a"/>
-</SimpleVname>
-<BinaryExpression>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="i"/>
-</SimpleVname>
-</VnameExpression>
-<Operator value="+"/>
-<IntegerExpression>
-<IntegerLiteral value="1"/>
-</IntegerExpression>
-</BinaryExpression>
-</AssignCommand>
 <CallCommand>
 <Identifier value="putint"/>
 <SingleActualParameterSequence>
 <ConstActualParameter>
 <VnameExpression>
 <SimpleVname>
-<Identifier value="a"/>
+<Identifier value="i"/>
 </SimpleVname>
 </VnameExpression>
 </ConstActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-</SequentialCommand>
 <CallCommand>
 <Identifier value="put"/>
 <SingleActualParameterSequence>
